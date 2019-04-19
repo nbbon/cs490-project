@@ -9,6 +9,7 @@ public class HomeController {
 	@GetMapping("/home")
 	public String sayHello() {
 		System.out.println("Hello MUM PMP group!!");
+		System.out.println("This is Romie!");
 		return "Hi";
 	}
 }
