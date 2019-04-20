@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
-	
+
 	@GetMapping("/home")
 	public String sayHello() {
 
@@ -15,11 +15,11 @@ public class HomeController {
 		System.out.println("Hello MUM PMP group!!");
 		System.out.println("This is Romie!");
 
-		
 		System.out.println("...");
-		
+
 		System.out.println("...Me romie");
 
+		System.out.println("Good Friday.");
 
 		return "Hi";
 	}
