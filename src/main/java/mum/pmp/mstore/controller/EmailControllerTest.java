@@ -1,6 +1,7 @@
 package mum.pmp.mstore.controller;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
@@ -20,7 +21,12 @@ public class EmailControllerTest {
 	public String sendEmail() throws AddressException, MessagingException, IOException {
 
 		EmailServiceInterface email = new EmailService();
-		email.sendEmail();
-		return "email send successfully!";
+		//email.sendEmail();
+		String stanley = "stanley.julien20@gmail.com";
+		String store = "storemanagement2019@gmail.com";
+		//email.sendEmail(stanley);
+		String[] emails = {stanley, store};
+		email.sendEmail(emails);
+		return "email send successfully to "+Arrays.toString(emails)+"";//"email send successfully to "+stanley+"";
 	}
 }
