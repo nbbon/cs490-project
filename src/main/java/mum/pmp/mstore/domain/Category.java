@@ -1,24 +1,42 @@
 package mum.pmp.mstore.domain;
 
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.validation.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
 public class Category {
-	private int categoryID;
+	
+
+	@Id
+	@GeneratedValue(strategy= GenerationType.AUTO)
+	private Integer categoryID;
+	@NotEmpty(message="{categoryName.empty}")
 	private String categoryName;
 	private String description;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "category")
+    @OrderBy("productName")
+    private List<Product> products;
 	
 
 	public Category() {	}
 
-	public Category(int categoryID, String categoryName, String description) {
-		this.categoryID = categoryID;
-		this.categoryName = categoryName;
-		this.description = description;
-	}
 	
 	
-	public int getCategoryID() {
+	public Integer getCategoryID() {
 		return categoryID;
 	}
-	public void setCategoryID(int categoryID) {
+	public void setCategoryID(Integer categoryID) {
 		this.categoryID = categoryID;
 	}
 	public String getCategoryName() {
@@ -33,6 +51,45 @@ public class Category {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	
+	
+	public List<Product> getProducts() {
+		return products;
+	}
+
+
+
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
+
+	
+	
+	   public boolean addProduct(Product product){
+
+	        boolean success=false;
+	        if( products.add(product)){
+	        	product.setCategory(this);
+	            success=true;
+	        }
+	        return success;
+	    }
+
+	    public boolean removeProduct(Product product){
+	        boolean success=false;
+
+	        if(products.remove(product)){
+	        	product.setCategory(null);
+	            success=true;
+	        }
+
+	        return success;
+	    }
+	
+	
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

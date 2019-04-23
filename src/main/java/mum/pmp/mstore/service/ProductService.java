@@ -6,9 +6,9 @@ import mum.pmp.mstore.domain.Product;
 import mum.pmp.mstore.domain.Stock;
 
 public interface ProductService {
-	void addProduct(String productNumber, String productName, int price, String description, int categoryID);
-	Product getProduct(String productNumber);
-	void deleteProduct(String productNumber);
+	void addProduct(Product product);
+	Product getProduct(Integer id);
+	void deleteProduct(Integer id);
 	List<Product> getProducts();
 	void setStock(String productNumber, int quantity, String locationCode);
     Stock getStock(String productNumber);

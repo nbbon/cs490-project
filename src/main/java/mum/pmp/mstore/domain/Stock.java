@@ -1,6 +1,26 @@
 package mum.pmp.mstore.domain;
 
-public class Stock {
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class Stock implements Serializable{
+	
+	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4210144688196855737L;
+
+
+	@Id
+	@GeneratedValue(strategy= GenerationType.AUTO)
+	private int id;
 	private int quantity;
 	private String locationCode;
 	
@@ -9,12 +29,27 @@ public class Stock {
 	}
 	
 	
+
 	public Stock(int quantity, String locationCode) {
+		super();
 		this.quantity = quantity;
 		this.locationCode = locationCode;
 	}
 
 
+
+
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	
 	public int getQuantity() {
 		return quantity;
 	}

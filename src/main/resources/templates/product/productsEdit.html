@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Product</title>
+
+    <link rel="stylesheet" type="text/css" media="all" href="../../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}" src="js/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.min.js}" src="js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+     
+    
+  
+        <h1>Product</h1>
+
+        <form class="form-group" action="/productsEdit" th:action="@{/productEdit}" method="post">
+            <input th:type="hidden" name="id" th:field="${products.id}" />
+            <div class="form-group">
+                <label for="productNumber">ProductNumber</label>
+                <input type="text" class="form-control" id="productNumber" th:field="${products.productNumber}" />
+            </div>
+            
+            <div class="form-group">
+                <label for="productName">ProductName</label>
+                <input type="text" class="form-control" id="productName" th:field="${products.productName}" />
+            </div>
+            
+              <div class="form-group">
+                <label for="price">Price</label>
+                <input type="text" class="form-control" id="price" th:field="${products.price}" />
+            </div>
+            
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" id="description" th:field="${products.description}"></textarea>
+            </div>
+            
+            
+             <div class="form-group">
+                <label for="stock">Stock</label>
+                <input type="text" class="form-control" id="stock" th:field="${products.stock.quantity}" />
+            </div>
+            
+            
+            
+            
+            
+              <div class="form-group">
+                <label for="category">Categories</label>
+                               
+                  <select class="form-control" th:field="${products.category.categoryID}" >
+                        <option th:each="category : ${categoriesList}"
+                                th:value="${category.categoryID}"
+                                th:text="${category.categoryName}"
+                                th:selected="${products.category.categoryID == category.categoryID}">                             
+                        </option>
+                    </select> 
+            </div>
+            
+            
+            
+                <div class="form-group">
+                    <label for="airline">Airline</label>
+                    <select class="form-control" th:field="${flight.airline.id}" >
+                        <option th:each="airline : ${airlines}"
+                                th:value="${airline.id}"
+                                th:text="${airline.airlineName}"
+                                th:selected="${flight.airline.id == airline.id}">
+                        </option>
+                    </select>
+                </div>
+            
+            
+            
+                              
+            <button type="submit" class="btn btn-primary">Add Product</button>
+            <a href="#" th:href="@{/}" class="btn btn-danger" role="button">Cancel</a>
+        </form>
+
+    </div>
+
+</body>
+</html>

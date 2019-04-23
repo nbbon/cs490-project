@@ -5,9 +5,9 @@ import java.util.List;
 import mum.pmp.mstore.domain.Category;
 
 public interface CategoryService {
-	void addCategory(int categoryID, String categoryName, String description);
-	Category getCategory(int id);
+	void addCategory(Category category);
+	Category getCategory(Integer id);
 	List<Category> getCategories();
-	void deleteCategory(int id);
+	void deleteCategory(Integer id);
 
 }

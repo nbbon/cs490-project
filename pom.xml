@@ -16,6 +16,8 @@
 	<description>Branded Online Store Version 1.1</description>
 
 	<properties>
+		 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 	</properties>
 
@@ -24,12 +26,15 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		
+ 		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
 		<!-- Spring Security -->
 		<dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 
 		<!-- JSP engine -->
 		<dependency>
@@ -43,17 +48,17 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-<<<<<<< HEAD
+
 		<dependency>
-		 <groupId>org.springframework.boot</groupId>
-		 <artifactId>spring-boot-starter-data-jpa</artifactId>
-	  </dependency>
-	  <dependency>
-                 <groupId>org.springframework.boot</groupId>
-                 <artifactId>spring-boot-devtools</artifactId>
-                 <optional>true</optional>
-          </dependency> 
-=======
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
+
 
 		<!-- JSTL -->
 		<dependency>
@@ -72,9 +77,8 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
-			<version>2.1.3.RELEASE</version>
 		</dependency>
->>>>>>> refs/remotes/origin/master
+
 	</dependencies>
 
 	<build>

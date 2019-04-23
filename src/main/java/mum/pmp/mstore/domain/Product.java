@@ -1,31 +1,57 @@
 package mum.pmp.mstore.domain;
 
-public class Product {
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
+public class Product implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5367391064682325748L;
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
 	private String productNumber;
 	private String productName;
 	private int price;
 	private String description;
+	@OneToOne(fetch = FetchType.LAZY)
 	private Stock stock;
+	@JsonIgnore
+	@ManyToOne
 	private Category category;
 	
 
 	public Product() {	}
 	
 		
-	public Product(String productNumber, String productName, int price, String description) {
-		this.productNumber = productNumber;
-		this.productName = productName;
-		this.price = price;
-		this.description = description;
+	public Integer getId() {
+		return id;
+	}
+
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	
-	
-	
-
 	public String getProductNumber() {
 		return productNumber;
 	}
+
+
 
 
 	public void setProductNumber(String productNumber) {
@@ -62,16 +88,15 @@ public class Product {
 		this.description = description;
 	}
 
-
+	
 	public Stock getStock() {
 		return stock;
 	}
 
-
+	
 	public void setStock(Stock stock) {
 		this.stock = stock;
 	}
-
 
 	public Category getCategory() {
 		return category;

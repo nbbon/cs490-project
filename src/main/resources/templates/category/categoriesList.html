@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Categories</title>
+
+    <link rel="stylesheet" type="text/css" media="all" href="../../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}" src="js/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.min.js}" src="js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <div class="container">
+
+        <h1>Categories</h1>
+
+        <p>
+            <a href="/categoriesEdit" th:href="@{/categoriesEdit}">Add Category</a>
+        </p>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>category ID</th>
+                    <th>category Name</th>
+                    <th>description</th>
+                </tr>
+            </thead>
+                    
+            
+            <tbody>
+                <tr th:each="categories : ${categoriesList}">
+                    <td th:text="${categories.categoryID}">1</td>
+                    <td th:text="${categories.categoryName}">Test</td>
+                    <td th:text="${categories.description}">Test</td>
+                    
+                    <td>
+                        <a href="/categoriesEdit/1" th:href="@{/categoriesEdit/__${categories.categoryID}__}">Update</a>
+                        <a href="/categoriesDelete/1" th:href="@{/categoriesDelete/__${categories.categoryID}__}">Remove</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
