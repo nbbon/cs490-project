@@ -9,12 +9,7 @@ import javax.persistence.Id;
 
 @Entity
 public class Stock implements Serializable{
-	
-	
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -4210144688196855737L;
 
 

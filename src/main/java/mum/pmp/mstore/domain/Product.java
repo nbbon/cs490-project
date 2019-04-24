@@ -2,6 +2,7 @@ package mum.pmp.mstore.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -27,9 +28,8 @@ public class Product implements Serializable {
 	private String productName;
 	private int price;
 	private String description;
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Stock stock;
-	@JsonIgnore
 	@ManyToOne
 	private Category category;
 	
