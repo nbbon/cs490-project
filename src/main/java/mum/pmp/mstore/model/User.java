@@ -1,53 +1,48 @@
 package mum.pmp.mstore.model;
 
-import java.util.Set;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name="user")
-public class User {
+@Table(name="USER")
+public class User implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="id")
-	private int id;
+	@GeneratedValue
+	@Column(name="ID")
+	private long id;
 	
-	@Column(name="email", nullable = false, unique = true)
-	@Email(message="{email.invalid}")
-	@NotEmpty(message="{email.empty}")
+	@Column(name="EMAIL", unique = true)
 	private String email;
 	
-	private String username;
-	
+	@Column(name="PASSWORD")
 	private String password;
 	
-	private String passwordConfirm;
-	
-	private String firstName;
-	
-	private String lastName;
-	
+	@Column(name="ENABLED")
 	private boolean enabled;
 	
-	private String confirmationToken;
-	
-	@ManyToMany
-    private Set<Role> roles;
+	@ManyToMany(cascade=CascadeType.ALL, fetch= FetchType.EAGER)
+	private List<Role> roles = new ArrayList<Role>();
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -59,44 +54,12 @@ public class User {
 		this.email = email;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
 	public String getPassword() {
 		return password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	
-	public String getPasswordConfirm() {
-		return passwordConfirm;
-	}
-
-	public void setPasswordConfirm(String passwordConfirm) {
-		this.passwordConfirm = passwordConfirm;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
 	}
 
 	public boolean isEnabled() {
@@ -107,21 +70,24 @@ public class User {
 		this.enabled = enabled;
 	}
 
-	public String getConfirmationToken() {
-		return confirmationToken;
+	public List<Role> getRoles() {
+		return roles;
 	}
 
-	public void setConfirmationToken(String confirmationToken) {
-		this.confirmationToken = confirmationToken;
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
 	
-	public Set<Role> getRoles() {
-        return roles;
-    }
+	public void addRole(Role role) {
+		roles.add(role);
+	}
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", email=" + email + ", password=" + password + ", enabled=" + enabled + ", roles="
+				+ roles + "]";
+	}
 	
 	
+
 }
