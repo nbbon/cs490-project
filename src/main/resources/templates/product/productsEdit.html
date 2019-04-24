@@ -17,7 +17,7 @@
   
         <h1>Product</h1>
 
-        <form class="form-group" action="/productsEdit" th:action="@{/productEdit}" method="post">
+        <form class="form-group" action="/productsEdit" th:action="@{/productsEdit}" method="post">
             <input th:type="hidden" name="id" th:field="${products.id}" />
             <div class="form-group">
                 <label for="productNumber">ProductNumber</label>
@@ -44,39 +44,19 @@
                 <label for="stock">Stock</label>
                 <input type="text" class="form-control" id="stock" th:field="${products.stock.quantity}" />
             </div>
-            
-            
-            
-            
-            
-              <div class="form-group">
+                
+             <div class="form-group">
                 <label for="category">Categories</label>
                                
                   <select class="form-control" th:field="${products.category.categoryID}" >
-                        <option th:each="category : ${categoriesList}"
+                        <option th:each="category : ${categories}"
                                 th:value="${category.categoryID}"
                                 th:text="${category.categoryName}"
-                                th:selected="${products.category.categoryID == category.categoryID}">                             
+                                >                             
                         </option>
                     </select> 
-            </div>
-            
-            
-            
-                <div class="form-group">
-                    <label for="airline">Airline</label>
-                    <select class="form-control" th:field="${flight.airline.id}" >
-                        <option th:each="airline : ${airlines}"
-                                th:value="${airline.id}"
-                                th:text="${airline.airlineName}"
-                                th:selected="${flight.airline.id == airline.id}">
-                        </option>
-                    </select>
-                </div>
-            
-            
-            
-                              
+            </div> 
+                                              
             <button type="submit" class="btn btn-primary">Add Product</button>
             <a href="#" th:href="@{/}" class="btn btn-danger" role="button">Cancel</a>
         </form>

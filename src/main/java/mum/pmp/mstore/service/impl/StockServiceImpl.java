@@ -31,7 +31,6 @@ public class StockServiceImpl implements StockService{
 
 	@Override
 	public List<Stock> getStocks() {
-		// TODO Auto-generated method stub
 		return (List<Stock>) stockRepository.findAll();
 	}
 

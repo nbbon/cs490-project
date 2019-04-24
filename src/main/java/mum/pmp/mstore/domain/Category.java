@@ -23,10 +23,13 @@ public class Category {
 	private String categoryName;
 	private String description;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "category")
-    @OrderBy("productName")
-    private List<Product> products;
+	/*
+	 * @JsonIgnore
+	 * 
+	 * @OneToMany(mappedBy = "category")
+	 * 
+	 * @OrderBy("productName") private List<Product> products;
+	 */
 	
 
 	public Category() {	}
@@ -53,39 +56,26 @@ public class Category {
 	}
 	
 	
-	
-	public List<Product> getProducts() {
-		return products;
-	}
-
-
-
-	public void setProducts(List<Product> products) {
-		this.products = products;
-	}
-
-	
-	
-	   public boolean addProduct(Product product){
-
-	        boolean success=false;
-	        if( products.add(product)){
-	        	product.setCategory(this);
-	            success=true;
-	        }
-	        return success;
-	    }
-
-	    public boolean removeProduct(Product product){
-	        boolean success=false;
-
-	        if(products.remove(product)){
-	        	product.setCategory(null);
-	            success=true;
-	        }
-
-	        return success;
-	    }
+	/*
+	 * public List<Product> getProducts() { return products; }
+	 * 
+	 * 
+	 * 
+	 * public void setProducts(List<Product> products) { this.products = products; }
+	 * 
+	 * 
+	 * 
+	 * public boolean addProduct(Product product){
+	 * 
+	 * boolean success=false; if( products.add(product)){ product.setCategory(this);
+	 * success=true; } return success; }
+	 * 
+	 * public boolean removeProduct(Product product){ boolean success=false;
+	 * 
+	 * if(products.remove(product)){ product.setCategory(null); success=true; }
+	 * 
+	 * return success; }
+	 */
 	
 	
 

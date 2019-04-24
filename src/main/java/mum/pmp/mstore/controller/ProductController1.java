@@ -1,5 +1,6 @@
 package mum.pmp.mstore.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -32,6 +33,7 @@ public class ProductController1 {
 
 	  @GetMapping(value="/products")
 	    public String listProducts(Model model) {
+		  
 	        model.addAttribute("productsList", productService.getProducts());
 	        return "product/productsList";
 	    }
@@ -40,24 +42,28 @@ public class ProductController1 {
 	  @GetMapping(value={"/productsEdit","/productsEdit/{id}"})
 	    public String productsEdit(Model model, @PathVariable(required = false, name = "id") Integer id) {
 	        if (null != id) {
+	        	List<Category> categories = categoryService.getCategories();
+	        	model.addAttribute("categories", categories);
 	            model.addAttribute("products", productService.getProduct(id));
 	        } else {
-	        	//model.addAttribute("products", categoryService.getCategories());
+				        	
+	        	List<Category> categories = categoryService.getCategories();
+	        	model.addAttribute("categories", categories);
+	        	
 	            model.addAttribute("products", new Product());
 	        }
 	        return "product/productsEdit";
 	    }
-	  @GetMapping(value = "/productsEdit")
-	    public String newProductForm(@ModelAttribute("products") Product products, Model model) {
-	        return "product/productsEdit";
-	    }
+	
 	
 	  @PostMapping(value="/productsEdit")
-	    public String productsEdit(@ Valid @ModelAttribute("products")  Product product, BindingResult bindingResult, Model model) {
+	    public String addproducts(@ Valid @ModelAttribute("products")  Product product, BindingResult bindingResult, Model model) {
 		  if (bindingResult.hasErrors()) {
 			  return "product/productsEdit";
-			
 		}	
+		  
+		  List<Category> categories = categoryService.getCategories();
+		  model.addAttribute("categories", categories);
 		  productService.addProduct(product);		
 	        return "product/productsList";
 	    }
@@ -65,50 +71,13 @@ public class ProductController1 {
 	  	  
 	  @DeleteMapping(value="/productsDelete/{id}")
 	    public String productsDelete(Model model, @PathVariable(required = true, name = "id") Integer id) {
-		  	productService.getProduct(id);        
-			model.addAttribute("productsList", productService.getProduct(id));
+		     productService.deleteProduct(id);       
+			model.addAttribute("productsList", productService.getProducts());
 	        return "product/productsList";
+	        
+	        
+	        
 	    }
 	
 	
-	
-	/*
-	 * @GetMapping("/product") public String registration(Model model) {
-	 * 
-	 * List<Category> nameCategories = categoryService.getCategories();
-	 * model.addAttribute("nameCategories", nameCategories);
-	 * model.addAttribute("productForm",new Product());
-	 * 
-	 * return "product"; }
-	 * 
-	 * @PostMapping("/product") public String
-	 * registration(@ModelAttribute("productForm") Product productForm,
-	 * BindingResult bindingResult) {
-	 * 
-	 * if (bindingResult.hasErrors()) { return "product"; }
-	 * 
-	 * System.out.println("In registration..");
-	 * productService.addProduct(productForm);
-	 * 
-	 * 
-	 * return "redirect:/welcome"; }
-	 * 
-	 * 
-	 * 
-	 * @GetMapping("/products") public String getcategories(Model model) {
-	 * model.addAttribute("products", productService.getProducts());
-	 * 
-	 * return "productsForm"; }
-	 * 
-	 * 
-	 * 
-	 * @GetMapping(value = "/product/{productNumber}") public String
-	 * getProduct(@PathVariable("productNumber") String productNumber, Model model)
-	 * { // Category category= categoryService.getCategory(id); Product
-	 * product=productService.getProduct(productNumber); if (product != null) {
-	 * model.addAttribute("product", product); return "product"; } return
-	 * "redirect:/welcome"; }
-	 * 
-	 */
-
 }
