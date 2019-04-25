@@ -11,7 +11,7 @@
 <body>
 <div class="container">
     <div th:replace="fragments/menu :: menu"></div>
-    <form class="form-horizontal" th:object="${customer}" role="form" method="POST" th:action="@{/signup}">
+    <form class="form-horizontal" th:object="${vendor}" role="form" method="POST" th:action="@{/vendor/signup}">
         <div class="form-group row">
             <label for="firstName" class="col-sm-3 col-md-3 col-form-label">First Name</label>
             <div class="col-sm-9 col-md-9">
@@ -43,29 +43,30 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="city" class="col-sm-3 col-md-3 col-form-label">City</label>
+            <label for="phone" class="col-sm-3 col-md-3 col-form-label">Vendor Number</label>
             <div class="col-sm-9 col-md-9">
-                <input th:field="*{address.city}" type="text" class="form-control" id="city"/>
+                <input th:field="*{vendorNumber}" type="text" class="form-control" id="vendorNumber"/>
             </div>
         </div>
         <div class="form-group row">
-            <label for="state" class="col-sm-3 col-md-3 col-form-label">State</label>
+            <label for="phone" class="col-sm-3 col-md-3 col-form-label">Vendor Name</label>
             <div class="col-sm-9 col-md-9">
-                <input th:field="*{address.state}" type="text" class="form-control" id="state"/>
+                <input th:field="*{vendorName}" type="text" class="form-control" id="vendorName"/>
             </div>
         </div>
         <div class="form-group row">
-            <label for="country" class="col-sm-3 col-md-3 col-form-label">Country</label>
-            <div class="col-sm-9">
-                <input th:field="*{address.country}" type="text" class="form-control" id="country"/>
+            <label for="phone" class="col-sm-3 col-md-3 col-form-label">Registration Number</label>
+            <div class="col-sm-9 col-md-9">
+                <input th:field="*{regId}" type="text" class="form-control" id="regId"/>
             </div>
         </div>
         <div class="form-group row">
-            <label for="zipcode" class="col-sm-3 col-md-3 col-form-label">Zip Code</label>
+            <label for="phone" class="col-sm-3 col-md-3 col-form-label">Contact Person</label>
             <div class="col-sm-9 col-md-9">
-                <input th:field="*{address.zipcode}" type="text" class="form-control" id="zipcode"/>
+                <input th:field="*{contactPerson}" type="text" class="form-control" id="contactPerson"/>
             </div>
         </div>
+       
         <input type="submit" class="btn btn-default" value="Signup"/>
     </form>
 </div>

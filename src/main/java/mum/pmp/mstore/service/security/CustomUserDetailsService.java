@@ -34,8 +34,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 		if (user == null) {
 			throw new UsernameNotFoundException(String.format("User with %s doesn't exist!", email));
 		}
-		List<Person> persons = personService.findByEmail(user.getEmail());
-		return new UserAdapter(user, persons.get(0));
+		//List<Person> persons = personService.findByEmail(user.getEmail());
+		Person person = personService.findByEmail(user.getEmail());
+		return new UserAdapter(user, person);
 		
 	}
 

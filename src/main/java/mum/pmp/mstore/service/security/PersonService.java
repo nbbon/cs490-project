@@ -13,6 +13,7 @@ import mum.pmp.mstore.model.User;
 import mum.pmp.mstore.repository.security.PersonRepository;
 import mum.pmp.mstore.repository.security.RoleRepository;
 import mum.pmp.mstore.repository.security.UserRepository;
+import mum.pmp.mstore.utilities.User_Type;
 
 @Service
 @Transactional
@@ -33,7 +34,7 @@ public class PersonService {
 		return personRepository.save(person);
 	}
 
-	public List<Person> findByEmail(String email) {
+	public Person findByEmail(String email) {
 		return personRepository.findByEmail(email);
 	}
 
@@ -49,16 +50,16 @@ public class PersonService {
 		return personRepository.findAll();
 	}
 	
-	public void signup(Person person) {
+	public void signup(Person person, User_Type user_type) {
 		person.setEnable(true);;
 
 		User user = new User();
 		user.setEmail(person.getEmail());
 		user.setEnabled(true);
-		Role customerRole = roleRepository.findByRole("ROLE_CUSTOMER");
+		Role userRole = roleRepository.findByRole(user_type.toString());
 		
-		System.out.println("customerRole:" + customerRole);
-		user.addRole(customerRole);
+		System.out.println("customerRole:" + userRole);
+		user.addRole(userRole);
 		//user.setPassword(person.getPassword());
 		user.setPassword(passwordEncoder.encode(person.getPassword()));
 

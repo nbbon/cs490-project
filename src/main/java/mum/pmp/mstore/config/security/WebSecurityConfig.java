@@ -28,7 +28,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		System.out.println("In configure webSecurityConfig");
 
 		http.authorizeRequests()
-				.antMatchers("/webjars/**", "/css/**", "/images/**", "/signup", "/login").permitAll()
+				.antMatchers("/webjars/**", "/css/**", "/images/**", 
+						"/signup", "/login",
+						"/admin/signup", "/vendor/signup", "/login").permitAll()
 				.and()
 				.httpBasic()
 				.realmName(REALM)
