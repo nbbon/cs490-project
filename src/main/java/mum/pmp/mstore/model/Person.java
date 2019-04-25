@@ -3,7 +3,9 @@ package mum.pmp.mstore.model;
 import javax.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+//@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "USER_TYPE")
 @Table(name = "PERSON")
 public class Person {
 	@Id
@@ -19,10 +21,6 @@ public class Person {
 	
 	@Column(name = "EMAIL", unique = true)
 	private String email;
-	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "ADDRESS_ID")
-	private Address address;
 	
 	@Column(name = "PHONE")
 	private String phone;
@@ -68,14 +66,14 @@ public class Person {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
+//
+//	public Address getAddress() {
+//		return address;
+//	}
+//
+//	public void setAddress(Address address) {
+//		this.address = address;
+//	}
 
 	public String getPhone() {
 		return phone;
@@ -93,6 +91,5 @@ public class Person {
 		this.password = password;
 	}
 
-	
 	
 }
