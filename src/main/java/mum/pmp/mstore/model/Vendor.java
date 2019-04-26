@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @DiscriminatorValue(value = "VENDOR")
-public class Vendor extends Person{
+public class Vendor extends Profile{
 	
 	@Column(name="VENDOR_NUMBER")
 	private String vendorNumber;

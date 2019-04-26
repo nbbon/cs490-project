@@ -54,7 +54,7 @@ public class UserController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ModelAndView doCreate(Model model, @ModelAttribute("user") User user) {
         ModelAndView mv = new ModelAndView("redirect:/admin/user/");
-        User existingUser = userService.getUserByEmail(user.getEmail());
+        User existingUser = userService.getUserByEmail(user.getUserId());
         if(existingUser != null && user.getId() == 0) {
             ModelAndView mv2 = new ModelAndView("admin/user/create");
             return mv2;

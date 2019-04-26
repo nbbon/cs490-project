@@ -6,14 +6,14 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import mum.pmp.mstore.model.Person;
+import mum.pmp.mstore.model.Profile;
 
 
 @Repository
-public interface RegistrationRepository extends JpaRepository<Person, Long> {
+public interface RegistrationRepository extends JpaRepository<Profile, Long> {
 
 	//public List<Person> findByEmail(String email);
 	
-	public Person findByEmail(String email);
+	public Profile findByEmail(String email);
 	
 }

@@ -6,8 +6,8 @@ import javax.persistence.*;
 //@Inheritance(strategy = InheritanceType.JOINED)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "USER_TYPE")
-@Table(name = "PERSON")
-public class Person {
+@Table(name = "PROFILE")
+public class Profile {
 	@Id
 	@GeneratedValue
 	@Column(name="ID")
@@ -25,12 +25,13 @@ public class Person {
 	@Column(name = "PHONE")
 	private String phone;
 	
+	//need to remove 
 	@Column(name = "ENABLE")
 	private boolean enable;
 	
-	@Transient
 	private String password;
 	
+	@Transient
 	private String confirmPassword;
 
 	public long getId() {

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import mum.pmp.mstore.config.security.SessionListener;
-import mum.pmp.mstore.model.Person;
+import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.model.Vendor;
 import mum.pmp.mstore.service.security.RegistrationService;
 import mum.pmp.mstore.utilities.User_Type;
@@ -57,7 +57,7 @@ public class VendorController {
 	@GetMapping("/vendor/update")
 	public String updatePage(Model model) {
 		System.out.println("in update : " + sessionListener.getUser().getEmail());
-		Person person = registrationService.findByEmail(sessionListener.getUser().getEmail());
+		Profile person = registrationService.findByEmail(sessionListener.getUser().getEmail());
 		model.addAttribute("vendor" , person);
 		return "/profile/vendor_profile";
 	}
@@ -66,7 +66,7 @@ public class VendorController {
 	public String update(@ModelAttribute Vendor vendor, BindingResult bindingResult) {
 		
 		// get a proxy object first to prevent duplicate entry 
-		Person person = registrationService.findByEmail(vendor.getEmail());
+		Profile person = registrationService.findByEmail(vendor.getEmail());
 		Vendor vendorToUpdate;
 		
 		System.out.println("vendorToupdate" + person);

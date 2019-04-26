@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import mum.pmp.mstore.adapters.UserAdapter;
-import mum.pmp.mstore.model.Person;
+import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.model.Role;
 import mum.pmp.mstore.model.User;
 import mum.pmp.mstore.repository.security.UserRepository;
@@ -32,13 +32,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		System.out.println("In load user by name");
-		User user = userRepository.findByEmail(email);
+		User user = userRepository.findByUserId(email);
 		if (user == null) {
 			throw new UsernameNotFoundException(String.format("User with %s doesn't exist!", email));
 		}
 		
 		//List<Person> persons = personService.findByEmail(user.getEmail());
-		Person person = personService.findByEmail(user.getEmail());
+		Profile person = personService.findByEmail(user.getUserId());
 		return new UserAdapter(user, person);
 		
 	}

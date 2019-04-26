@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @DiscriminatorValue(value="CUSTOMER")
-public class Customer extends Person{
+public class Customer extends Profile{
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ADDRESS_ID")
