@@ -5,9 +5,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import mum.pmp.mstore.model.Person;
+import mum.pmp.mstore.model.Role;
 import mum.pmp.mstore.model.User;
 
 public class UserAdapter implements UserDetails {
@@ -35,6 +37,7 @@ public class UserAdapter implements UserDetails {
 		user.getRoles().stream().forEach(authorities::add);
 		user.getRoles().forEach(System.out::print);
 		
+		System.out.println("authorities :" + authorities);
 		return authorities;
 	}
 
