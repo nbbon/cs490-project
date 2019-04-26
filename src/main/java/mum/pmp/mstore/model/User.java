@@ -26,10 +26,10 @@ public class User implements Serializable{
 	@Column(name="ID")
 	private long id;
 	
-	@Column(name="EMAIL", unique = true)
+	@Column(name="EMAIL", nullable= false, length= 30, unique = true)
 	private String email;
 	
-	@Column(name="PASSWORD")
+	@Column(name="PASSWORD", length= 60)
 	private String password;
 	
 	@Column(name="ENABLED")
@@ -78,9 +78,18 @@ public class User implements Serializable{
 		this.roles = roles;
 	}
 	
-	public void addRole(Role role) {
+	public void setRole(Role role) {
 		roles.add(role);
 	}
+	
+	
+	public void removeRole(Role role) {
+        this.roles.remove(role);
+	}
+	
+	public void clearRoles() {
+        roles.clear();
+    }
 
 	@Override
 	public String toString() {

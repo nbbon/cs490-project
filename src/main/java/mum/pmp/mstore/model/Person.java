@@ -30,6 +30,8 @@ public class Person {
 	
 	@Transient
 	private String password;
+	
+	private String confirmPassword;
 
 	public long getId() {
 		return id;
@@ -66,14 +68,6 @@ public class Person {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-//
-//	public Address getAddress() {
-//		return address;
-//	}
-//
-//	public void setAddress(Address address) {
-//		this.address = address;
-//	}
 
 	public String getPhone() {
 		return phone;
@@ -91,5 +85,14 @@ public class Person {
 		this.password = password;
 	}
 
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+
+	
 	
 }
