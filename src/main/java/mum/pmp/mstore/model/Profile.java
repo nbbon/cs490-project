@@ -6,8 +6,8 @@ import javax.persistence.*;
 //@Inheritance(strategy = InheritanceType.JOINED)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "USER_TYPE")
-@Table(name = "PERSON")
-public class Person {
+@Table(name = "PROFILE")
+public class Profile {
 	@Id
 	@GeneratedValue
 	@Column(name="ID")
@@ -25,13 +25,18 @@ public class Person {
 	@Column(name = "PHONE")
 	private String phone;
 	
+	//need to remove 
 	@Column(name = "ENABLE")
 	private boolean enable;
 	
-	@Transient
 	private String password;
 	
+<<<<<<< HEAD:src/main/java/mum/pmp/mstore/model/Person.java
 	private String token;
+=======
+	@Transient
+	private String confirmPassword;
+>>>>>>> upstream/master:src/main/java/mum/pmp/mstore/model/Profile.java
 
 	public long getId() {
 		return id;
@@ -68,14 +73,6 @@ public class Person {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-//
-//	public Address getAddress() {
-//		return address;
-//	}
-//
-//	public void setAddress(Address address) {
-//		this.address = address;
-//	}
 
 	public String getPhone() {
 		return phone;
@@ -93,6 +90,7 @@ public class Person {
 		this.password = password;
 	}
 
+<<<<<<< HEAD:src/main/java/mum/pmp/mstore/model/Person.java
 	public String getToken() {
 		return token;
 	}
@@ -101,5 +99,23 @@ public class Person {
 		this.token = token;
 	}
 
+=======
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", phone=" + phone + ", enable=" + enable + ", password=" + password + ", confirmPassword="
+				+ confirmPassword + "]";
+	}
+
+	
+>>>>>>> upstream/master:src/main/java/mum/pmp/mstore/model/Profile.java
 	
 }

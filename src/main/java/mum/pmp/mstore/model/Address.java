@@ -14,6 +14,10 @@ public class Address {
 	@Column(name = "CITY")
 	private String city;
 	
+	//add street
+	@Column(name = "STREET")
+	private String street;
+	
 	@Column(name = "STATE")
 	private String state;
 	
@@ -53,6 +57,18 @@ public class Address {
 
 	public void setZipcode(String zipcode) {
 		this.zipcode = zipcode;
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 }

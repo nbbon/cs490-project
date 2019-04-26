@@ -5,21 +5,23 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import mum.pmp.mstore.model.Person;
+import mum.pmp.mstore.model.Profile;
+import mum.pmp.mstore.model.Role;
 import mum.pmp.mstore.model.User;
 
 public class UserAdapter implements UserDetails {
 	private static final long serialVersionUID = -1360188483928178893L;
 	private User user;
-	private Person person;
+	private Profile person;
 
 	public UserAdapter(User user) {
 		this.user = user;
 	}
 
-	public UserAdapter(User user, Person person) {
+	public UserAdapter(User user, Profile person) {
 		this.user = user;
 		this.person = person;
 		System.out.println("user details:" + user);
@@ -35,6 +37,7 @@ public class UserAdapter implements UserDetails {
 		user.getRoles().stream().forEach(authorities::add);
 		user.getRoles().forEach(System.out::print);
 		
+		System.out.println("authorities :" + authorities);
 		return authorities;
 	}
 
@@ -45,7 +48,7 @@ public class UserAdapter implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return user.getEmail();
+		return user.getUserId();
 	}
 
 	@Override
@@ -72,7 +75,7 @@ public class UserAdapter implements UserDetails {
 		return user;
 	}
 
-	public Person getPerson() {
+	public Profile getPerson() {
 		return person;
 	}
 }
