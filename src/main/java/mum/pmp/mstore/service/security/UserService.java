@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import mum.pmp.mstore.model.User;
-import mum.pmp.mstore.repository.security.UserRepository;
+import mum.pmp.mstore.repository.profile.UserRepository;
 import mum.pmp.mstore.service.IUserService;
 
 @Service

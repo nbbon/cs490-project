@@ -1,4 +1,4 @@
-package mum.pmp.mstore.controller.registration;
+package mum.pmp.mstore.controller.profile;
 
 
 

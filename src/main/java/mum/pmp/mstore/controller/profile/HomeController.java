@@ -1,4 +1,4 @@
-package mum.pmp.mstore.controller.registration;
+package mum.pmp.mstore.controller.profile;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import mum.pmp.mstore.model.Role;
-import mum.pmp.mstore.repository.security.RoleRepository;
+import mum.pmp.mstore.repository.profile.RoleRepository;
 
 @Controller
 public class HomeController {

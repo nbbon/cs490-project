@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.model.Role;
 import mum.pmp.mstore.model.User;
-import mum.pmp.mstore.repository.security.ProfileRepository;
-import mum.pmp.mstore.repository.security.RoleRepository;
-import mum.pmp.mstore.repository.security.UserRepository;
+import mum.pmp.mstore.repository.profile.ProfileRepository;
+import mum.pmp.mstore.repository.profile.RoleRepository;
+import mum.pmp.mstore.repository.profile.UserRepository;
 import mum.pmp.mstore.utilities.User_Type;
 
 @Service
