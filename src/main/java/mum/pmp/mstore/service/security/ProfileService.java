@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.model.Role;
 import mum.pmp.mstore.model.User;
-import mum.pmp.mstore.repository.security.RegistrationRepository;
+import mum.pmp.mstore.repository.security.ProfileRepository;
 import mum.pmp.mstore.repository.security.RoleRepository;
 import mum.pmp.mstore.repository.security.UserRepository;
 import mum.pmp.mstore.utilities.User_Type;
@@ -22,7 +22,7 @@ import mum.pmp.mstore.utilities.User_Type;
 public class ProfileService {
 
 	@Autowired
-	private RegistrationRepository personRepository;
+	private ProfileRepository profileRepository;
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -33,23 +33,23 @@ public class ProfileService {
 	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	public Profile register(Profile person) {
-		return personRepository.save(person);
+		return profileRepository.save(person);
 	}
 
 	public Profile findByEmail(String email) {
-		return personRepository.findByEmail(email);
+		return profileRepository.findByEmail(email);
 	}
 
 	public Profile findById(Long id) {
-		return personRepository.findById(id).get();
+		return profileRepository.findById(id).get();
 	}
 	
 	public void remove(Profile person) {
-		personRepository.delete(person);
+		profileRepository.delete(person);
 	}
 
 	public List<Profile> findAll(){
-		return personRepository.findAll();
+		return profileRepository.findAll();
 	}
 	
 	public boolean signup(Profile person, User_Type user_type) {
@@ -74,7 +74,7 @@ public class ProfileService {
 			user.setPassword(passwordEncoder.encode(person.getPassword()));
 
 			//save the user
-			person = personRepository.save(person);
+			person = profileRepository.save(person);
 			userRepository.save(user);
 			return true;
 		}

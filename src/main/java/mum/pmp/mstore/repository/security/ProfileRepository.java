@@ -10,7 +10,7 @@ import mum.pmp.mstore.model.Profile;
 
 
 @Repository
-public interface RegistrationRepository extends JpaRepository<Profile, Long> {
+public interface ProfileRepository extends JpaRepository<Profile, Long> {
 
 	//public List<Person> findByEmail(String email);
 	
