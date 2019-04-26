@@ -19,7 +19,7 @@ import mum.pmp.mstore.utilities.User_Type;
 
 @Service
 @Transactional
-public class RegistrationService {
+public class ProfileService {
 
 	@Autowired
 	private RegistrationRepository personRepository;

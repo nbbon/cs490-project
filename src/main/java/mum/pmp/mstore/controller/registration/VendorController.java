@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import mum.pmp.mstore.config.security.SessionListener;
 import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.model.Vendor;
-import mum.pmp.mstore.service.security.RegistrationService;
+import mum.pmp.mstore.service.security.ProfileService;
 import mum.pmp.mstore.utilities.User_Type;
 import mum.pmp.mstore.validator.VendorValidator;
 
@@ -22,7 +22,7 @@ public class VendorController {
 	private  VendorValidator validator;
 
 	@Autowired
-	private RegistrationService registrationService;
+	private ProfileService registrationService;
 	
 	@Autowired
 	private SessionListener sessionListener;
