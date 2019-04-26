@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import mum.pmp.mstore.adapters.UserAdapter;
 import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.model.User;
-import mum.pmp.mstore.service.security.RegistrationService;
+import mum.pmp.mstore.service.security.ProfileService;
 import mum.pmp.mstore.service.security.UserService;
 
 @Component("sessionListener")
@@ -22,7 +22,7 @@ public class SessionListener {
   UserService userService;
   
   @Autowired 
-  RegistrationService personService;
+  ProfileService personService;
   
   @Autowired
   HttpSession httpSession;
