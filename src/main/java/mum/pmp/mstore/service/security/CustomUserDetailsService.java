@@ -24,7 +24,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	private UserRepository userRepository;
 
 	@Autowired
-	private PersonService personService;
+	private RegistrationService personService;
 
 	public CustomUserDetailsService() {
 	}

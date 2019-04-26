@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import mum.pmp.mstore.model.Admin;
-import mum.pmp.mstore.service.security.PersonService;
+import mum.pmp.mstore.service.security.RegistrationService;
 import mum.pmp.mstore.utilities.User_Type;
 
 @Controller
 public class AdminController {
 
 	@Autowired
-	private PersonService personService;
+	private RegistrationService personService;
 	
 	@GetMapping("/admin/signup")
 	public String adminSignupPage(Model model) {

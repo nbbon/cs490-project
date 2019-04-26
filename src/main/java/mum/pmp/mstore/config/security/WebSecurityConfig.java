@@ -30,7 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				.antMatchers("/webjars/**", "/css/**", "/images/**", 
 						"/signup", "/login",
-						"/admin/signup", "/vendor/signup", "/admin/user/", "/login").permitAll()
+						"/admin/**", "/vendor/**", "/admin/user/", "/login").permitAll()
 				.and()
 				.httpBasic()
 				.realmName(REALM)
