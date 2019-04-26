@@ -31,12 +31,10 @@ public class Profile {
 	
 	private String password;
 	
-<<<<<<< HEAD:src/main/java/mum/pmp/mstore/model/Person.java
 	private String token;
-=======
+	
 	@Transient
 	private String confirmPassword;
->>>>>>> upstream/master:src/main/java/mum/pmp/mstore/model/Profile.java
 
 	public long getId() {
 		return id;
@@ -90,7 +88,6 @@ public class Profile {
 		this.password = password;
 	}
 
-<<<<<<< HEAD:src/main/java/mum/pmp/mstore/model/Person.java
 	public String getToken() {
 		return token;
 	}
@@ -99,7 +96,6 @@ public class Profile {
 		this.token = token;
 	}
 
-=======
 	public String getConfirmPassword() {
 		return confirmPassword;
 	}
@@ -116,6 +112,5 @@ public class Profile {
 	}
 
 	
->>>>>>> upstream/master:src/main/java/mum/pmp/mstore/model/Profile.java
 	
 }

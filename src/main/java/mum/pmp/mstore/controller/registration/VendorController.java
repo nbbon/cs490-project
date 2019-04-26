@@ -78,7 +78,7 @@ public class VendorController {
 			vendorToUpdate.setPassword(vendor.getPassword());
 			vendorToUpdate.setPhone(vendor.getPhone());
 			vendorToUpdate.setContactPerson(vendor.getContactPerson());
-			registrationService.register(vendorToUpdate);
+			registrationService.saveProfile(vendorToUpdate);
 		}
 		
 		return "redirect:/vendor/update";

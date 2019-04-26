@@ -14,11 +14,7 @@ public interface ProfileRepository extends JpaRepository<Profile, Long> {
 
 	//public List<Person> findByEmail(String email);
 	
-<<<<<<< HEAD:src/main/java/mum/pmp/mstore/repository/security/PersonRepository.java
-	public Person findByEmail(String email);
-	public Person findByToken(String token);
-=======
 	public Profile findByEmail(String email);
->>>>>>> upstream/master:src/main/java/mum/pmp/mstore/repository/security/RegistrationRepository.java
+	public Profile findByToken(String token);
 	
 }
