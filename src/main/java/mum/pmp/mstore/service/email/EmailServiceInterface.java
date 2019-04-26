@@ -10,6 +10,7 @@ import javax.mail.internet.AddressException;
 public interface EmailServiceInterface {
 
 	void sendEmail()throws AddressException, MessagingException, IOException;
+	void sendEmail(String email, String token)throws AddressException, MessagingException, IOException;
 	void sendEmail(String email)throws AddressException, MessagingException, IOException;
 	void sendEmail(String[] email)throws AddressException, MessagingException, IOException;
 	Properties emailProperties();

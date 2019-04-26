@@ -18,7 +18,9 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 import org.springframework.expression.AccessException;
+import org.springframework.stereotype.Service;
 
+@Service
 public class EmailService implements EmailServiceInterface {
 
 	@Override
@@ -32,6 +34,13 @@ public class EmailService implements EmailServiceInterface {
 		Transport.send(msg);
 	}
 
+	@Override
+	public void sendEmail(String emailAddresses, String token) throws AddressException, MessagingException {
+		Address emailAddress = new InternetAddress(emailAddresses);// {stanley, store};
+		Message msg = message(emailAddress, token);
+		Transport.send(msg);
+	}
+	
 	@Override
 	public void sendEmail(String emailAddresses) throws AddressException, MessagingException {
 		Address emailAddress = new InternetAddress(emailAddresses);// {stanley, store};
@@ -73,6 +82,28 @@ public class EmailService implements EmailServiceInterface {
 		return session;
 	}
 
+	private Message message(Address emailAddress, String token) throws AddressException, MessagingException {
+		Session session = sessionEmailAuth();
+		Message msg = new MimeMessage(session);
+
+		msg.setFrom(new InternetAddress("storemanagement2019@gmail.com", false));
+
+		msg.setRecipient(Message.RecipientType.TO, emailAddress);
+
+		msg.setSubject("Test email");
+		msg.setContent("This is just to test the email module.", "text/html");
+		msg.setSentDate(new Date());
+		MimeBodyPart messageBodyPart = new MimeBodyPart();
+		messageBodyPart.setContent("Our test email. Token code: " + token, "text/html");
+
+		Multipart multipart = new MimeMultipart();
+		multipart.addBodyPart(messageBodyPart);
+		msg.setContent(multipart);
+
+		return msg;
+
+	}
+	
 	private Message message(Address emailAddress) throws AddressException, MessagingException {
 		Session session = sessionEmailAuth();
 		Message msg = new MimeMessage(session);

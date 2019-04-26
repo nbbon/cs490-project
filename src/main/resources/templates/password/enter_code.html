@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+<link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.0.13/css/all.css}"/>
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/menu :: menu"></div>
+    <form class="form-horizontal" th:object="${confirmPassword}" role="form" method="POST" th:action="@{/forgotpassword}">
+        
+        <div class="form-group row">
+            <label for="confirmPassword" class="col-sm-3 col-md-3 col-form-label">Enter Code Here</label>
+            <div class="col-sm-9 col-md-9">
+                <input th:field="*{token}" type="text" class="form-control" id="email"/>
+            </div>
+        </div>
+        
+        <input type="submit" class="btn btn-default" value="reset"/>
+    </form>
+</div>
+</body>
+</html>

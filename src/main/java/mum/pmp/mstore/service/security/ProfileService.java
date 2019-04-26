@@ -32,7 +32,7 @@ public class ProfileService {
 	
 	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-	public Profile register(Profile person) {
+	public Profile saveProfile(Profile person) {
 		return profileRepository.save(person);
 	}
 
@@ -82,4 +82,9 @@ public class ProfileService {
 			return false;
 		
 	}
+	
+	public Profile findProfileByToken(String token) {
+		return profileRepository.findByToken(token);
+	}
+	
 }
