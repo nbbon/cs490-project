@@ -7,7 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import mum.pmp.mstore.model.Role;
-import mum.pmp.mstore.repository.security.RoleRepository;
+import mum.pmp.mstore.repository.profile.RoleRepository;
 
 @Service
 @Transactional

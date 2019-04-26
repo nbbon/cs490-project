@@ -1,4 +1,4 @@
-package mum.pmp.mstore.repository.security;
+package mum.pmp.mstore.repository.profile;
 
 
 import java.util.List;

@@ -15,7 +15,7 @@ import mum.pmp.mstore.adapters.UserAdapter;
 import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.model.Role;
 import mum.pmp.mstore.model.User;
-import mum.pmp.mstore.repository.security.UserRepository;
+import mum.pmp.mstore.repository.profile.UserRepository;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {

@@ -1,4 +1,4 @@
-package mum.pmp.mstore.controller;
+package mum.pmp.mstore.controller.profile;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
