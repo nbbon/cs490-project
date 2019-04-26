@@ -29,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests()
 				.antMatchers("/webjars/**", "/css/**", "/images/**", 
-						"/signup", "/login",
+						"/signup", "/login","/password",
 						"/admin/signup", "/vendor/signup", "/login").permitAll()
 				.and()
 				.httpBasic()
@@ -54,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //	        .permitAll();
 
 		
-		http.authorizeRequests()
+		/*http.authorizeRequests()
         .anyRequest()//allow all urls
         .authenticated()//all URLs are allowed by any authenticated user, no role restrictions.
         .and()
@@ -65,6 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .logout()//default logout handling
         .logoutSuccessUrl("/my-login?logout")//our new logout success url, we are not replacing other defaults.
         .permitAll();//allow all as it will be accessed when user is not logged in anymore
+        */
 
 	}
 

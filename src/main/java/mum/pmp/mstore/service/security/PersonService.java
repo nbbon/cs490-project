@@ -49,7 +49,10 @@ public class PersonService {
 	public List<Person> findAll(){
 		return personRepository.findAll();
 	}
-	
+	public Person findPersonByToken(String token)
+	{
+		return personRepository.findByToken(token);
+	}
 	public void signup(Person person, User_Type user_type) {
 		person.setEnable(true);;
 

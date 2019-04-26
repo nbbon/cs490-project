@@ -30,6 +30,8 @@ public class Person {
 	
 	@Transient
 	private String password;
+	
+	private String token;
 
 	public long getId() {
 		return id;
@@ -89,6 +91,14 @@ public class Person {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	
