@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import mum.pmp.mstore.adapters.UserAdapter;
-import mum.pmp.mstore.model.Person;
+import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.model.User;
 import mum.pmp.mstore.service.security.RegistrationService;
 import mum.pmp.mstore.service.security.UserService;
@@ -27,14 +27,14 @@ public class SessionListener {
   @Autowired
   HttpSession httpSession;
 
-  public Person getUser() {
+  public Profile getUser() {
     if (httpSession.getAttribute("loggedUser") != null) {
-      return (Person) httpSession.getAttribute("loggedUser");
+      return (Profile) httpSession.getAttribute("loggedUser");
     }
    
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
    	UserDetails userdetails = (UserDetails) auth.getPrincipal();
-    Person person = personService.findByEmail(userdetails.getUsername());
+    Profile person = personService.findByEmail(userdetails.getUsername());
 
     httpSession.setAttribute("loggedUser", person);
     return person;

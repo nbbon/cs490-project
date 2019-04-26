@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue(value = "ADMIN")
-public class Admin extends Person{
+public class Admin extends Profile{
 	
 	
 	

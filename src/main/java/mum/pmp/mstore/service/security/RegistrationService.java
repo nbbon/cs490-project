@@ -9,7 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import mum.pmp.mstore.model.Person;
+import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.model.Role;
 import mum.pmp.mstore.model.User;
 import mum.pmp.mstore.repository.security.RegistrationRepository;
@@ -32,30 +32,30 @@ public class RegistrationService {
 	
 	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-	public Person register(Person person) {
+	public Profile register(Profile person) {
 		return personRepository.save(person);
 	}
 
-	public Person findByEmail(String email) {
+	public Profile findByEmail(String email) {
 		return personRepository.findByEmail(email);
 	}
 
-	public Person findById(Long id) {
+	public Profile findById(Long id) {
 		return personRepository.findById(id).get();
 	}
 	
-	public void remove(Person person) {
+	public void remove(Profile person) {
 		personRepository.delete(person);
 	}
 
-	public List<Person> findAll(){
+	public List<Profile> findAll(){
 		return personRepository.findAll();
 	}
 	
-	public boolean signup(Person person, User_Type user_type) {
+	public boolean signup(Profile person, User_Type user_type) {
 		
 		// Check if user already exist.
-		User existingUser = userRepository.findByEmail(person.getEmail());
+		User existingUser = userRepository.findByUserId(person.getEmail());
 		System.out.println("existing user >>" + existingUser);
 		if(existingUser == null) {
 			//enable the user account.
@@ -63,7 +63,7 @@ public class RegistrationService {
 	
 			User user = new User();
 			//set the email.
-			user.setEmail(person.getEmail());
+			user.setUserId(person.getEmail());
 			user.setEnabled(true);
 			
 			//add user Role
