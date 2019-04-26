@@ -93,6 +93,13 @@ public class Person {
 		this.confirmPassword = confirmPassword;
 	}
 
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", phone=" + phone + ", enable=" + enable + ", password=" + password + ", confirmPassword="
+				+ confirmPassword + "]";
+	}
+
 	
 	
 }

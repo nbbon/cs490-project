@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import mum.pmp.mstore.config.security.SessionListener;
+import mum.pmp.mstore.model.Person;
 import mum.pmp.mstore.model.Vendor;
-import mum.pmp.mstore.service.security.PersonService;
+import mum.pmp.mstore.service.security.RegistrationService;
 import mum.pmp.mstore.utilities.User_Type;
 import mum.pmp.mstore.validator.VendorValidator;
 
@@ -20,16 +22,19 @@ public class VendorController {
 	private  VendorValidator validator;
 
 	@Autowired
-	private PersonService personService;
+	private RegistrationService registrationService;
+	
+	@Autowired
+	private SessionListener sessionListener;
 	
 	@GetMapping("/vendor/signup")
-	public String vendorSignupPage(Model model) {
+	public String signupPage(Model model) {
 		model.addAttribute("vendor", new Vendor());
 		return "/registration/vendor_signup";
 	}
 	
 	@PostMapping("/vendor/signup")
-	public String vendorSignup(@ModelAttribute Vendor vendor, BindingResult bindingResult) {
+	public String signup(@ModelAttribute Vendor vendor, BindingResult bindingResult) {
 		
 		String redirectURL = "";
 		//validate the vendor  details
@@ -38,7 +43,7 @@ public class VendorController {
 		if(bindingResult.hasErrors()) {
 			redirectURL =  "/registration/vendor_signup";
 		}else {
-			if(personService.signup(vendor, User_Type.VENDOR)) {
+			if(registrationService.signup(vendor, User_Type.VENDOR)) {
 				redirectURL = "redirect:/login";
 			}
 			else {
@@ -47,5 +52,35 @@ public class VendorController {
 			}
 		}
 		return redirectURL;
+	}
+	
+	@GetMapping("/vendor/update")
+	public String updatePage(Model model) {
+		System.out.println("in update : " + sessionListener.getUser().getEmail());
+		Person person = registrationService.findByEmail(sessionListener.getUser().getEmail());
+		model.addAttribute("vendor" , person);
+		return "/profile/vendor_profile";
+	}
+	
+	@PostMapping("/vendor/update")
+	public String update(@ModelAttribute Vendor vendor, BindingResult bindingResult) {
+		
+		// get a proxy object first to prevent duplicate entry 
+		Person person = registrationService.findByEmail(vendor.getEmail());
+		Vendor vendorToUpdate;
+		
+		System.out.println("vendorToupdate" + person);
+		if(person instanceof Vendor) {
+			vendorToUpdate = (Vendor) person;
+			vendorToUpdate.setVendorName(vendor.getVendorName());
+			vendorToUpdate.setVendorNumber(vendor.getVendorNumber());
+			vendorToUpdate.setRegId(vendor.getRegId());
+			vendorToUpdate.setPassword(vendor.getPassword());
+			vendorToUpdate.setPhone(vendor.getPhone());
+			vendorToUpdate.setContactPerson(vendor.getContactPerson());
+			registrationService.register(vendorToUpdate);
+		}
+		
+		return "redirect:/vendor/update";
 	}
 }

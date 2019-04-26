@@ -56,5 +56,11 @@ public class Vendor extends Person{
 		this.contactPerson = contactPerson;
 	}
 
+	@Override
+	public String toString() {
+		return "Vendor [vendorNumber=" + vendorNumber + ", vendorName=" + vendorName + ", regId=" + regId
+				+ ", contactPerson=" + contactPerson + "]";
+	}
+
 	
 }

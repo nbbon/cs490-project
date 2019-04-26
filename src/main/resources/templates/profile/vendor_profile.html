@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/layout">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
+<link rel="stylesheet"
+	th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}" />
+<link rel="stylesheet"
+	th:href="@{https://use.fontawesome.com/releases/v5.0.13/css/all.css}" />
+</head>
+<body>
+	<div class="container">
+		<div th:replace="fragments/menu :: menu"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<h2 class="page-header">Vendor Profile - Settings</h2>
+					<h5 align="left">Welcome <span th:text="${vendor.getVendorName()}"></span></h5>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-6 col-md-6">
+						<div class="well well-sm">
+							<div class="row">
+								<div class="col-sm-6 col-md-4">
+									<img src="http://placehold.it/380x500" alt=""
+										class="img-rounded img-responsive" />
+								</div>
+								<div class="col-sm-6 col-md-8">
+									<h4 th:text="${vendor.getVendorName()}">Vendor Name</h4>
+									<p>
+										<i class="glyphicon glyphicon-envelope"></i> <span
+											th:text="${vendor.getEmail()}"></span> <br />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-xs-12 col-sm-6 col-md-6">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Vendor</h3>
+					</div>
+					<div class="panel-body">
+						<form class="form-horizontal" th:object="${vendor}" role="form" method="POST" th:action="@{/vendor/update}">
+							<input
+								type="hidden" th:field="*{id}" />
+							<div class="form-group row">
+								<label for="phone" class="col-sm-3 col-md-3 col-form-label">Vendor
+									Name</label>
+								<div class="col-sm-9 col-md-9">
+									<input th:field="*{vendorName}" type="text"
+										class="form-control" id="vendorName" required="true" /> <label
+										th:if="${#fields.hasErrors('vendorName')}"
+										class="text-danger align-middle"> Vendor Name must be
+										between 2 to 20 characters. </label>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="phone" class="col-sm-3 col-md-3 col-form-label">Vendor
+									Number</label>
+								<div class="col-sm-9 col-md-9">
+									<input th:field="*{vendorNumber}" type="text"
+										class="form-control" id="vendorNumber" required="true" /> <label
+										th:if="${#fields.hasErrors('vendorNumber')}"
+										class="text-danger align-middle"> Vendor No. must be
+										between 2 to 20 characters. </label>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="phone" class="col-sm-3 col-md-3 col-form-label">Registration
+									Number</label>
+								<div class="col-sm-9 col-md-9">
+									<input th:field="*{regId}" type="text" class="form-control"
+										id="regId" required="true" /> <label
+										th:if="${#fields.hasErrors('regId')}"
+										class="text-danger align-middle"> Registration ID
+										should not be null and must be between 2 to 20 alpha numeric
+										characters. </label>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="email" class="col-sm-3 col-md-3 col-form-label">Email</label>
+								<div class="col-sm-9 col-md-9">
+									<input readonly th:field="*{email}" type="email" class="form-control"
+										id="email" required="true" /> 
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="password" class="col-sm-3 col-md-3 col-form-label">Password</label>
+								<div class="col-sm-9 col-md-9">
+									<input th:field="*{password}" type="password"
+										class="form-control" id="password" required="true" />
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="password" class="col-sm-3 col-md-3 col-form-label">Confirm
+									Password</label>
+								<div class="col-sm-9 col-md-9">
+									<input th:field="*{confirmPassword}" type="password"
+										class="form-control" id="confirmPassword" required="true" /> <label
+										th:if="${#fields.hasErrors('password')}"
+										class="text-danger align-middle"> Password and Confirm
+										password is not match! </label>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="phone" class="col-sm-3 col-md-3 col-form-label">Phone
+									Number</label>
+								<div class="col-sm-9 col-md-9">
+									<input th:field="*{phone}" type="number" class="form-control"
+										id="phone" require="true" />
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="phone" class="col-sm-3 col-md-3 col-form-label">Contact
+									Person</label>
+								<div class="col-sm-9 col-md-9">
+									<input th:field="*{contactPerson}" type="text"
+										class="form-control" id="contactPerson" required="true" />
+								</div>
+							</div>
+							<input type="submit" class="btn btn-info" value="Update" />
+						</form>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<div th:replace="fragments/footer :: footer"></div>
+	</div>
+</body>
+</html>

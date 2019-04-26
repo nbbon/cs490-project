@@ -12,17 +12,17 @@ import org.springframework.transaction.annotation.Transactional;
 import mum.pmp.mstore.model.Person;
 import mum.pmp.mstore.model.Role;
 import mum.pmp.mstore.model.User;
-import mum.pmp.mstore.repository.security.PersonRepository;
+import mum.pmp.mstore.repository.security.RegistrationRepository;
 import mum.pmp.mstore.repository.security.RoleRepository;
 import mum.pmp.mstore.repository.security.UserRepository;
 import mum.pmp.mstore.utilities.User_Type;
 
 @Service
 @Transactional
-public class PersonService {
+public class RegistrationService {
 
 	@Autowired
-	private PersonRepository personRepository;
+	private RegistrationRepository personRepository;
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -32,7 +32,7 @@ public class PersonService {
 	
 	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-	public Person savePerson(Person person) {
+	public Person register(Person person) {
 		return personRepository.save(person);
 	}
 
@@ -43,8 +43,8 @@ public class PersonService {
 	public Person findById(Long id) {
 		return personRepository.findById(id).get();
 	}
-
-	public void removePerson(Person person) {
+	
+	public void remove(Person person) {
 		personRepository.delete(person);
 	}
 

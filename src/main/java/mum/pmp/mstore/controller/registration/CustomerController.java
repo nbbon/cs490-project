@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import mum.pmp.mstore.model.Customer;
-import mum.pmp.mstore.service.security.PersonService;
+import mum.pmp.mstore.service.security.RegistrationService;
 import mum.pmp.mstore.utilities.User_Type;
 
 @Controller
 public class CustomerController {
 	
 	@Autowired
-	private PersonService personService;
+	private RegistrationService personService;
 	
 	@GetMapping("/signup")
 	public String signupPage(Model model) {
