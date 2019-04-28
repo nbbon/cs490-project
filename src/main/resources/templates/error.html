@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout">
 <head>
-    <style>
-table td{
-vertical-align:top;
-border:solid 1px #888;
-padding:10px;
-}
-
-    </style>
+<meta charset="UTF-8" />
+<title>Login</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+<link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.0.13/css/all.css}"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-<h1>My Thymeleaf Error Page</h1>
+<div class="container">
+<div th:replace="fragments/menu :: menu"></div>
+<h1> Error Page</h1>
 <table>
     <tr>
         <td>Date</td>
@@ -45,5 +46,6 @@ padding:10px;
         </td>
     </tr>
 </table>
+</div>
 </body>
 </html>

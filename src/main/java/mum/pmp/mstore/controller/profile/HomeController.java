@@ -16,12 +16,6 @@ public class HomeController {
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		
-		for(GrantedAuthority roles : auth.getAuthorities()) {
-			String authorizedRole = roles.getAuthority();
-			System.out.println(authorizedRole);
-		}
-		
-		
 		UserDetails user = (UserDetails) auth.getPrincipal();
 		model.addAttribute("userdetails", user);
 		
