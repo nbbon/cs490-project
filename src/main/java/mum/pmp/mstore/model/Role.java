@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -17,9 +16,8 @@ public class Role implements GrantedAuthority, Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
 	@Column(name="ID")
-	private long id;
+	private Long id;
 	
 	@Column(name="ROLE")
 	private String role;
@@ -44,7 +42,7 @@ public class Role implements GrantedAuthority, Serializable{
 	public void setRole(String role) {
 		this.role = role;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Role [id=" + id + ", role=" + role + "]";

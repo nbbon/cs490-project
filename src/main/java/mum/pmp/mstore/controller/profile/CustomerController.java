@@ -20,7 +20,7 @@ public class CustomerController {
 	@GetMapping("/signup")
 	public String signupPage(Model model) {
 		model.addAttribute("customer", new Customer());
-		return "/secure/signup";
+		return "/profile/signup";
 	}
 
 	@PostMapping("/signup")

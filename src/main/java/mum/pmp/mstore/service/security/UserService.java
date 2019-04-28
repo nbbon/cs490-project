@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import mum.pmp.mstore.model.User;
 import mum.pmp.mstore.repository.profile.UserRepository;
 import mum.pmp.mstore.service.IUserService;
+import mum.pmp.mstore.model.User;
 
 @Service
 @Transactional
@@ -34,7 +34,6 @@ public class UserService implements  IUserService{
     @Transactional
     public void delete(long id) {
         User user = userRepository.findById(id).get();
-        user.clearRoles();
         userRepository.delete(user);
     }
     @Override
@@ -51,6 +50,6 @@ public class UserService implements  IUserService{
 		// TODO Auto-generated method stub
 		return null;
 	}
-    
+
    
 }

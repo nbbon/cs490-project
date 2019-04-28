@@ -55,24 +55,24 @@ public class ProfileService {
 	public boolean signup(Profile person, User_Type user_type) {
 		
 		// Check if user already exist.
-		User existingUser = userRepository.findByUserId(person.getEmail());
+		User existingUser = userRepository.findByUsername(person.getEmail());
 		System.out.println("existing user >>" + existingUser);
 		if(existingUser == null) {
+			
 			//enable the user account.
 			person.setEnable(true);;
 	
 			User user = new User();
-			//set the email.
-			user.setUserId(person.getEmail());
-			user.setEnabled(true);
-			
 			//add user Role
 			Role userRole = roleRepository.findByRole(user_type.toString());
-			user.setRole(userRole);
-			
+			//set the email.
+			user.setUsername(person.getEmail());
+			//Add roles 
+			user.addRole(userRole);
+			user.setEnabled(true);
 			//encrypt the password with bCrypt
 			user.setPassword(passwordEncoder.encode(person.getPassword()));
-
+			
 			//save the user
 			person = profileRepository.save(person);
 			userRepository.save(user);

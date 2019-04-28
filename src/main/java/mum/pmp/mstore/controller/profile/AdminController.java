@@ -21,7 +21,7 @@ public class AdminController {
 	@GetMapping("/admin/signup")
 	public String adminSignupPage(Model model) {
 		model.addAttribute("admin", new Admin());
-		return "/secure/admin_signup";
+		return "/profile/admin_signup";
 	}
 	
 	@PostMapping("/admin/signup")
@@ -30,3 +30,4 @@ public class AdminController {
 		return "redirect:/login";
 	}
 }
+

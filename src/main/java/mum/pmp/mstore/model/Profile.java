@@ -29,6 +29,7 @@ public class Profile {
 	@Column(name = "ENABLE")
 	private boolean enable;
 	
+	@Transient
 	private String password;
 	
 	private String token;
