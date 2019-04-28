@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import mum.pmp.mstore.config.security.Listener;
 import mum.pmp.mstore.model.Customer;
 import mum.pmp.mstore.model.Profile;
+import mum.pmp.mstore.service.ProductService;
 import mum.pmp.mstore.service.security.ProfileService;
 import mum.pmp.mstore.utilities.User_Type;
 import mum.pmp.mstore.validator.CustomerValidator;
@@ -19,13 +20,16 @@ import mum.pmp.mstore.validator.CustomerValidator;
 public class CustomerController {
 	
 	@Autowired
-	private ProfileService profileService;
+	private Listener sessionListener;
 	
 	@Autowired
 	private CustomerValidator validator;
 	
 	@Autowired
-	private Listener sessionListener;
+	private ProfileService profileService;
+	
+	@Autowired
+	private ProductService productService;
 	
 	@GetMapping("/customer/signup")
 	public String signupPage(Model model) {
@@ -64,6 +68,10 @@ public class CustomerController {
 	
 	@PostMapping("/customer/update")
 	public String update(@ModelAttribute Customer customer, BindingResult bindingResult) {
+		
+		//validate the admin details.
+		validator.validate(customer, bindingResult);
+		
 		Profile person = profileService.findByEmail(customer.getEmail());
 		Customer customerToUpdate;
 		if(person instanceof Customer)
@@ -77,5 +85,11 @@ public class CustomerController {
 			profileService.saveProfile(customerToUpdate);
 		}
 		return "redirect:/customer/update";
+	}
+	
+	@GetMapping("/catalogs")
+	public String getAllCatalogs(Model model) {
+		model.addAttribute("products", productService.getProducts());
+		return "/catalog/catalog";
 	}
 }

@@ -14,29 +14,31 @@ public class AdminValidator implements Validator {
 
 	@Override
 	public boolean supports(Class<?> clazz) {
-		return false;
+		return Admin.class.equals(clazz);
 	}
 
+	@Override
 	public void validate(Object target, Errors errors) {
 
 		Admin admin = (Admin) target;
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "field.required");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "field.required");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "field.required");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirmPassword", "field.required");
-		
 		if (admin.getFirstName().length() < 2 || admin.getFirstName().length() > 20) {
 			errors.rejectValue("firstName", "First name must be 2 to 20 alpha numeric characters.");
 		}
 		
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "field.required");
 		if (admin.getLastName().length() < 2 || admin.getLastName().length() > 20) {
 			errors.rejectValue("lastName", "Last name must be 2 to 20 alpha numeric characters.");
 		}
 		
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Password is required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirmPassword", "Confirm password is required");
 		if (!admin.getPassword().equals(admin.getConfirmPassword())) {
 			errors.rejectValue("password", "nomatch.password");
 		}
+		
+		System.out.println("In validation");
 
 	}
 
