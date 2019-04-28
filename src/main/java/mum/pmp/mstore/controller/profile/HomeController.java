@@ -1,42 +1,41 @@
 package mum.pmp.mstore.controller.profile;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-
-import mum.pmp.mstore.model.Role;
-import mum.pmp.mstore.repository.profile.RoleRepository;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class HomeController {
-
-	@Autowired
-	private RoleRepository roleService;
-
-	@GetMapping({ "/" })
-	public String homePage(Model model) {
-		// Retrieve authenticated user details
+	
+	@RequestMapping("/")
+	public String home(Model model) {
+		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		for(GrantedAuthority roles : auth.getAuthorities()) {
+			String authorizedRole = roles.getAuthority();
+			System.out.println(authorizedRole);
+		}
+		
+		
 		UserDetails user = (UserDetails) auth.getPrincipal();
 		model.addAttribute("userdetails", user);
-
+		
 		return "index";
 	}
-
-	@GetMapping({ "/login" })
-	public String securePage() {
+	
+	@RequestMapping("/login")
+	public String loginPage() {
+		System.out.println("Login???");
 		return "/secure/login";
 	}
-
-	@ModelAttribute("roles")
-	public List<Role> getRoles() {
-		return roleService.findAll();
+	
+	@RequestMapping("/logout-success")
+	public String logoutPage() {
+		return "/secure/logout";
 	}
 }

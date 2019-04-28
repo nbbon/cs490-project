@@ -9,14 +9,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import mum.pmp.mstore.adapters.UserAdapter;
 import mum.pmp.mstore.model.Profile;
-import mum.pmp.mstore.model.User;
 import mum.pmp.mstore.service.security.ProfileService;
 import mum.pmp.mstore.service.security.UserService;
 
 @Component("sessionListener")
-public class SessionListener {
+public class Listener{
 
   @Autowired
   UserService userService;
@@ -33,6 +31,7 @@ public class SessionListener {
     }
    
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    System.out.println("auth details : " + auth.getPrincipal());
    	UserDetails userdetails = (UserDetails) auth.getPrincipal();
     Profile person = personService.findByEmail(userdetails.getUsername());
 

@@ -7,5 +7,5 @@ import mum.pmp.mstore.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-	User findByUserId(String email);
+	User findByUsername(String username);
 }
