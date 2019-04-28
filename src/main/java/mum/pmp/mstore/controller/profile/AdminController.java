@@ -66,6 +66,10 @@ public class AdminController {
 	
 	@PostMapping("/admin/update")
 	public String update(@ModelAttribute Admin admin, BindingResult bindingResult) {
+		
+		//validate the admin details.
+		validator.validate(admin, bindingResult);
+				
 		Profile person = profileService.findByEmail(admin.getEmail());
 		Admin adminToUpdate;
 		if(person instanceof Admin) {

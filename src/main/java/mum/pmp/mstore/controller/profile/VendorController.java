@@ -65,6 +65,10 @@ public class VendorController {
 	
 	@PostMapping("/vendor/update")
 	public String update(@ModelAttribute Vendor vendor, BindingResult bindingResult) {
+		
+		//validate the vendor details.
+		validator.validate(vendor, bindingResult);
+		
 		// get a proxy object first to prevent duplicate entry 
 		Profile person = profileService.findByEmail(vendor.getEmail());
 		Vendor vendorToUpdate;
