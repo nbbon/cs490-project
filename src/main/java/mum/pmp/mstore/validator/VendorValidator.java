@@ -47,7 +47,6 @@ public class VendorValidator implements Validator {
 			errors.rejectValue("password", "nomatch.password");
 		}
 		
-    		
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "contactPerson", "NotEmpty");
         if(vendor.getContactPerson().length() < 2 || vendor.getContactPerson().length() > 20)
         {

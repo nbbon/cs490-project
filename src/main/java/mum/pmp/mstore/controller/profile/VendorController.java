@@ -36,22 +36,22 @@ public class VendorController {
 	@PostMapping("/vendor/signup")
 	public String signup(@ModelAttribute Vendor vendor, BindingResult bindingResult) {
 		
-		String redirectURL = "";
+		String url = "";
 		//validate the vendor  details
 		validator.validate(vendor, bindingResult);
 		
 		if(bindingResult.hasErrors()) {
-			redirectURL =  "/profile/vendor_signup";
+			url =  "/profile/vendor_signup";
 		}else {
 			if(profileService.signup(vendor, User_Type.VENDOR)) {
-				redirectURL = "redirect:/login";
+				url = "redirect:/login";
 			}
 			else {
 				bindingResult.rejectValue("email", "There is already an account registered with that email.");
-				redirectURL =  "/profile/vendor_signup";
+				url =  "/profile/vendor_signup";
 			}
 		}
-		return redirectURL;
+		return url;
 	}
 	
 	@GetMapping("/vendor/update")
@@ -65,7 +65,6 @@ public class VendorController {
 	
 	@PostMapping("/vendor/update")
 	public String update(@ModelAttribute Vendor vendor, BindingResult bindingResult) {
-		
 		// get a proxy object first to prevent duplicate entry 
 		Profile person = profileService.findByEmail(vendor.getEmail());
 		Vendor vendorToUpdate;
@@ -81,7 +80,6 @@ public class VendorController {
 			vendorToUpdate.setContactPerson(vendor.getContactPerson());
 			profileService.saveProfile(vendorToUpdate);
 		}
-		
 		return "redirect:/vendor/update";
 	}
 }

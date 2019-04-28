@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/layout">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
+<link rel="stylesheet"
+	th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}" />
+<link rel="stylesheet"
+	th:href="@{https://use.fontawesome.com/releases/v5.0.13/css/all.css}" />
+</head>
+<body>
+	<div class="container">
+		<div th:replace="fragments/menu :: menu"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<h2 class="page-header">Customer Profile - Settings</h2>
+					<h5 align="left">Welcome <span th:text="${customer.getFirstName()} + ' ' + ${customer.getLastName()}"></span></h5>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-6 col-md-6">
+						<div class="well well-sm">
+							<div class="row">
+								<div class="col-sm-6 col-md-4">
+									<img src="http://placehold.it/380x500" alt=""
+										class="img-rounded img-responsive" />
+								</div>
+								<div class="col-sm-6 col-md-8">
+									<h4 th:text="${customer.getFirstName()}">Customer Name</h4>
+									<p>
+										<i class="glyphicon glyphicon-envelope"></i> <span
+											th:text="${customer.getEmail()}"></span> <br />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-xs-12 col-sm-6 col-md-6">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Customer</h3>
+					</div>
+					<div class="panel-body">
+						<form class="form-horizontal" th:object="${customer}" role="form" method="POST" th:action="@{/customer/update}">
+				        <div class="form-group row">
+				            <label for="firstName" class="col-sm-3 col-md-3 col-form-label">First Name</label>
+				            <div class="col-sm-9 col-md-9">
+				                <input th:field="*{firstName}" type="text" class="form-control" id="firstName"/>
+				            </div>
+				        </div>
+				        <div class="form-group row">
+				            <label for="lastName" class="col-sm-3 col-md-3 col-form-label">Last Name</label>
+				            <div class="col-sm-9 col-md-9">
+				                <input th:field="*{lastName}" type="text" class="form-control" id="lastName"/>
+				            </div>
+				        </div>
+				        <div class="form-group row">
+				            <label for="email" class="col-sm-3 col-md-3 col-form-label">Email</label>
+				            <div class="col-sm-9 col-md-9">
+				                <input th:field="*{email}" type="email" class="form-control" id="email"/>
+				            </div>
+				        </div>
+				        <div class="form-group row">
+				            <label for="password" class="col-sm-3 col-md-3 col-form-label">Password</label>
+				            <div class="col-sm-9 col-md-9">
+				                <input th:field="*{password}" type="password" class="form-control" id="password"/>
+				            </div>
+				        </div>
+				        <div class="form-group row">
+				            <label for="phone" class="col-sm-3 col-md-3 col-form-label">Phone Number</label>
+				            <div class="col-sm-9 col-md-9">
+				                <input th:field="*{phone}" type="number" class="form-control" id="phone"/>
+				            </div>
+				        </div>
+				        <div class="form-group row">
+				            <label for="city" class="col-sm-3 col-md-3 col-form-label">City</label>
+				            <div class="col-sm-9 col-md-9">
+				                <input th:field="*{address.city}" type="text" class="form-control" id="city"/>
+				            </div>
+				        </div>
+				        <div class="form-group row">
+				            <label for="state" class="col-sm-3 col-md-3 col-form-label">State</label>
+				            <div class="col-sm-9 col-md-9">
+				                <input th:field="*{address.state}" type="text" class="form-control" id="state"/>
+				            </div>
+				        </div>
+				        <div class="form-group row">
+				            <label for="country" class="col-sm-3 col-md-3 col-form-label">Country</label>
+				            <div class="col-sm-9">
+				                <input th:field="*{address.country}" type="text" class="form-control" id="country"/>
+				            </div>
+				        </div>
+				        <div class="form-group row">
+				            <label for="zipcode" class="col-sm-3 col-md-3 col-form-label">Zip Code</label>
+				            <div class="col-sm-9 col-md-9">
+				                <input th:field="*{address.zipcode}" type="text" class="form-control" id="zipcode"/>
+				            </div>
+				        </div>
+				        <input type="submit" class="btn btn-default" value="Update"/>
+				    </form>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<div th:replace="fragments/footer :: footer"></div>
+	</div>
+</body>
+</html>

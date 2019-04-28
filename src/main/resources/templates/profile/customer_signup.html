@@ -11,7 +11,7 @@
 <body>
 <div class="container">
     <div th:replace="fragments/menu :: menu"></div>
-    <form class="form-horizontal" th:object="${customer}" role="form" method="POST" th:action="@{/signup}">
+    <form class="form-horizontal" th:object="${customer}" role="form" method="POST" th:action="@{/customer/signup}">
         <div class="form-group row">
             <label for="firstName" class="col-sm-3 col-md-3 col-form-label">First Name</label>
             <div class="col-sm-9 col-md-9">
@@ -34,6 +34,12 @@
             <label for="password" class="col-sm-3 col-md-3 col-form-label">Password</label>
             <div class="col-sm-9 col-md-9">
                 <input th:field="*{password}" type="password" class="form-control" id="password"/>
+            </div>
+        </div>
+         <div class="form-group row">
+            <label for="confirmPassword" class="col-sm-3 col-md-3 col-form-label">Confirm Password</label>
+            <div class="col-sm-9 col-md-9">
+                <input th:field="*{confirmPassword}" type="password" class="form-control" id="confirmPassword"/>
             </div>
         </div>
         <div class="form-group row">
