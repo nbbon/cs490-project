@@ -1,14 +1,15 @@
 package mum.pmp.mstore.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -22,21 +23,25 @@ public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
-	@Column(name="ID")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID", unique = true, nullable = false)
 	private long id;
 	
-	@Column(name="EMAIL", unique = true)
-	private String email;
+	@Column(name="USERNAME", nullable= false, length= 30, unique = true)
+	private String username;
 	
-	@Column(name="PASSWORD")
+	@Column(name="PASSWORD", length= 60)
 	private String password;
 	
-	@Column(name="ENABLED")
+	@Column(name="ENABLED", nullable=true)
 	private boolean enabled;
 	
-	@ManyToMany(cascade=CascadeType.ALL, fetch= FetchType.EAGER)
-	private List<Role> roles = new ArrayList<Role>();
+	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	@JoinTable(name="user_roles",
+			joinColumns = {@JoinColumn(name="user_id", referencedColumnName="id")},
+			inverseJoinColumns = {@JoinColumn(name="role_id", referencedColumnName="id")}
+	)
+	private Set<Role> roles = new HashSet<Role>();
 
 	public long getId() {
 		return id;
@@ -45,13 +50,13 @@ public class User implements Serializable{
 	public void setId(long id) {
 		this.id = id;
 	}
-
-	public String getEmail() {
-		return email;
+	
+	public String getUsername() {
+		return username;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {
@@ -69,12 +74,12 @@ public class User implements Serializable{
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-
-	public List<Role> getRoles() {
+	
+	public Set<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<Role> roles) {
+	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
 	
@@ -84,10 +89,9 @@ public class User implements Serializable{
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", password=" + password + ", enabled=" + enabled + ", roles="
-				+ roles + "]";
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", enabled=" + enabled
+				+ ", roles=" + roles + "]";
 	}
-	
-	
 
+	
 }

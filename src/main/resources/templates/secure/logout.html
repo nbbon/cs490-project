@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout">
+<head>
+<meta charset="UTF-8" />
+<title>Logout</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+<link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.0.13/css/all.css}"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="container">
+<div th:replace="fragments/menu :: menu"></div>
+    <form class="form-group" role="form" method="POST" th:action="@{/login}">
+       
+        <div class="row" style="padding-top: 1rem">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                 <a class="btn btn-link" href="/">Home</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+	$('.active').removeClass('active');
+	$('#login').addClass('active');
+</script>
+</body>
+</html>
