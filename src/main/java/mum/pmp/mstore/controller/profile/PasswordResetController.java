@@ -42,16 +42,21 @@ public class PasswordResetController {
 		System.out.println("emailParam: "+emailParam);
 		
 			//System.out.println("Inside else");
-		model.addAttribute("confirmPassword", new Password());
+		Password passwordObj = new Password();
+		model.addAttribute("passwordObj", passwordObj);
 			String message = "";
 			System.out.println(emailParam.getEmail());
 			Profile profile = profileService.findByEmail(emailParam.getEmail());
+			System.out.println(profile.getFirstName()+profile.getLastName());
 			if(profile != null)
 			{
-				profile.setToken(profile.getFirstName()+profile.getLastName());
+				int unique = (int) (Math.random() * 9000) + 1000;
+				//profile.setToken(profile.getFirstName()+profile.getLastName());
+				profile.setToken(""+unique);
 				
 				profileService.saveProfile(profile);
 				emailService.sendEmail(emailParam.getEmail(), profile.getToken());
+				//passwordObj.setToken(""+unique);
 			}
 			message = "Email sent";
 			//model.addAttribute("message", message);
@@ -61,25 +66,36 @@ public class PasswordResetController {
 	}
 	
 	@PostMapping(value = "/forgotpassword")
-	public String forgotPassword(Model model, @ModelAttribute("confirmPassword") Password confirmPassword)
+	public String forgotPassword(Model model, @ModelAttribute("passwordObj") Password passwordObj)
 	{
-		Profile person = profileService.findProfileByToken(confirmPassword.getToken());
-		if(person != null)
+		Profile profile = profileService.findProfileByToken(passwordObj.getToken());
+		Password passwordObj2 = new Password();
+		
+		if(profile != null)
 		{
+			passwordObj2.setToken(profile.getToken());
+			model.addAttribute("passwordObj", passwordObj2);
 			return "password/forgot_password";
 		}
+		
 		return "password/enter_code";
 	}
 	
 	@PostMapping(value = "/resetpassword")
-	public String resetPassword(Model model, @ModelAttribute("confirmPassword") Password confirmPassword)
+	public String resetPassword(Model model, @ModelAttribute("passwordObj") Password passwordObj)
 	{
-		Profile person = profileService.findProfileByToken(confirmPassword.getToken());
+		Profile profile = profileService.findProfileByToken(passwordObj.getToken());
 		//System.out.println(person.getToken());
-		if(person != null)
+		System.out.println("Profile: "+profile);
+		if(profile == null)
 		{
 			return "password/forgot_password";
 		}
-		return "password/enter_code";
+		
+		profile.setPassword(passwordObj.getPassword());
+		profile.setToken(null);
+		profileService.saveProfile(profile);
+		
+		return "password/forgot_password";
 	}
 }

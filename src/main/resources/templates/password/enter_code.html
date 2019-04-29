@@ -11,7 +11,7 @@
 <body>
 <div class="container">
     <div th:replace="fragments/menu :: menu"></div>
-    <form class="form-horizontal" th:object="${confirmPassword}" role="form" method="POST" th:action="@{/forgotpassword}">
+    <form class="form-horizontal" th:object="${passwordObj}" role="form" method="POST" th:action="@{/forgotpassword}">
         
         <div class="form-group row">
             <label for="confirmPassword" class="col-sm-3 col-md-3 col-form-label">Enter Code Here</label>
