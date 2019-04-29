@@ -1,16 +1,13 @@
 package mum.pmp.mstore.domain;
 
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.validation.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class Category {
@@ -23,15 +20,7 @@ public class Category {
 	private String categoryName;
 	private String description;
 	
-	/*
-	 * @JsonIgnore
-	 * 
-	 * @OneToMany(mappedBy = "category")
-	 * 
-	 * @OrderBy("productName") private List<Product> products;
-	 */
 	
-
 	public Category() {	}
 
 	

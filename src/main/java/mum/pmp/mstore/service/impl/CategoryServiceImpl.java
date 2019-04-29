@@ -41,10 +41,9 @@ public class CategoryServiceImpl implements CategoryService{
 
 	@Override
 	public void deleteCategory(Integer id) {
-		 Optional<Category> optional = categoryRepository.findById(id);
-	     if (optional.isPresent()) {
+		
 	    	 categoryRepository.deleteById(id);	
-		}		
+				
 	}
 
 }
