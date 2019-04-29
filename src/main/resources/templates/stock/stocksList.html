@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Stocks</title>
+
+    <link rel="stylesheet" type="text/css" media="all" href="../../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}" src="js/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.min.js}" src="js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <div class="container">
+
+        <h1>Stocks</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Stock ID</th>
+                    <th>quantity</th>
+                    <th>locationCode</th>
+                </tr>
+            </thead>
+                    
+
+            
+            
+            
+            
+            <tbody>
+                <tr th:each="stock : ${stocksList}">
+                    <td th:text="${stock.id}"></td>
+                    <td th:text="${stock.quantity}"></td>
+                    <td th:text="${stock.locationCode}"></td>
+                    
+                    <td>
+                        <a href="/stocksEdit/1" th:href="@{/stocksEdit/__${stock.id}__}">Update</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

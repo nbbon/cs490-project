@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+<link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.0.13/css/all.css}"/>
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/menu :: menu"></div>
+    <form class="form-horizontal" th:object="${admin}" role="form" method="POST" th:action="@{/admin/signup}">
+        <div class="form-group row">
+            <label for="firstName" class="col-sm-3 col-md-3 col-form-label">First Name</label>
+            <div class="col-sm-9 col-md-9">
+                <input th:field="*{firstName}" type="text" class="form-control" id="firstName"/>
+                <label th:if="${#fields.hasErrors('firstName')}" class="text-danger align-middle">
+              	 First Name must be between 2 to 20 characters.
+                </label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="lastName" class="col-sm-3 col-md-3 col-form-label">Last Name</label>
+            <div class="col-sm-9 col-md-9">
+                <input th:field="*{lastName}" type="text" class="form-control" id="lastName"/>
+                <label th:if="${#fields.hasErrors('lastName')}" class="text-danger align-middle">
+                Last Name must be between 2 to 20 characters.
+                </label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="email" class="col-sm-3 col-md-3 col-form-label">Email</label>
+            <div class="col-sm-9 col-md-9">
+                <input th:field="*{email}" type="email" class="form-control" id="email"/>
+                 <label th:if="${#fields.hasErrors('email')}" class="text-danger align-middle">
+                 There is already an account registered with that email.</label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="password" class="col-sm-3 col-md-3 col-form-label">Password</label>
+            <div class="col-sm-9 col-md-9">
+                <input th:field="*{password}" type="password" class="form-control" id="password"/>
+            </div>
+        </div>
+         <div class="form-group row">
+            <label for="password" class="col-sm-3 col-md-3 col-form-label">Confirm Password</label>
+            <div class="col-sm-9 col-md-9">
+                <input th:field="*{confirmPassword}" type="password" class="form-control" id="confirmPassword"/>
+                <label th:if="${#fields.hasErrors('password')}" class="text-danger align-middle">
+            		Password and Confirm password is not match!
+            	</label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="phone" class="col-sm-3 col-md-3 col-form-label">Phone Number</label>
+            <div class="col-sm-9 col-md-9">
+                <input th:field="*{phone}" type="number" class="form-control" id="phone"/>
+            </div>
+        </div>
+       
+        <input type="submit" class="btn btn-default" value="Signup"/>
+    </form>
+</div>
+</body>
+</html>

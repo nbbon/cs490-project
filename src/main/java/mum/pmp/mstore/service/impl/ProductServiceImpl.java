@@ -52,6 +52,7 @@ public class ProductServiceImpl implements ProductService{
 	public void addProduct(Product product) {
 		Optional<Category> optional = categoryService.findById(product.getCategory().getCategoryID());
 		
+		System.out.print(optional.get()+ " tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
        if (optional.isPresent()) {
    		   product.setCategory(optional.get());
    		   Stock stock = new Stock();
