@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Sales Report</title>
+
+<link rel="stylesheet" type="text/css" media="all"
+	href="/static/css/bootstrap.min.css"
+	th:href="@{/static/css/bootstrap.min.css}" />
+
+<script type="text/javascript" th:src="@{/static/js/jquery.min.js}"
+	src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" th:src="@{/static/js/bootstrap.min.js}"
+	src="/static/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+	<h3>Reports</h3>
+	<a th:href="@{reports/testreport}">Generate Report</a>
+	<h3>Select Report</h3>
+	<div>
+		<label for="report">Report type:</label> <select
+			th:field="*{reportType}" name="report" id="report">
+			<option value="default">Please select report...</option>
+			<option th:each="entry :${reportType.entrySet() }"
+				th:value="${entry.key }" th:text="${entry.value }" />
+		</select>
+	</div>
+	<div>
+		<div>
+			<label for="periodical">Periodical:</label> <select
+				th:field="*{periods}" name="periodical" id="periodical">
+				<option value="default">Please select...</option>
+				<option th:each="period :${periods }" th:value="${period }"
+					th:text="${period }" />
+			</select>
+
+			<div id="weekly" style="display: none;">
+				<label for="fromDate">From date: </label> 
+				<input id="fromDate" type="date" /> 
+				<label for="toDate">To date: </label> 
+				<input id="toDate" type="date" />
+			</div>
+			<div id="monthly" style="display: none;">
+				<label for="month">Month: </label> <select id="month" name="month">
+					<option value="default">Select month...</option>
+					<option th:each="m :${#numbers.sequence( 1, 12)}" th:value="${m }"
+						th:text="${m }" />
+				</select>
+			</div>
+			<div id="quarterly" style="display: none;">
+				<label for="quarter">Quarter: </label> <select id="quarter"
+					name="quarter">
+					<option value="default">Select quarter...</option>
+					<option th:each="m :${#numbers.sequence( 1, 4)}" th:value="${m }"
+						th:text="Quarter- + ${m }" />
+				</select>
+			</div>
+			<div id="half-yearly" style="display: none;">
+				<input type="radio" name="halfYear" value="1"> First half</input> 
+				<input type="radio" name="halfYear" value="2"> Second half</input>
+			</div>
+			<div id="annually" style="display: none;">
+				<label for="year">Year: </label> <select id="year" name="year">
+					<option value="default">Select year...</option>
+					<option
+						th:each="m :${#numbers.sequence( #dates.year(#dates.createNow()), 1970)}"
+						th:value="${m }" th:text="${m }" />
+				</select>
+			</div>
+			<div id="ad-hoc" style="display: none;">
+				<label for="ad-hocFromDate">From date: </label> <input
+					id="ad-hocFromDate" type="date" /> <label for="ad-hoc-ToDate">To
+					date: </label> <input id="ad-hocToDate" type="date" />
+			</div>
+			<div>
+				<input name="genReport" id="genReport" type="submit" class="btn btn-primary"
+				value="html"/>
+			</div>
+		</div>
+	</div>
+</body>
+<footer>
+	<script type="text/javascript" src="/static/js/report/report.js"></script>
+</footer>
+</html>
