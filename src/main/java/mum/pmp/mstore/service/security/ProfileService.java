@@ -75,7 +75,7 @@ public class ProfileService {
 			user.setUsername(profile.getEmail());
 			//Add roles 
 			user.addRole(userRole);
-			System.out.println(userRole.getRole());
+//			System.out.println(userRole.getRole());
 			if(userRole.getRole().equals("ADMIN")) {
 				user.setEnabled(false);
 				profile.setEnable(false);
@@ -84,6 +84,8 @@ public class ProfileService {
 				user.setEnabled(true);
 				profile.setEnable(true);
 			}
+//			user.setEnabled(true);
+//			profile.setEnable(true);
 			
 			//encrypt the password with bCrypt
 			user.setPassword(passwordEncoder.encode(profile.getPassword()));

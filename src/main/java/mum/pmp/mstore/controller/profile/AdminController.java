@@ -76,6 +76,8 @@ public class AdminController {
 			adminToUpdate.setPassword(admin.getPassword());
 			adminToUpdate.setPhone(admin.getPhone());
 			profileService.saveProfile(adminToUpdate);
+			
+			//need to update password ins user table.
 		}
 		return "redirect:/admin/update";
 	}
