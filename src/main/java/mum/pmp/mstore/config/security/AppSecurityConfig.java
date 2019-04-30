@@ -48,7 +48,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 			.antMatchers("/webjars/**", "/css/**", "/images/**" , 
-					"/signup", "/vendor/signup", "/admin/signup", "/customer/signup")
+					"/signup", "/vendor/signup", "/admin/signup", "/customer/signup", "/password/forgotpassword",
+					"/forgotpassword", "/sendemailforgotpassword", "/resetpassword")
 			.permitAll();
 		
 		http.csrf().disable()		//disable cross-side scripting

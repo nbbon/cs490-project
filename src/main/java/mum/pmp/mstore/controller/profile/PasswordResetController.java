@@ -28,6 +28,14 @@ public class PasswordResetController {
 	@Autowired
 	Email email;
 	
+	@GetMapping(value = "/password/forgotpassword")
+	public String enterEmailToResetPassword2(Model model, @ModelAttribute("email") Email emailParam) throws AddressException, MessagingException
+	{
+		model.addAttribute("emailPerson", email);
+		return "password/enter_email";
+		
+	}
+	
 	@GetMapping(value = "/forgotpassword")
 	public String enterEmailToResetPassword(Model model, @ModelAttribute("email") Email emailParam) throws AddressException, MessagingException
 	{
