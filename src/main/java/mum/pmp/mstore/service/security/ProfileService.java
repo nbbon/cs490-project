@@ -9,9 +9,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import mum.pmp.mstore.model.Admin;
 import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.model.Role;
 import mum.pmp.mstore.model.User;
+import mum.pmp.mstore.repository.profile.AdminDAO;
 import mum.pmp.mstore.repository.profile.ProfileRepository;
 import mum.pmp.mstore.repository.profile.RoleRepository;
 import mum.pmp.mstore.repository.profile.UserRepository;
@@ -29,6 +31,9 @@ public class ProfileService {
 
 	@Autowired
 	private RoleRepository roleRepository;
+	
+	@Autowired
+	private AdminDAO adminDAO;
 	
 	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -52,29 +57,39 @@ public class ProfileService {
 		return profileRepository.findAll();
 	}
 	
-	public boolean signup(Profile person, User_Type user_type) {
+	public List<Admin> findAllAdmins(){
+		return adminDAO.findAllAdmins();
+	}
+	
+	public boolean signup(Profile profile, User_Type user_type) {
 		
 		// Check if user already exist.
-		User existingUser = userRepository.findByUsername(person.getEmail());
+		User existingUser = userRepository.findByUsername(profile.getEmail());
 		System.out.println("existing user >>" + existingUser);
 		if(existingUser == null) {
 			
-			//enable the user account.
-			person.setEnable(true);;
-	
 			User user = new User();
 			//add user Role
 			Role userRole = roleRepository.findByRole(user_type.toString());
 			//set the email.
-			user.setUsername(person.getEmail());
+			user.setUsername(profile.getEmail());
 			//Add roles 
 			user.addRole(userRole);
-			user.setEnabled(true);
+			System.out.println(userRole.getRole());
+			if(userRole.getRole().equals("ADMIN")) {
+				user.setEnabled(false);
+				profile.setEnable(false);
+			}
+			else {
+				user.setEnabled(true);
+				profile.setEnable(true);
+			}
+			
 			//encrypt the password with bCrypt
-			user.setPassword(passwordEncoder.encode(person.getPassword()));
+			user.setPassword(passwordEncoder.encode(profile.getPassword()));
 			
 			//save the user
-			person = profileRepository.save(person);
+			profile = profileRepository.save(profile);
 			userRepository.save(user);
 			return true;
 		}
@@ -85,6 +100,17 @@ public class ProfileService {
 	
 	public Profile findProfileByToken(String token) {
 		return profileRepository.findByToken(token);
+	}
+
+	public void approveAdmin(String adminEmail) {
+		Profile adminProfile = findByEmail(adminEmail);
+		adminProfile.setEnable(true);
+		
+		User user = userRepository.findByUsername(adminEmail);
+		user.setEnabled(true);
+		
+		userRepository.save(user);
+		saveProfile(adminProfile);
 	}
 	
 }

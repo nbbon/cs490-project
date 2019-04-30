@@ -1,11 +1,14 @@
 package mum.pmp.mstore.controller.profile;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import mum.pmp.mstore.config.security.Listener;
@@ -20,59 +23,53 @@ public class AdminController {
 
 	@Autowired
 	private ProfileService profileService;
-	
+
 	@Autowired
 	private AdminValidator validator;
-	
-	@Autowired 
+
+	@Autowired
 	private Listener sessionListener;
-	
+
 	@GetMapping("/admin/signup")
 	public String adminSignupPage(Model model) {
 		model.addAttribute("admin", new Admin());
 		return "/profile/admin_signup";
 	}
-	
+
 	@PostMapping("/admin/signup")
 	public String adminSignup(@ModelAttribute Admin admin, BindingResult bindingResult) {
 		String url = "";
-		
-		//validate the admin details.
+		// validate the admin details.
 		validator.validate(admin, bindingResult);
-		
-		if(bindingResult.hasErrors())
-		{
+		if (bindingResult.hasErrors()) {
 			url = "/profile/admin_signup";
-		}
-		else {
-			if(profileService.signup(admin, User_Type.ADMIN)) {
+		} else {
+			if (profileService.signup(admin, User_Type.ADMIN)) {
 				url = "redirect:/login";
-			}
-			else {
+			} else {
 				bindingResult.rejectValue("email", "There is already an account registered with that email.");
 				url = "/profile/admin_signup";
 			}
 		}
-		
 		return url;
 	}
-	
+
 	@GetMapping("/admin/update")
 	public String updatePage(Model model) {
 		Admin adminProfile = (Admin) profileService.findByEmail(sessionListener.getUser().getEmail());
 		model.addAttribute("admin", adminProfile);
 		return "/profile/admin_profile";
 	}
-	
+
 	@PostMapping("/admin/update")
 	public String update(@ModelAttribute Admin admin, BindingResult bindingResult) {
-		
-		//validate the admin details.
+
+		// validate the admin details.
 		validator.validate(admin, bindingResult);
-				
+
 		Profile person = profileService.findByEmail(admin.getEmail());
 		Admin adminToUpdate;
-		if(person instanceof Admin) {
+		if (person instanceof Admin) {
 			adminToUpdate = (Admin) person;
 			adminToUpdate.setFirstName(admin.getFirstName());
 			adminToUpdate.setLastName(admin.getLastName());
@@ -82,5 +79,36 @@ public class AdminController {
 		}
 		return "redirect:/admin/update";
 	}
-}
+	
+	
+	// For super admin
+	@GetMapping("/super/admins")
+	public String personList(Model model) {
+		List<Admin> admins = profileService.findAllAdmins();
+		System.out.println(admins);
+		model.addAttribute("admins", admins);
+		return "/admin/adminList";
+	}
 
+	@PostMapping("/admin/approve/{adminEmail}")
+	public String approveAdmin(@PathVariable("adminEmail") String adminEmail) {
+		profileService.approveAdmin(adminEmail);
+		return "redirect:/admins";
+	}
+	
+	@GetMapping("/admin/delete/{adminId}")
+	public String deletePerson(Admin person, @PathVariable("adminId") long adminId) {
+		Admin personToDelete = (Admin) profileService.findById(adminId);
+		//personService.removePerson(personToDelete);
+		return "redirect:/admins";
+	}
+	
+	@GetMapping("/admin/{adminId}")
+	public String updatePerson(@PathVariable("amdinId") Long adminId, Model model) {
+		model.addAttribute("person", profileService.findById(adminId));
+		return "admins";
+	}
+	
+	
+	
+}
