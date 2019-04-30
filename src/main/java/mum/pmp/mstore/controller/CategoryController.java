@@ -3,10 +3,7 @@ package mum.pmp.mstore.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,12 +45,21 @@ public class CategoryController {
 	    }
 	  
 	  
-	  @DeleteMapping(value="/categoriesDelete/{id}")
+	  @RequestMapping(value="/categoriesDelete/{id}", method=RequestMethod.GET)
 	    public String deleteCategory(Model model, @PathVariable(required = true, name = "id") Integer id) {
 		  	categoryService.deleteCategory(id);	        
 			model.addAttribute("categoriesList", categoryService.getCategories());
 	        return "category/categoriesList";
 	    }
 
+	  
+	/*
+	 * @RequestMapping(value="/notesDelete/{id}", method = RequestMethod.GET) public
+	 * String notesDelete(Model model, @PathVariable(required = true, name = "id")
+	 * Long id) { notesService.deleteNotes(id); model.addAttribute("notesList",
+	 * notesService.findAll()); return "notesList"; }
+	 */
+	  
+	  
 	  
 }
