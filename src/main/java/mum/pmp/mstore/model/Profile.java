@@ -36,6 +36,12 @@ public class Profile {
 	
 	@Transient
 	private String confirmPassword;
+	
+	// By default user is enable. But user can
+	// decide to disable himself.
+	// 1: Enable
+	// 2: Disable.
+	private byte status = 1;
 
 	public long getId() {
 		return id;
@@ -104,14 +110,24 @@ public class Profile {
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
 	}
+	
+
+	public byte getStatus() {
+		return status;
+	}
+
+	public void setStatus(byte status) {
+		this.status = status;
+	}
 
 	@Override
 	public String toString() {
-		return "Person [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", phone=" + phone + ", enable=" + enable + ", password=" + password + ", confirmPassword="
-				+ confirmPassword + "]";
+		return "Profile [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", phone=" + phone + ", enable=" + enable + ", password=" + password + ", token=" + token
+				+ ", confirmPassword=" + confirmPassword + ", status=" + status + "]";
 	}
 
+	
 	
 	
 }
