@@ -3,6 +3,7 @@ package mum.pmp.mstore.controller.profile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,10 +14,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import mum.pmp.mstore.model.Profile;
+import mum.pmp.mstore.service.security.ProfileService;
+
 @Controller
 public class HomeController {
 
 	private Authentication auth;
+	
+	@Autowired
+	private ProfileService profileService;
 
 	@RequestMapping("/login")
 	public String loginPage() {
@@ -38,6 +45,7 @@ public class HomeController {
 		auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth != null && !auth.getPrincipal().equals("anonymousUser")) {
 			UserDetails user = secureOperations();
+			System.out.println("UserDetails: "+user);
 			if (user != null) {
 				model.addAttribute("userdetails", user);
 				model.addAttribute("role", authorizedRole());
@@ -79,7 +87,18 @@ public class HomeController {
 		UserDetails user = null;
 		if (auth.getPrincipal() != null)
 			user = (UserDetails) auth.getPrincipal();
-
+		
+		// When user login set his status to 1 to enable him if he was previously disabled by himself.
+		if(user != null)
+		{
+			Profile profile = profileService.findByEmail(user.getUsername());
+			if(profile.getStatus() == 0)
+			{
+				profile.setStatus((byte)1);
+				profileService.saveProfile(profile);
+			}
+		}
+		
 		return user;
 	}
 

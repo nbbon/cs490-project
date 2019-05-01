@@ -12,6 +12,7 @@ public interface EmailServiceInterface {
 	void sendEmail()throws AddressException, MessagingException, IOException;
 	void sendEmail(String email, String token)throws AddressException, MessagingException, IOException;
 	void sendEmail(String email)throws AddressException, MessagingException, IOException;
+	void sendEmail(String emailAddresses, String subject, String body)throws AddressException, MessagingException, IOException;
 	void sendEmail(String[] email)throws AddressException, MessagingException, IOException;
 	Properties emailProperties();
 	Session sessionEmailAuth();
