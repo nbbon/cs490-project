@@ -13,16 +13,16 @@ public class Profile {
 	@Column(name="ID")
 	private long id;
 	
-	@Column(name="FIRST_NAME")
+	@Column(name="FIRST_NAME", length=20)
 	private String firstName;
 	
-	@Column(name="LAST_NAME")
+	@Column(name="LAST_NAME", length=20)
 	private String lastName;
 	
 	@Column(name = "EMAIL", unique = true)
 	private String email;
 	
-	@Column(name = "PHONE")
+	@Column(name = "PHONE", nullable=false)
 	private String phone;
 	
 	//need to remove 
