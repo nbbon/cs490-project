@@ -100,7 +100,7 @@ public class CustomerController {
 		byte status = 0;
 		profile.setStatus(status);
 		profileService.saveProfile(profile);
-		return "redirect:/secure/login";
+		return "redirect:/login";
 	}
 	
 	@GetMapping("/catalogs")

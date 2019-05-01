@@ -109,6 +109,10 @@
         </div>
 							<input type="submit" class="btn btn-info" value="Update" />
 						</form>
+						<form method = "POST" th:object="${vendor}" role="form" th:action="@{/vendor/disable}">
+					        <input type="submit" class="btn btn-default" value="Disable"/>
+					        <input th:field="*{email}" type="hidden" class="form-control" id="email"/>
+				    	</form>
 					</div>
 				</div>
 			</div>
