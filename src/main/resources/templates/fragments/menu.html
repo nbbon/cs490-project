@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+		 xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" >
 <head></head>
 <body>
 
@@ -13,7 +14,7 @@
 	    </div>
 	    <ul class="nav navbar-nav">
 	      <li id="products"><a href="/admin/products">Product Details</a></li>
-	      <li id="vendors"><a href="/admin/vendors">Manage Vendor</a></li>
+	      <li id="vendors"><a href="/admin/vendors">Manage Vendors</a></li>
 	      <li id="categories"><a href="/admin/categories">Manage Product Categories</a></li>
 	    </ul>
 	  </div>
@@ -90,7 +91,7 @@
 	    <ul class="nav navbar-nav">
 	      <li id="login" class="active"><a href="/login">Login</a></li>
 	      <li id="product"><a href="/super/reports">Reports</a></li>
-	      <li id="person"><a href="/super/vendors">Vendor Management</a></li>
+<!-- 	      <li id="person"><a href="/super/vendors">Vendor Management</a></li> -->
 	      <li id="admins"><a href="/super/admins">Manage Administrators</a></li>
 	    </ul>
 	  </div>

@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Person List</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
+<link rel="stylesheet"
+	th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}" />
+<link rel="stylesheet"
+	th:href="@{https://use.fontawesome.com/releases/v5.0.13/css/all.css}" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<title>MStore - Super Admin Home</title>
+</head>
+<body>
+	<div class="container">
+		<div th:replace="fragments/menu :: menu_super_admin"></div>
+		<!-- 	  <a th:href="@{/admin/signup}" class="btn btn-default"><i class="fa fa-plus"></i> Create an admin</a> -->
+		<h4>Admin Approval</h4>
+		<br />
+		<br />
+		<table class="table">
+			<tr>
+				<td colspan="4">List of Administrators pending for Approval</td>
+			</tr>
+			<tr>
+				<th scope="col">First Name</th>
+				<th scope="col">Last Name</th>
+				<th scope="col">Email</th>
+				<th scope="col">Phone</th>
+			</tr>
+			<tbody>
+				<tr th:each="admin : ${admins}">
+					<td><a th:href="@{'/admin/' + ${admin.id}}"
+						th:text="${admin.firstName}"> </a></td>
+					<td th:text="${admin.lastName}"></td>
+					<td th:text="${admin.email}"></td>
+					<td th:text="${admin.phone}"></td>
+					<td>
+						<form method="post" th:action="@{'/admin/approve/'+${admin.email}}">
+							<input type="submit" class="btn btn-default" name="action" value="Approve" /> 
+							<input type="submit" class="btn btn-default" name="action" value="Reject" />
+						</form>
+					</td>
+					<td><a th:href="@{'/admin/' + ${admin.id}}"><i class="fa fa-edit"></i></a> &nbsp;&nbsp;
+						<a
+						th:href="@{'/admin/delete/'+ ${admin.id}}"><i class="fa fa-trash"></i></a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<script>
+    	$('.active').removeClass('active');
+    	$('#admins').addClass('active');
+    </script>
+</body>
+</html>

@@ -82,35 +82,4 @@ public class AdminController {
 		return "redirect:/admin/update";
 	}
 	
-	
-	// For super admin
-	@GetMapping("/super/admins")
-	public String personList(Model model) {
-		List<Admin> admins = profileService.findAllAdmins();
-		System.out.println(admins);
-		model.addAttribute("admins", admins);
-		return "/admin/adminList";
-	}
-
-	@PostMapping("/admin/approve/{adminEmail}")
-	public String approveAdmin(@PathVariable("adminEmail") String adminEmail) {
-		profileService.approveAdmin(adminEmail);
-		return "redirect:/admins";
-	}
-	
-	@GetMapping("/admin/delete/{adminId}")
-	public String deletePerson(Admin person, @PathVariable("adminId") long adminId) {
-		Admin personToDelete = (Admin) profileService.findById(adminId);
-		//personService.removePerson(personToDelete);
-		return "redirect:/admins";
-	}
-	
-	@GetMapping("/admin/{adminId}")
-	public String updatePerson(@PathVariable("amdinId") Long adminId, Model model) {
-		model.addAttribute("person", profileService.findById(adminId));
-		return "admins";
-	}
-	
-	
-	
 }

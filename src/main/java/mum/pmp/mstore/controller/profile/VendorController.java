@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import mum.pmp.mstore.config.security.Listener;
 import mum.pmp.mstore.model.Profile;
@@ -35,22 +36,27 @@ public class VendorController {
 	
 	@PostMapping("/vendor/signup")
 	public String signup(@ModelAttribute Vendor vendor, BindingResult bindingResult) {
-		
+		//@RequestParam(value="action", required=true) String action
 		String url = "";
 		//validate the vendor  details
-		validator.validate(vendor, bindingResult);
-		
-		if(bindingResult.hasErrors()) {
-			url =  "/profile/vendor_signup";
-		}else {
-			if(profileService.signup(vendor, User_Type.VENDOR)) {
-				url = "redirect:/login";
-			}
-			else {
-				bindingResult.rejectValue("email", "There is already an account registered with that email.");
+		//if(action.equals("Save")) {
+			validator.validate(vendor, bindingResult);
+			
+			if(bindingResult.hasErrors()) {
 				url =  "/profile/vendor_signup";
+			}else {
+				if(profileService.signup(vendor, User_Type.VENDOR)) {
+					url = "redirect:/login";
+				}
+				else {
+					bindingResult.rejectValue("email", "vendor.email.exist");
+					url =  "/profile/vendor_signup";
+				}
 			}
-		}
+//		}
+//		if(action.equals("Cancel")) {
+//			url = "redirect:/login";
+//		}
 		return url;
 	}
 	
@@ -65,25 +71,11 @@ public class VendorController {
 	
 	@PostMapping("/vendor/update")
 	public String update(@ModelAttribute Vendor vendor, BindingResult bindingResult) {
-		
-		//validate the vendor details.
 		validator.validate(vendor, bindingResult);
-		
-		// get a proxy object first to prevent duplicate entry 
-		Profile person = profileService.findByEmail(vendor.getEmail());
-		Vendor vendorToUpdate;
-		
-		System.out.println("vendorToupdate" + person);
-		if(person instanceof Vendor) {
-			vendorToUpdate = (Vendor) person;
-			vendorToUpdate.setVendorName(vendor.getVendorName());
-			vendorToUpdate.setVendorNumber(vendor.getVendorNumber());
-			vendorToUpdate.setRegId(vendor.getRegId());
-			vendorToUpdate.setPassword(vendor.getPassword());
-			vendorToUpdate.setPhone(vendor.getPhone());
-			vendorToUpdate.setContactPerson(vendor.getContactPerson());
-			profileService.saveProfile(vendorToUpdate);
-		}
-		return "redirect:/vendor/update";
+		boolean status = profileService.updateVendor(vendor);
+		if(status)
+			return "/secure/login";
+		else
+			return "redirect:/vendor/update";
 	}
 }
