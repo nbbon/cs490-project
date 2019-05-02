@@ -17,7 +17,7 @@
         <h1>Products</h1>
 
         <p>
-            <a href="/productsEdit" th:href="@{/productsEdit}">Add Product</a>
+            <a href="/products/productsEdit" th:href="@{/products/productsEdit}">Add Product</a>
         </p>
 
         <table class="table">
@@ -47,8 +47,8 @@
                     <td th:text="${product.category.categoryName}"></td>
                     
                     <td>
-                        <a href="/productsEdit/1" th:href="@{/productsEdit/__${product.id}__}">Update</a>
-                        <a href="/productsDelete/1" th:href="@{/productsDelete/__${product.id}__}">Remove</a>
+                        <a href="/products/productsEdit/1" th:href="@{/products/productsEdit/__${product.id}__}">Update</a>
+                        <a href="/products/productsDelete/1" th:href="@{/products/productsDelete/__${product.id}__}">Remove</a>
                     </td>
                 </tr>
             </tbody>

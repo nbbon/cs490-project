@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import mum.pmp.mstore.domain.Order;
 
-public interface OrderRepository extends CrudRepository<Order, Long>{
+public interface OrderRepository extends CrudRepository<Order, String>{
 
 }

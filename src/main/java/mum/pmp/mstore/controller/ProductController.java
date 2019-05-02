@@ -39,7 +39,7 @@ public class ProductController {
 	    }
 	
 	  
-	  @GetMapping(value={"/productsEdit","/productsEdit/{id}"})
+	  @GetMapping(value={"/products/productsEdit","/productsEdit/{id}"})
 	    public String productsEdit(Model model, @PathVariable(required = false, name = "id") Integer id) {
 	        if (null != id) {
 	        	List<Category> categories = categoryService.getCategories();
@@ -56,7 +56,7 @@ public class ProductController {
 	    }
 	
 	
-	  @PostMapping(value="/productsEdit")
+	  @PostMapping(value="/products/productsEdit")
 	    public String addproducts(@ Valid @ModelAttribute("products")  Product product, BindingResult bindingResult, Model model) {
 		  if (bindingResult.hasErrors()) {
 			  return "product/productsEdit";
@@ -69,7 +69,7 @@ public class ProductController {
 	    }
 	  
 	  	  
-	  @RequestMapping(value="/productsDelete/{id}", method=RequestMethod.GET)
+	  @RequestMapping(value="/products/productsDelete/{id}", method=RequestMethod.GET)
 	    public String productsDelete(Model model, @PathVariable(required = true, name = "id") Integer id) {
 		     productService.deleteProduct(id);       
 			model.addAttribute("productsList", productService.getProducts());
