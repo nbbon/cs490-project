@@ -1,3 +1,4 @@
+
 package mum.pmp.mstore.service;
 
 import javax.persistence.Column;
@@ -12,7 +13,7 @@ public interface OrderService {
 	 public void setCustomer(String orderNumber, String email) ;
 	    
 	 void addBillingAddress(String orderNumber,  Address address);
-	 void addShoppingAddress(String orderNumber, Address address);
+	 void addShippingAddress(String orderNumber, Address address);
 
 
 	/*

@@ -13,13 +13,14 @@ import mum.pmp.mstore.domain.Category;
 import mum.pmp.mstore.service.CategoryService;
 
 @Controller
+@RequestMapping("/category")
 public class CategoryController {
 	
 	@Autowired
 	CategoryService categoryService;
 	
 	
-	  @GetMapping(value="/category")
+	  @GetMapping
 	    public String categoriesList(Model model) {
 	        model.addAttribute("categoriesList", categoryService.getCategories());
 	        return "category/categoriesList";

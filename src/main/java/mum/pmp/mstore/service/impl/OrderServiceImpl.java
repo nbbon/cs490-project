@@ -1,3 +1,4 @@
+
 package mum.pmp.mstore.service.impl;
 
 import java.util.Optional;
@@ -72,7 +73,7 @@ public class OrderServiceImpl implements OrderService{
 
 
 	@Override
-	public void addShoppingAddress(String orderNumber,Address address) {
+	public void addShippingAddress(String orderNumber,Address address) {
 		Optional<Order> optOrder = orderRepository.findById(orderNumber);
         if (optOrder.isPresent()) {
             Order order = optOrder.get();

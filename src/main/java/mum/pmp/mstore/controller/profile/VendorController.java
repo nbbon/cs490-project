@@ -7,8 +7,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import mum.pmp.mstore.config.security.Listener;
+import mum.pmp.mstore.model.Customer;
 import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.model.Vendor;
 import mum.pmp.mstore.service.security.ProfileService;
@@ -35,22 +37,27 @@ public class VendorController {
 	
 	@PostMapping("/vendor/signup")
 	public String signup(@ModelAttribute Vendor vendor, BindingResult bindingResult) {
-		
+		//@RequestParam(value="action", required=true) String action
 		String url = "";
 		//validate the vendor  details
-		validator.validate(vendor, bindingResult);
-		
-		if(bindingResult.hasErrors()) {
-			url =  "/profile/vendor_signup";
-		}else {
-			if(profileService.signup(vendor, User_Type.VENDOR)) {
-				url = "redirect:/login";
-			}
-			else {
-				bindingResult.rejectValue("email", "There is already an account registered with that email.");
+		//if(action.equals("Save")) {
+			validator.validate(vendor, bindingResult);
+			
+			if(bindingResult.hasErrors()) {
 				url =  "/profile/vendor_signup";
+			}else {
+				if(profileService.signup(vendor, User_Type.VENDOR)) {
+					url = "redirect:/login";
+				}
+				else {
+					bindingResult.rejectValue("email", "vendor.email.exist");
+					url =  "/profile/vendor_signup";
+				}
 			}
-		}
+//		}
+//		if(action.equals("Cancel")) {
+//			url = "redirect:/login";
+//		}
 		return url;
 	}
 	
@@ -65,25 +72,25 @@ public class VendorController {
 	
 	@PostMapping("/vendor/update")
 	public String update(@ModelAttribute Vendor vendor, BindingResult bindingResult) {
-		
-		//validate the vendor details.
 		validator.validate(vendor, bindingResult);
+		boolean status = profileService.updateVendor(vendor);
+		if(status)
+			return "/secure/login";
+		else
+			return "redirect:/vendor/update";
+	}
+	
+	@PostMapping("/vendor/disable")
+	public String disableVendor(@ModelAttribute("vendor") Vendor vendor)
+	{
+		System.out.println(vendor);
+		System.out.println(vendor.getEmail());
 		
-		// get a proxy object first to prevent duplicate entry 
-		Profile person = profileService.findByEmail(vendor.getEmail());
-		Vendor vendorToUpdate;
-		
-		System.out.println("vendorToupdate" + person);
-		if(person instanceof Vendor) {
-			vendorToUpdate = (Vendor) person;
-			vendorToUpdate.setVendorName(vendor.getVendorName());
-			vendorToUpdate.setVendorNumber(vendor.getVendorNumber());
-			vendorToUpdate.setRegId(vendor.getRegId());
-			vendorToUpdate.setPassword(vendor.getPassword());
-			vendorToUpdate.setPhone(vendor.getPhone());
-			vendorToUpdate.setContactPerson(vendor.getContactPerson());
-			profileService.saveProfile(vendorToUpdate);
-		}
-		return "redirect:/vendor/update";
+		Profile profile = profileService.findByEmail(vendor.getEmail());
+		System.out.println("My Profile: "+profile);
+		byte status = 0;
+		profile.setStatus(status);
+		profileService.saveProfile(profile);
+		return "redirect:/login";
 	}
 }

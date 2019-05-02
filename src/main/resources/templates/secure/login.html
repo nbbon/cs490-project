@@ -13,7 +13,16 @@
 <body>
 <div class="container">
 <div th:replace="fragments/menu :: menu"></div>
+	
     <form class="form-group" role="form" method="POST" th:action="@{/login}">
+    	  <th:block th:if="${#session != null && #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}">
+             <div th:if= "${#request.getParameter('error') == 'true'}"
+                style="color: red; margin: 10px 0px;">
+                Login Failed!!!<br /> Reason :
+                <span th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}"></span>
+             </div>
+         </th:block>
+          
         <div class="form-group">
             <div class="col-md-3"></div>
             <div class="col-md-6">
@@ -45,7 +54,7 @@
                     <label class="sr-only" for="username">Email Address</label>
                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                         <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-at"></i></div>
-                        <input type="text" name="username" class="form-control" id="username"
+                        <input type="text" name="username" class="form-control" id="username" autofocus="autofocus"
                                placeholder="you@example.com" />
                     </div>
                 </div>
@@ -68,7 +77,7 @@
             <div class="col-md-3"></div>
             <div class="col-md-6">
                 <button type="submit" class="btn btn-success"><i class="fa fa-sign-in"></i> Login</button>
-                <a class="btn btn-link" href="/forgotpassword">Forgot password</a>
+                	<a class="btn btn-link" href="/password/forgotpassword">Forgot password</a>
       		</div>
         </div>
         <br>

@@ -1,24 +1,37 @@
+
 package mum.pmp.mstore.domain;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.swing.JList.DropLocation;
 
 import mum.pmp.mstore.model.Address;
 import mum.pmp.mstore.model.Customer;
 
+@Entity
 public class Order {
 	    @Id
 	    private String ordernumber;
 	    private LocalDate date;
 	    private String status;
+	    @OneToOne(cascade = CascadeType.ALL)
+		@JoinColumn(name = "ID")
 	    private Customer customer;
 	    
+	    @OneToOne(cascade = CascadeType.ALL)
+		@JoinColumn(name = "ADDRESS_ID1")
 	    private Address billingAddress;
-	    private Address shoppingAddress;
+	    
+	    @OneToOne(cascade = CascadeType.ALL)
+		@JoinColumn(name = "ADDRESS_ID2")
+	    private Address shippingAddress;
 	    
 	  
 
@@ -99,12 +112,12 @@ public class Order {
 			this.billingAddress = billingAddress;
 		}
 
-		public Address getShoppingAddress() {
-			return shoppingAddress;
+		public Address getShippingAddress() {
+			return shippingAddress;
 		}
 
-		public void setShoppingAddress(Address shoppingAddress) {
-			this.shoppingAddress = shoppingAddress;
+		public void setShippingAddress(Address shippingAddress) {
+			this.shippingAddress = shippingAddress;
 		}
 	    
 	    

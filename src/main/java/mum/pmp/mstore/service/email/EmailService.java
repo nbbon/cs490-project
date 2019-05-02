@@ -47,6 +47,13 @@ public class EmailService implements EmailServiceInterface {
 		Message msg = message(emailAddress);
 		Transport.send(msg);
 	}
+	
+	@Override
+	public void sendEmail(String emailAddresses, String subject, String body) throws AddressException, MessagingException {
+		Address emailAddress = new InternetAddress(emailAddresses);// {stanley, store};
+		Message msg = message(emailAddress, subject, body);
+		Transport.send(msg);
+	}
 
 	@Override
 	public void sendEmail(String[] emailAddresses) throws AddressException, MessagingException {
@@ -117,6 +124,28 @@ public class EmailService implements EmailServiceInterface {
 		msg.setSentDate(new Date());
 		MimeBodyPart messageBodyPart = new MimeBodyPart();
 		messageBodyPart.setContent("Our test email", "text/html");
+
+		Multipart multipart = new MimeMultipart();
+		multipart.addBodyPart(messageBodyPart);
+		msg.setContent(multipart);
+
+		return msg;
+
+	}
+	
+	private Message message(Address emailAddress, String subject, String body) throws AddressException, MessagingException {
+		Session session = sessionEmailAuth();
+		Message msg = new MimeMessage(session);
+
+		msg.setFrom(new InternetAddress("storemanagement2019@gmail.com", false));
+
+		msg.setRecipient(Message.RecipientType.TO, emailAddress);
+
+		msg.setSubject(subject);
+		msg.setContent("Email module(customize).", "text/html");
+		msg.setSentDate(new Date());
+		MimeBodyPart messageBodyPart = new MimeBodyPart();
+		messageBodyPart.setContent(body, "text/html");
 
 		Multipart multipart = new MimeMultipart();
 		multipart.addBodyPart(messageBodyPart);
