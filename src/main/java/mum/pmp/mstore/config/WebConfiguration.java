@@ -1,4 +1,4 @@
-package mum.pmp.mstore.auth;
+package mum.pmp.mstore.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

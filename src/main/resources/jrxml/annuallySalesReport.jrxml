@@ -1,0 +1,272 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN"
+   "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+
+<jasperReport xmlns = "http://jasperreports.sourceforge.net/jasperreports"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation = "http://jasperreports.sourceforge.net/jasperreports
+   http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+   name = "jasper_report_template" pageWidth = "690"
+   pageHeight = "580" columnWidth = "555" leftMargin = "20" rightMargin = "20"
+   topMargin = "20" bottomMargin = "20">
+  
+	<parameter name="title" class="java.lang.String" />
+	<parameter name="period" class="java.lang.String" />
+	<parameter name="startDate" class="java.lang.String" />
+	<parameter name="endDate" class="java.lang.String" />
+	<parameter name="itemId" class="java.lang.String" />
+	<parameter name="itemName" class="java.lang.String" />
+	<parameter name="year" class="java.lang.String" />
+	<parameter name="totalSales" class="java.lang.String" />
+	<parameter name="total" class="java.lang.String" />
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="itemId" class="java.lang.String"/>
+	<field name="itemName" class="java.lang.String"/>
+	<field name="yearSales" class="java.lang.Integer"/>
+	<field name="totalSales" class="java.lang.Integer"/>
+	<field name="total" class="java.lang.Double"/>
+	
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	
+	<title>
+		<band height="39" splitType="Stretch">
+	   		<textField>
+	   			<reportElement x="0" y="0" width="690" height="36"/>
+	   			<box>
+		     		<pen lineWidth="0"/>
+		 			<bottomPen lineWidth="0.5"/>
+		    	</box>
+			    <textElement textAlignment="Center" verticalAlignment="Middle">
+			    	<font size="24" isBold="true" />
+			    </textElement>
+			    <textFieldExpression class="java.lang.String">
+					<![CDATA[$P{title}]]>
+				</textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="36" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="8" width="80" height="20"/>
+		    	<textElement textAlignment="Left" verticalAlignment="Middle">
+		     		<font size="12" isBold="false"/>
+		    	</textElement>
+		    	<textFieldExpression class="java.lang.String">
+					<![CDATA[$P{period}]]>
+				</textFieldExpression>
+	   		</textField>
+			<textField>
+	   			<reportElement x="80" y="8" width="75" height="20"/>
+			    <textElement textAlignment="Center" verticalAlignment="Middle">
+			    	<font size="12" isBold="false" />
+			    </textElement>
+			    <textFieldExpression class="java.lang.String">
+					<![CDATA[$P{startDate}]]>
+				</textFieldExpression>
+			</textField>
+			<staticText>
+	   			<reportElement x="155" y="8" width="4" height="20"/>
+			    <textElement textAlignment="Center" verticalAlignment="Middle">
+			    	<font size="12" isBold="false" />
+			    </textElement>
+			    <text><![CDATA[-]]></text>
+			</staticText>
+			<textField>
+	   			<reportElement x="159" y="8" width="75" height="20"/>
+			    <textElement textAlignment="Center" verticalAlignment="Middle">
+			    	<font size="12" isBold="false" />
+			    </textElement>
+			    <textFieldExpression class="java.lang.String">
+					<![CDATA[$P{endDate}]]>
+				</textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="110" height="24"/>
+		    	<box>
+		     		<pen lineWidth="0.5"/>
+		 			<topPen lineWidth="0.5"/>
+		 			<leftPen lineWidth="0.5"/>
+		 			<bottomPen lineWidth="0.5"/>
+		 			<rightPen lineWidth="0.5"/>
+		    	</box>
+		 		<textElement textAlignment="Center" verticalAlignment="Middle">
+		     		<font size="12" isBold="true"/>
+		    	</textElement>
+		    	<textFieldExpression class="java.lang.String">
+		    		<![CDATA[$P{itemId}]]>
+		    	</textFieldExpression>
+	   		</textField>
+	   		<textField>
+	    		<reportElement x="110" y="0" width="170" height="24"/>
+	    		<box>
+				     <pen lineWidth="0.5"/>
+				     <topPen lineWidth="0.5"/>
+				     <leftPen lineWidth="0.5"/>
+				     <bottomPen lineWidth="0.5"/>
+				     <rightPen lineWidth="0.5"/>
+	    		</box>
+	    		<textElement textAlignment="Center" verticalAlignment="Middle">
+	     			<font size="12" isBold="true"/>
+	    		</textElement>
+	    		<textFieldExpression class="java.lang.String">
+	    			<![CDATA[$P{itemName}]]>
+	    		</textFieldExpression>
+	   		</textField>
+	   		<textField>
+	    		<reportElement x="280" y="0" width="110" height="24"/>
+	    		<box>
+				     <pen lineWidth="0.5"/>
+				     <topPen lineWidth="0.5"/>
+				     <leftPen lineWidth="0.5"/>
+				     <bottomPen lineWidth="0.5"/>
+				     <rightPen lineWidth="0.5"/>
+	    		</box>
+	    		<textElement textAlignment="Center" verticalAlignment="Middle">
+	     			<font size="12" isBold="true"/>
+	    		</textElement>
+	    		<textFieldExpression class="java.lang.String">
+					<![CDATA[$P{year}]]>
+				</textFieldExpression>	
+	   		</textField>
+		   <textField>
+			    <reportElement x="390" y="0" width="140" height="24"/>
+			    <box>
+				     <pen lineWidth="0.5"/>
+				     <topPen lineWidth="0.5"/>
+				     <leftPen lineWidth="0.5"/>
+				     <bottomPen lineWidth="0.5"/>
+				     <rightPen lineWidth="0.5"/>
+			    </box>
+			    <textElement textAlignment="Center" verticalAlignment="Middle">
+					 <font size="12" isBold="true"/>
+			    </textElement>
+			    <textFieldExpression class="java.lang.String">
+			    	<![CDATA[$P{totalSales}]]>
+			    </textFieldExpression>
+	   		</textField>
+	   		<textField>
+			    <reportElement x="530" y="0" width="160" height="24"/>
+			    <box>
+				     <pen lineWidth="0.5"/>
+				     <topPen lineWidth="0.5"/>
+				     <leftPen lineWidth="0.5"/>
+				     <bottomPen lineWidth="0.5"/>
+				     <rightPen lineWidth="0.5"/>
+			    </box>
+			    <textElement textAlignment="Center" verticalAlignment="Middle">
+					 <font size="12" isBold="true"/>
+			    </textElement>
+			    <textFieldExpression class="java.lang.String">
+			    	<![CDATA[$P{total}]]>
+			    </textFieldExpression>
+	   		</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="110" height="16"/>
+				<box>
+				     <pen lineWidth="0.5"/>
+				     <topPen lineWidth="0.5"/>
+				     <leftPen lineWidth="0.5"/>
+				     <bottomPen lineWidth="0.5"/>
+				     <rightPen lineWidth="0.5"/>
+			    </box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+			     	<font size="12"  isBold="false"/>
+			    </textElement>
+				<textFieldExpression><![CDATA[$F{itemId}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="0" width="170" height="16"/>
+				<box>
+				     <pen lineWidth="0.5"/>
+				     <topPen lineWidth="0.5"/>
+				     <leftPen lineWidth="0.5"/>
+				     <bottomPen lineWidth="0.5"/>
+				     <rightPen lineWidth="0.5"/>
+			    </box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+			     	<font size="12"  isBold="false"/>
+			    </textElement>
+				<textFieldExpression><![CDATA[$F{itemName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="0" width="110" height="16"/>
+				<box>
+				     <pen lineWidth="0.5"/>
+				     <topPen lineWidth="0.5"/>
+				     <leftPen lineWidth="0.5"/>
+				     <bottomPen lineWidth="0.5"/>
+				     <rightPen lineWidth="0.5"/>
+			    </box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+			     	<font size="12"  isBold="false"/>
+			    </textElement>
+				<textFieldExpression><![CDATA[$F{yearSales}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="0" width="140" height="16"/>
+				<box>
+				     <pen lineWidth="0.5"/>
+				     <topPen lineWidth="0.5"/>
+				     <leftPen lineWidth="0.5"/>
+				     <bottomPen lineWidth="0.5"/>
+				     <rightPen lineWidth="0.5"/>
+			    </box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+			     	<font size="12"  isBold="false"/>
+			    </textElement>
+				<textFieldExpression><![CDATA[$F{totalSales}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="530" y="0" width="160" height="16"/>
+				<box>
+				     <pen lineWidth="0.5"/>
+				     <topPen lineWidth="0.5"/>
+				     <leftPen lineWidth="0.5"/>
+				     <bottomPen lineWidth="0.5"/>
+				     <rightPen lineWidth="0.5"/>
+			    </box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+			     	<font size="12"  isBold="false"/>
+			    </textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>	
+		</band>
+	</detail>
+		
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="16" splitType="Stretch">
+			<line>
+                <reportElement x="0" y="0" width="690" height="1"/>
+                <graphicElement>
+                    <pen lineWidth="0.5"/>
+                </graphicElement>
+            </line>
+		    <staticText>
+				<reportElement x="0" y="0" width="690" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+			     	<font size="10"  isBold="false"/>
+			    </textElement>
+				<text><![CDATA[Online Branded Shop]]></text>
+			</staticText>	
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="16" splitType="Stretch"/>
+	</summary>
+</jasperReport>
