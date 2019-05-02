@@ -45,11 +45,5 @@ public class UserService implements  IUserService{
 		return userRepository.getOne(Long.parseLong(userId));
 	}
 
-	@Override
-	public User getUserByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
    
 }

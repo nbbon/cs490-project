@@ -2,16 +2,17 @@ package mum.pmp.mstore.domain;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 
 @Entity
 public class Product implements Serializable {
@@ -28,15 +29,31 @@ public class Product implements Serializable {
 	private String productName;
 	private int price;
 	private String description;
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne
+	@JoinColumn(name = "STOCK_ID")
 	private Stock stock;
 	@ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
 	private Category category;
 	
 
-	public Product() {	}
+	
 	
 		
+	public Product() {
+		super();
+	}
+
+
+	public Product(String productNumber, String productName, int price, String description) {
+		super();
+		this.productNumber = productNumber;
+		this.productName = productName;
+		this.price = price;
+		this.description = description;
+	}
+
+
 	public Integer getId() {
 		return id;
 	}

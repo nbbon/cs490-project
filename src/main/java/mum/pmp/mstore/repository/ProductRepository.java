@@ -9,5 +9,6 @@ import mum.pmp.mstore.domain.Product;
 public interface ProductRepository extends CrudRepository<Product,Integer>{
 	
 	Product findByProductNumber(String productNumber);
+	
 
 }

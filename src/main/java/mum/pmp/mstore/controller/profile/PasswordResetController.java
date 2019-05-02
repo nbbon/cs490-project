@@ -4,6 +4,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import mum.pmp.mstore.model.Email;
 import mum.pmp.mstore.model.Password;
 import mum.pmp.mstore.model.Profile;
+import mum.pmp.mstore.model.User;
+import mum.pmp.mstore.repository.profile.UserRepository;
 import mum.pmp.mstore.service.email.EmailService;
 import mum.pmp.mstore.service.security.ProfileService;
+import mum.pmp.mstore.service.security.UserService;
 
 @Controller
 public class PasswordResetController {
@@ -23,10 +27,23 @@ public class PasswordResetController {
 	ProfileService profileService;
 	
 	@Autowired
+	UserRepository userRepository;
+	
+	@Autowired
 	EmailService emailService;
+	
+	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
 	@Autowired
 	Email email;
+	
+	@GetMapping(value = "/password/forgotpassword")
+	public String enterEmailToResetPassword2(Model model, @ModelAttribute("email") Email emailParam) throws AddressException, MessagingException
+	{
+		model.addAttribute("emailPerson", email);
+		return "password/enter_email";
+		
+	}
 	
 	@GetMapping(value = "/forgotpassword")
 	public String enterEmailToResetPassword(Model model, @ModelAttribute("email") Email emailParam) throws AddressException, MessagingException
@@ -92,9 +109,15 @@ public class PasswordResetController {
 			return "password/forgot_password";
 		}
 		
-		profile.setPassword(passwordObj.getPassword());
+		profile.setPassword(passwordEncoder.encode(passwordObj.getPassword()));
 		profile.setToken(null);
 		profileService.saveProfile(profile);
+		
+		//set for user details.
+		User user = userRepository.findByUsername(profile.getEmail());
+		System.out.println("user >>" + user);
+		user.setPassword(passwordEncoder.encode(passwordObj.getPassword()));
+		userRepository.save(user);
 		
 		return "password/forgot_password";
 	}

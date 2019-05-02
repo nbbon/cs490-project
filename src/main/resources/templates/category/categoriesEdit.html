@@ -15,7 +15,7 @@
   
         <h1>Category</h1>
 
-        <form class="form-group" action="/categoriesEdit" th:action="@{/categoriesEdit}" method="post">
+        <form class="form-group" action="/category/categoriesEdit" th:action="@{/category/categoriesEdit}" method="post">
             <input th:type="hidden" name="id" th:field="${categories.categoryID}" />
             <div class="form-group">
                 <label for="categoryName">CategoryName</label>
@@ -26,7 +26,7 @@
                 <textarea class="form-control" id="description" th:field="${categories.description}"></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Add Category</button>
-            <a href="#" th:href="@{/}" class="btn btn-danger" role="button">Cancel</a>
+            <a href="#" th:href="@{/category}" class="btn btn-danger" role="button">Cancel</a>
         </form>
 
     </div>

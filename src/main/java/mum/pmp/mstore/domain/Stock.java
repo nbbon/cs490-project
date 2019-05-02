@@ -2,10 +2,13 @@ package mum.pmp.mstore.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Stock implements Serializable{
@@ -15,9 +18,13 @@ public class Stock implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
+    @Column(name = "STOCK_ID")
 	private int id;
 	private int quantity;
 	private String locationCode;
+	
+	 @OneToOne(mappedBy = "stock", cascade = CascadeType.ALL)
+	 private Product product;;
 	
 	public Stock() {
 		

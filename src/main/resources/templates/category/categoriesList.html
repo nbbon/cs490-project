@@ -17,7 +17,7 @@
         <h1>Categories</h1>
 
         <p>
-            <a href="/categoriesEdit" th:href="@{/categoriesEdit}">Add Category</a>
+            <a href="/category/categoriesEdit" th:href="@{/category/categoriesEdit}">Add Category</a>
         </p>
 
         <table class="table">
@@ -37,8 +37,8 @@
                     <td th:text="${categories.description}">Test</td>
                     
                     <td>
-                        <a href="/categoriesEdit/1" th:href="@{/categoriesEdit/__${categories.categoryID}__}">Update</a>
-                        <a href="/categoriesDelete/1" th:href="@{/categoriesDelete/__${categories.categoryID}__}">Remove</a>
+                        <a href="/category/categoriesEdit/1" th:href="@{/category/categoriesEdit/__${categories.categoryID}__}">Update</a>
+                        <a href="/category/categoriesDelete/1" th:href="@{/category/categoriesDelete/__${categories.categoryID}__}">Remove</a>
                     </td>
                 </tr>
             </tbody>
