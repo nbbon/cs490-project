@@ -50,6 +50,17 @@ public class HomeController {
 				model.addAttribute("userdetails", user);
 				model.addAttribute("role", authorizedRole());
 			}
+			System.out.println("......User Role ......." +authorizedRole());
+			// When user login set his status to 1 to enable him if he was previously disabled by himself.
+			if(user != null && !authorizedRole().equals("ROLE_SUPER_ADMIN"))
+			{
+				Profile profile = profileService.findByEmail(user.getUsername());
+				if(profile.getStatus() == 0)
+				{
+					profile.setStatus((byte)1);
+					profileService.saveProfile(profile);
+				}
+			}
 		}
 		return userHome();
 	}
@@ -87,17 +98,6 @@ public class HomeController {
 		UserDetails user = null;
 		if (auth.getPrincipal() != null)
 			user = (UserDetails) auth.getPrincipal();
-		
-		// When user login set his status to 1 to enable him if he was previously disabled by himself.
-		if(user != null)
-		{
-			Profile profile = profileService.findByEmail(user.getUsername());
-			if(profile.getStatus() == 0)
-			{
-				profile.setStatus((byte)1);
-				profileService.saveProfile(profile);
-			}
-		}
 		
 		return user;
 	}

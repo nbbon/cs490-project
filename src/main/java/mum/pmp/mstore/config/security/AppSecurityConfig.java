@@ -60,16 +60,12 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 			.antMatchers("/login").permitAll()
 			.antMatchers("/index").permitAll()
-
 			.antMatchers("/admins/**", "/admin/approve/**").hasRole("SUPER_ADMIN")
 			.antMatchers("/admin/**").hasRole("ADMIN")
 			.antMatchers("/vendor/**").hasRole("VENDOR")
-
 			.antMatchers("/customer/**").hasRole("CUSTOMER")
-				/*
-				 * .antMatchers("/products" , "/products/**").hasRole("VENDOR")
-				 		.antMatchers("/category" , "/category/**").hasRole("ADMIN")
-				 		*/	
+			.antMatchers("/products" , "/products/**").hasRole("VENDOR")
+			.antMatchers("/category" , "/category/**").hasRole("ADMIN")
 			.anyRequest().authenticated()
 			.and()
 			.formLogin()
@@ -81,7 +77,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 			.logoutSuccessUrl("/logout-success")
 			.permitAll();
-			
 	}
 	
 	@Autowired

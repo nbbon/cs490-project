@@ -19,7 +19,7 @@ import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.model.Role;
 import mum.pmp.mstore.model.User;
 import mum.pmp.mstore.model.Vendor;
-import mum.pmp.mstore.repository.profile.AdminDAO;
+import mum.pmp.mstore.repository.profile.ApprovalDAO;
 import mum.pmp.mstore.repository.profile.ProfileRepository;
 import mum.pmp.mstore.repository.profile.RoleRepository;
 import mum.pmp.mstore.repository.profile.UserRepository;
@@ -40,7 +40,7 @@ public class ProfileService {
 	private RoleRepository roleRepository;
 
 	@Autowired
-	private AdminDAO adminDAO;
+	private ApprovalDAO adminDAO;
 	
 	@Autowired
 	private EmailService emailService;
@@ -67,8 +67,12 @@ public class ProfileService {
 		return profileRepository.findAll();
 	}
 
-	public List<Admin> findAllAdmins() {
-		return adminDAO.findAllAdmins();
+	public List<Admin> findNewAdmins() {
+		return adminDAO.findNewAdmins();
+	}
+	
+	public List<Vendor> findNewVendors() {
+		return adminDAO.findNewVendors();
 	}
 
 	public boolean signup(Profile profile, User_Type user_type) {
@@ -82,8 +86,7 @@ public class ProfileService {
 			Role userRole = roleRepository.findByRole(user_type.toString());
 			user.setUsername(profile.getEmail());
 			user.addRole(userRole);
-			if (userRole.getRole().equals("ADMIN")) {
-				// Disable admin until Super admin approve the user.
+			if (userRole.getRole().equals("ADMIN") || userRole.getRole().equals("VENDOR")) {
 				user.setEnabled(false);
 				profile.setEnable(false);
 			} else {
@@ -106,6 +109,7 @@ public class ProfileService {
 		return profileRepository.findByToken(token);
 	}
 
+	//Super admin to approve admin user.
 	public void approveAdmin(String adminEmail, String action) throws AddressException, MessagingException {
 		
 		Profile adminProfile = findByEmail(adminEmail);
@@ -123,10 +127,39 @@ public class ProfileService {
 		saveProfile(adminProfile);
 		
 		// send acknowledge email to admin
-		
-		emailService.sendEmail(adminEmail);
+		String subject = "M-Store admin Registration confirmation";
+		String body = "Your admin account " + adminEmail + " has been successfully approved. You may login to system using your email and password.";
+		emailService.sendEmail(adminEmail, subject, body);
 		
 	}
+	
+	//Admin to approve vendor user.
+	public void approveVendor(String adminEmail, String action) throws AddressException, MessagingException {
+		
+		Profile adminProfile = findByEmail(adminEmail);
+		User user = userRepository.findByUsername(adminEmail);
+		
+		System.out.println("....approveVendor.....>>>" + adminEmail + ", " + action);
+		if(action.equals("Approve")) {
+			adminProfile.setEnable(true);
+			user.setEnabled(true);
+		}else if(action.equals("Reject"))
+		{
+			adminProfile.setEnable(false);
+			user.setEnabled(false);
+		}
+		userRepository.save(user);
+		saveProfile(adminProfile);
+		
+		// send acknowledge email to admin
+		String subject = "M-Store admin Registration confirmation";
+		String body = "Your admin account " + adminEmail + " has been successfully approved. You may login to system using your email and password.";
+		emailService.sendEmail(adminEmail, subject, body);
+		
+		System.out.println("Approved successfully.");
+		
+	}
+	
 
 	public boolean updateVendor(Vendor vendor) {
 		Profile person = findByEmail(vendor.getEmail());

@@ -15,14 +15,6 @@
 <div th:replace="fragments/menu :: menu"></div>
 	
     <form class="form-group" role="form" method="POST" th:action="@{/login}">
-    	  <th:block th:if="${#session != null && #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}">
-             <div th:if= "${#request.getParameter('error') == 'true'}"
-                style="color: red; margin: 10px 0px;">
-                Login Failed!!!<br /> Reason :
-                <span th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}"></span>
-             </div>
-         </th:block>
-          
         <div class="form-group">
             <div class="col-md-3"></div>
             <div class="col-md-6">
@@ -32,9 +24,10 @@
         </div>
         <div class="row">
             <div class="col-md-3"></div>
-            <div class="col-md-6">
-                <div th:if="${param.error}" class="text-danger align-middle">
-                    <i class="fa fa-close"></i> Invalid username and password.
+            <div class="col-md-6" align="justify">
+                <div th:if="${param.error}" class="text-danger align-right">
+                    <i> Login Failed!!! </i>
+              	    <span th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}"></span>
                 </div>
             </div>
         </div>
