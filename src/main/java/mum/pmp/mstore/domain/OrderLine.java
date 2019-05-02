@@ -23,8 +23,4 @@ public class OrderLine {
 		this.product = product;
 	}
 	
-	
-	
-	
-	
 }
