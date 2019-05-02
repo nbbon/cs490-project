@@ -64,6 +64,7 @@ public class ApprovalController {
 	
 	@PostMapping("/vendor/approve/{vendorEmail}")
 	public String approveVendor(@PathVariable("vendorEmail") String vendorEmail, @RequestParam(value="action", required=true) String action) throws AddressException, MessagingException {
+		System.out.println("In vendor approval..");
 		profileService.approveVendor(vendorEmail, action);
 		return "redirect:/admin/vendors";
 	}

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import mum.pmp.mstore.config.security.Listener;
+import mum.pmp.mstore.model.Customer;
 import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.model.Vendor;
 import mum.pmp.mstore.service.security.ProfileService;
@@ -77,5 +78,19 @@ public class VendorController {
 			return "/secure/login";
 		else
 			return "redirect:/vendor/update";
+	}
+	
+	@PostMapping("/vendor/disable")
+	public String disableVendor(@ModelAttribute("vendor") Vendor vendor)
+	{
+		System.out.println(vendor);
+		System.out.println(vendor.getEmail());
+		
+		Profile profile = profileService.findByEmail(vendor.getEmail());
+		System.out.println("My Profile: "+profile);
+		byte status = 0;
+		profile.setStatus(status);
+		profileService.saveProfile(profile);
+		return "redirect:/login";
 	}
 }

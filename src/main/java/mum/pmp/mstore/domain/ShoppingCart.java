@@ -1,44 +1,34 @@
-//package mum.pmp.mstore.domain;
-//
-//import java.util.ArrayList;
-//
-//import javax.persistence.Entity;
-//import javax.persistence.GeneratedValue;
-//import javax.persistence.GenerationType;
-//import javax.persistence.Id;
-//import javax.persistence.JoinColumn;
-//import javax.persistence.OneToMany;
-//
-//@Entity
-//public class ShoppingCart {
-//
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.AUTO)
-//	private Long cartId;
-//	@OneToMany
-//	@JoinColumn(name = "cartId")
-//	private ArrayList<ShoppingCartLine>  shoppingCartLines;
-//	
-//
-//	ShoppingCart() {
-//	}
-//
-//	public Long getCartId() {
-//		return cartId;
-//	}
-//
-//	public void setCartId(Long cartId) {
-//		this.cartId = cartId;
-//	}
-//
-//	public ArrayList<ShoppingCartLine> getShoppingCartLines() {
-//		return shoppingCartLines;
-//	}
-//
-//	public void setShoppingCartLines(ArrayList<ShoppingCartLine> shoppingCartLines) {
-//		this.shoppingCartLines = shoppingCartLines;
-//	}
-//
-//	
-//
-//}
+
+package mum.pmp.mstore.domain;
+
+import java.util.ArrayList;
+
+public class ShoppingCart {
+	private String cartid;
+    private double totalPrice;
+    private ArrayList<ShoppingCartLine> cartlineList = new ArrayList<>();
+	public String getCartid() {
+		return cartid;
+	}
+	public void setCartid(String cartid) {
+		this.cartid = cartid;
+	}
+	public double getTotalPrice() {
+		return totalPrice;
+	}
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+	public ArrayList<ShoppingCartLine> getCartlineList() {
+		return cartlineList;
+	}
+	public void setCartlineList(ArrayList<ShoppingCartLine> cartlineList) {
+		this.cartlineList = cartlineList;
+	}
+    
+    
+    
+    
+
+
+}

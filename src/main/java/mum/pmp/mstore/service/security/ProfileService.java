@@ -134,29 +134,31 @@ public class ProfileService {
 	}
 	
 	//Admin to approve vendor user.
-		public void approveVendor(String adminEmail, String action) throws AddressException, MessagingException {
-			
-			Profile adminProfile = findByEmail(adminEmail);
-			User user = userRepository.findByUsername(adminEmail);
-			
-			if(action.equals("Approve")) {
-				adminProfile.setEnable(true);
-				user.setEnabled(true);
-			}else if(action.equals("Reject"))
-			{
-				adminProfile.setEnable(false);
-				user.setEnabled(false);
-			}
-			userRepository.save(user);
-			saveProfile(adminProfile);
-			
-			// send acknowledge email to admin
-			String subject = "M-Store admin Registration confirmation";
-			String body = "Your admin account " + adminEmail + " has been successfully approved. You may login to system using your email and password.";
-			emailService.sendEmail(adminEmail, subject, body);
-			
+	public void approveVendor(String adminEmail, String action) throws AddressException, MessagingException {
+		
+		Profile adminProfile = findByEmail(adminEmail);
+		User user = userRepository.findByUsername(adminEmail);
+		
+		System.out.println("....approveVendor.....>>>" + adminEmail + ", " + action);
+		if(action.equals("Approve")) {
+			adminProfile.setEnable(true);
+			user.setEnabled(true);
+		}else if(action.equals("Reject"))
+		{
+			adminProfile.setEnable(false);
+			user.setEnabled(false);
 		}
-	
+		userRepository.save(user);
+		saveProfile(adminProfile);
+		
+		// send acknowledge email to admin
+		String subject = "M-Store admin Registration confirmation";
+		String body = "Your admin account " + adminEmail + " has been successfully approved. You may login to system using your email and password.";
+		emailService.sendEmail(adminEmail, subject, body);
+		
+		System.out.println("Approved successfully.");
+		
+	}
 	
 
 	public boolean updateVendor(Vendor vendor) {

@@ -15,7 +15,7 @@
      
         <h1>Product</h1>
 
-        <form class="form-group" action="/productsEdit" th:action="@{/productsEdit}" method="post">
+        <form class="form-group" action="/products/productsEdit" th:action="@{/products/productsEdit}" method="post">
             <input th:type="hidden" name="id" th:field="${products.id}" />
             <div class="form-group">
                 <label for="productNumber">ProductNumber</label>
