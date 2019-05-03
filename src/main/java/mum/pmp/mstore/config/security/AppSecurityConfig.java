@@ -52,7 +52,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 					"/forgotpassword", "/resetpassword", "/user/**",
 					"/signup", "/vendor/signup", "/admin/signup", "/customer/signup",
 					"/password/forgotpassword", "/forgotpassword", "/sendemailforgotpassword", "/resetpassword"
-					,"/products/**", "/category/**" , "/shoppingCart/**", "/reports/**")
+					,"/products/**", "/category/**" , "/shoppingCart/**", "/catalogs","/reports/**")
 			.permitAll();
 		
 		http.csrf().disable()		//disable cross-side scripting
