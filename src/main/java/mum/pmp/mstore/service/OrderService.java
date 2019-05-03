@@ -1,14 +1,12 @@
 
 package mum.pmp.mstore.service;
 
-import javax.persistence.Column;
-
 import mum.pmp.mstore.domain.Order;
 import mum.pmp.mstore.domain.ShoppingCart;
 import mum.pmp.mstore.model.Address;
 
 public interface OrderService {
-	 public void createOrder(ShoppingCart shoppingCart);
+	 public Order createOrder(ShoppingCart shoppingCart);
 	 public Order getOrder(String orderNumber);
 	 public void setCustomer(String orderNumber, String email) ;
 	    

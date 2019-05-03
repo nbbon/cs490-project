@@ -52,7 +52,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 					"/forgotpassword", "/resetpassword", "/user/**",
 					"/signup", "/vendor/signup", "/admin/signup", "/customer/signup",
 					"/password/forgotpassword", "/forgotpassword", "/sendemailforgotpassword", "/resetpassword"
-					,"/products/**", "/category/**")
+					,"/products/**", "/category/**" , "/shoppingCart/**")
 
 			.permitAll();
 		
@@ -64,8 +64,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/admin/**").hasRole("ADMIN")
 			.antMatchers("/vendor/**").hasRole("VENDOR")
 			.antMatchers("/customer/**").hasRole("CUSTOMER")
-			.antMatchers("/products" , "/products/**").hasRole("VENDOR")
-			.antMatchers("/category" , "/category/**").hasRole("ADMIN")
+//			.antMatchers("/products" , "/products/**").hasRole("VENDOR")
+//			.antMatchers("/category" , "/category/**").hasRole("ADMIN")
 			.anyRequest().authenticated()
 			.and()
 			.formLogin()
