@@ -22,62 +22,62 @@ import mum.pmp.mstore.service.ProductService;
 
 @Controller
 public class ProductController {
-	
+
 	@Autowired
 	ProductService productService;
-	
-	@Autowired 
-	CategoryService categoryService;
-	
-	
 
-	  @GetMapping(value="/products")
-	    public String listProducts(Model model) {
-		  
-	        model.addAttribute("productsList", productService.getProducts());
-	        return "product/productsList";
-	    }
-	
-	  
-	  @GetMapping(value={"/products/productsEdit","/productsEdit/{id}"})
-	    public String productsEdit(Model model, @PathVariable(required = false, name = "id") Integer id) {
-	        if (null != id) {
-	        	List<Category> categories = categoryService.getCategories();
-	        	model.addAttribute("categories", categories);
-	            model.addAttribute("products", productService.getProduct(id));
-	        } else {
-				        	
-	        	List<Category> categories = categoryService.getCategories();
-	        	model.addAttribute("categories", categories);
-	        	
-	            model.addAttribute("products", new Product());
-	        }
-	        return "product/productsEdit";
-	    }
-	
-	
-	  @PostMapping(value="/products/productsEdit")
-	    public String addproducts(@ Valid @ModelAttribute("products")  Product product, BindingResult bindingResult, Model model) {
-		  if (bindingResult.hasErrors()) {
-			  return "product/productsEdit";
-		}	
-		  
-		  List<Category> categories = categoryService.getCategories();
-		  model.addAttribute("categories", categories);
-		  productService.addProduct(product);		
-	        return "product/productsList";
-	    }
-	  
-	  	  
-	  @RequestMapping(value="/products/productsDelete/{id}", method=RequestMethod.GET)
-	    public String productsDelete(Model model, @PathVariable(required = true, name = "id") Integer id) {
-		     productService.deleteProduct(id);       
-			model.addAttribute("productsList", productService.getProducts());
-	        return "product/productsList";
-	        
-	        
-	        
-	    }
-	
-	
+	@Autowired
+	CategoryService categoryService;
+
+	@GetMapping(value = "/products")
+	public String listProducts(Model model) {
+
+		model.addAttribute("productsList", productService.getProducts());
+		return "product/productsList";
+	}
+
+	@GetMapping(value = { "/products/productsEdit", "/productsEdit/{id}" })
+	public String productsEdit(Model model, @PathVariable(required = false, name = "id") Integer id) {
+		if (null != id) {
+			List<Category> categories = categoryService.getCategories();
+			model.addAttribute("categories", categories);
+			model.addAttribute("products", productService.getProduct(id));
+		} else {
+
+			List<Category> categories = categoryService.getCategories();
+			model.addAttribute("categories", categories);
+
+			model.addAttribute("products", new Product());
+		}
+		return "product/productsEdit";
+	}
+
+	@PostMapping(value = "/products/productsEdit")
+	public String addproducts(@Valid @ModelAttribute("products") Product product, BindingResult bindingResult,
+			Model model) {
+		if (bindingResult.hasErrors()) {
+			return "product/productsEdit";
+		}
+
+		List<Category> categories = categoryService.getCategories();
+		model.addAttribute("categories", categories);
+		productService.addProduct(product);
+		return "product/productsList";
+	}
+
+	@RequestMapping(value = "/products/productsDelete/{id}", method = RequestMethod.GET)
+	public String productsDelete(Model model, @PathVariable(required = true, name = "id") Integer id) {
+		productService.deleteProduct(id);
+		model.addAttribute("productsList", productService.getProducts());
+		return "product/productsList";
+
+	}
+
+	@GetMapping(value = "/allproducts")
+	public String getAllProducts(Model model) {
+
+		model.addAttribute("productsList", productService.getProducts());
+		return "product/allProducts";
+	}
+
 }
