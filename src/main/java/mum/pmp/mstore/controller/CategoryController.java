@@ -26,6 +26,7 @@ public class CategoryController {
 	        return "category/categoriesList";
 	    }
 	
+//	  public String vendorCategories()
 	
 	  @GetMapping(value={"/categoriesEdit","/categoriesEdit/{id}"})
 	    public String editCategory(Model model, @PathVariable(required = false, name = "id") Integer id) {
