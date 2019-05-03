@@ -54,7 +54,7 @@
             <td colspan="2" class="hidden-xs"></td>
             <td class="hidden-xs text-center"><strong>Total <p th:text="${total}"></p></strong></td>
             <td>
-                <form th:action="@{/placeOrder}" method="POST" id="placeOrder-btn">
+                <form th:action="@{/shoppingCart/placeOrder}" method="POST" id="placeOrder-btn">
                     <button th:if="${products != null and products.entrySet() != null}" class="btn btn-default btn-block">Place Order <i class="fa fa-angle-right"></i></button>
                 </form>
             </td>

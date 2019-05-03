@@ -26,9 +26,4 @@ public class ShoppingCart {
 		this.cartlineList = cartlineList;
 	}
     
-    
-    
-    
-
-
 }

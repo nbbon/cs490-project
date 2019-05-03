@@ -14,6 +14,8 @@ public class OrderFactory {
 			oline.setProduct(product);
 			oline.setQuantity(cline.getQuantity());
 			order.addOrderLine(oline);
+			
+			System.out.println("In create order. .....");
 		}
 		return order;
 

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import mum.pmp.mstore.domain.ShoppingCart;
+import mum.pmp.mstore.domain.Order;
 import mum.pmp.mstore.exception.NotEnoughProductsInStockException;
 import mum.pmp.mstore.service.ProductService;
 import mum.pmp.mstore.service.ShoppingCartService;
@@ -48,10 +48,10 @@ public class ShoppingCartController {
         return shoppingCart();
     }
 
-    @GetMapping("/shoppingCart/checkout")
+    @PostMapping("/shoppingCart/placeOrder")
     public ModelAndView checkout() {
         try {
-            shoppingCartService.checkout();
+           shoppingCartService.checkout();
         } catch (NotEnoughProductsInStockException e) {
             return shoppingCart().addObject("outOfStockMessage", e.getMessage());
         }
@@ -59,9 +59,9 @@ public class ShoppingCartController {
     }
     
     
-    @PostMapping("/placeOrder")
-	public String createOrder(ShoppingCart shoppingCart) {
-		System.out.println("Shopping Cart :");
-    	return "Place an order.";
-	}
+//    @PostMapping("/shoppingCart/placeOrder")
+//	public String createOrder(ShoppingCart shoppingCart) {
+//		System.out.println("Shopping Cart :");
+//    	return "Place an order.";
+//	}
 }
