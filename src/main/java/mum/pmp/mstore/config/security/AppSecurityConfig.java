@@ -47,19 +47,24 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers("/webjars/**", "/css/**", "/images/**" , 
-					"/signup", "/vendor/signup", "/admin/signup", "/customer/signup")
+
+			.antMatchers("/webjars/**", "/static/**", "/css/**", "/images/**" , "/",
+					"/forgotpassword", "/resetpassword", "/user/**",
+					"/signup", "/vendor/signup", "/admin/signup", "/customer/signup",
+					"/password/forgotpassword", "/forgotpassword", "/sendemailforgotpassword", "/resetpassword"
+					,"/products/**", "/category/**" , "/shoppingCart/**", "/reports/**")
 			.permitAll();
 		
 		http.csrf().disable()		//disable cross-side scripting
 			.authorizeRequests()
 			.antMatchers("/login").permitAll()
 			.antMatchers("/index").permitAll()
+			.antMatchers("/admins/**", "/admin/approve/**").hasRole("SUPER_ADMIN")
 			.antMatchers("/admin/**").hasRole("ADMIN")
 			.antMatchers("/vendor/**").hasRole("VENDOR")
 			.antMatchers("/customer/**").hasRole("CUSTOMER")
-			.antMatchers("/products" , "/products/**").hasRole("VENDOR")
-			.antMatchers("/category" , "/category/**").hasRole("ADMIN")
+//			.antMatchers("/products" , "/products/**").hasRole("VENDOR")
+//			.antMatchers("/category" , "/category/**").hasRole("ADMIN")
 			.anyRequest().authenticated()
 			.and()
 			.formLogin()
@@ -71,7 +76,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 			.logoutSuccessUrl("/logout-success")
 			.permitAll();
-			
 	}
 	
 	@Autowired

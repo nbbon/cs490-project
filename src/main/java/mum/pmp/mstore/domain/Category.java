@@ -1,5 +1,6 @@
 package mum.pmp.mstore.domain;
 
+
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 
 import mum.pmp.mstore.model.Vendor;
+
 
 @Entity
 public class Category {
@@ -44,8 +46,7 @@ public class Category {
 		this.products = products;
 	}
 
-	public Category() {
-	}
+	public Category() {	}
 
 	public Integer getCategoryID() {
 		return categoryID;

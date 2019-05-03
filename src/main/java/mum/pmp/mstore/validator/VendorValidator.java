@@ -21,38 +21,35 @@ public class VendorValidator implements Validator {
     public void validate(Object o, Errors errors) {
         Vendor vendor = (Vendor) o;
         
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "vendorName", "NotEmpty");
-        if(vendor.getVendorName().length() <2 || vendor.getVendorName().length() > 20) {
-        	errors.rejectValue("vendorName", "Vendor name must be 2 to 20 alpha numeric characters.");
-        }
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "vendorName", "notEmpty.vendor.name");
+        if(vendor.getVendorName().length() <2 || vendor.getVendorName().length() > 20) 
+        	errors.rejectValue("vendorName", "length.vendor.name");
         
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "vendorNumber", "NotEmpty");
-        if (vendor.getVendorNumber().length() < 2 || vendor.getVendorNumber().length() > 20) {
-            errors.rejectValue("vendorNumber", "Vendor number must be 2 to 20 alpha numeric characters.");
-        }
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "vendorNumber", "notEmpty.vendor.vendornumber");
+        if (vendor.getVendorNumber().length() < 2 || vendor.getVendorNumber().length() > 20) 
+            errors.rejectValue("vendorNumber", "length.vendor.number");
         
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "regId", "NotEmpty");
-        if(vendor.getRegId().length() <2 || vendor.getRegId().length() > 20) {
-        	errors.rejectValue("regId", "vendor.regId.length");
-        }
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "regId", "notEmpty.vendor.regId");
+        if(vendor.getRegId().length() <2 || vendor.getRegId().length() > 20) 
+        	errors.rejectValue("regId", "length.vendor.regId");
         
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password",
-    			"required.password", "Field name is required.");
+    			"required.password", "notEmpty.vendor.password");
     		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirmPassword",
-				"required.confirmPassword", "Field name is required.");
+				"required.confirmPassword", "notEmpty.vendor.password");
 		
 		if(!vendor.getPassword().equals(vendor.getConfirmPassword()))
-		{
 			errors.rejectValue("password", "nomatch.password");
-		}
 		
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "contactPerson", "NotEmpty");
-        if(vendor.getContactPerson().length() < 2 || vendor.getContactPerson().length() > 20)
-        {
-        	errors.rejectValue("contactPerson", "vendor.contactperson.length");
-        }
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "phone", "notEmpty.phone");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "contactPerson", "notEmpty.vendor.contactperson");
         
+        if(vendor.getPhone().length() > 11)
+        	errors.rejectValue("phone", "length.vendor.phone");
+        
+        if(vendor.getContactPerson().length() < 2 || vendor.getContactPerson().length() > 20)
+        	errors.rejectValue("contactPerson", "length.vendor.contactperson");
     }
 
     @InitBinder

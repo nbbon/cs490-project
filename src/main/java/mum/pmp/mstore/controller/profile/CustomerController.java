@@ -62,6 +62,8 @@ public class CustomerController {
 	@GetMapping("/customer/update")
 	public String updatePage(Model model) {
 		Customer customerProfile = (Customer) profileService.findByEmail(sessionListener.getUser().getEmail());
+
+		System.out.println("email in update sessionListener.getUser().getEmail(): "+sessionListener.getUser().getEmail());
 		model.addAttribute("customer", customerProfile);
 		return "/profile/customer_profile";
 	}
@@ -71,7 +73,7 @@ public class CustomerController {
 		
 		//validate the admin details.
 		validator.validate(customer, bindingResult);
-		
+		System.out.println("email in update: "+customer.getEmail());
 		Profile person = profileService.findByEmail(customer.getEmail());
 		Customer customerToUpdate;
 		if(person instanceof Customer)
@@ -87,9 +89,24 @@ public class CustomerController {
 		return "redirect:/customer/update";
 	}
 	
+	@PostMapping("/customer/disable")
+	public String disableCustomer(@ModelAttribute("customer") Customer customer)
+	{
+		System.out.println(customer);
+		System.out.println(customer.getEmail());
+		
+		Profile profile = profileService.findByEmail(customer.getEmail());
+		System.out.println("My Profile: "+profile);
+		byte status = 0;
+		profile.setStatus(status);
+		profileService.saveProfile(profile);
+		return "redirect:/login";
+	}
+	
 	@GetMapping("/catalogs")
 	public String getAllCatalogs(Model model) {
 		model.addAttribute("products", productService.getProducts());
 		return "/catalog/catalog";
 	}
+	
 }

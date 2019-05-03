@@ -1,30 +1,106 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+		 xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" >
 <head></head>
 <body>
-	<div th:fragment="menu">
-		<nav class="navbar navbar-default">
-			<a th:href="@{/logout}" class="btn btn-default"
-				style="float: right; margin: 7px;">Logout</a> 
-			<a
-				th:href="@{/profile}" class="btn btn-default"
-				style="float: right; margin: 7px;">Profile</a>
-				
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="/" id="home">M-Store</a>
-				</div>
-				<ul class="nav navbar-nav">
-					<li id="login" class="active"><a href="/login">Login</a></li>
-					<li id="product"><a href="/products">Product</a></li>
-					<li id="person"><a href="/persons">Person</a></li>
-					<li id="order"><a href="/orders">Order</a></li>
-					<li id="shopping-cart" class="nav-item"><a class="nav-link"
-						th:href="@{/shopping-cart}">Shopping Cart</a></li>
-				</ul>
-			</div>
-		</nav>
-	</div>
-	<br />
+
+<div th:fragment="menu_admin">
+	<nav class="navbar navbar-default">
+		<a th:href="@{/logout}" class="btn btn-default" style="float:right;margin:7px;">Logout</a>
+		<a th:href="@{/profile}" class="btn btn-default" style="float: right; margin: 7px;">Profile</a>
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="/" id="home">M-Store</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <li id="products"><a href="/admin/products">Product Details</a></li>
+	      <li id="vendors"><a href="/admin/vendors">Manage Vendors</a></li>
+	      <li id="categories"><a href="/admin/categories">Manage Product Categories</a></li>
+	    </ul>
+	  </div>
+	</nav>
+</div>
+
+<div th:fragment="menu">
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="/" id="home">M-Store</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <li id="login" class="active"><a href="/login">Login</a></li>
+	      <li id="product"><a href="/products">Product Details</a></li>
+	      <li id="shoppingCart" class="nav-item">
+               <a class="nav-link" th:href="@{/shoppingCart}">Shopping Cart</a>
+          </li>
+	    </ul>
+	  </div>
+	</nav>
+</div>
+
+<div th:fragment="menu_customer">
+	<nav class="navbar navbar-default">
+		<a th:href="@{/logout}" class="btn btn-default" style="float:right;margin:7px;">Logout</a>
+		<a th:href="@{/profile}" class="btn btn-default" style="float: right; margin: 7px;">Profile</a>
+	
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="/" id="home">M-Store</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <li th:if="${#authorization?.expression('!isAuthenticated()')}" id="login" class="active"><a href="/login">Login</a></li>
+	      <li id="product"><a href="/catalogs">View Catalogs</a></li>
+	      <li id="person"><a href="/customer/orders">Orders</a></li>
+	      <li id="shoppingCart" class="nav-item">
+               <a class="nav-link" th:href="@{/customer/shoppingCart}">Shopping Cart</a>
+          </li>
+	    </ul>
+	  </div>
+	</nav>
+</div>
+
+<div th:fragment="menu_vendor">
+	<nav class="navbar navbar-default">
+	<a th:href="@{/logout}" class="btn btn-default" style="float:right;margin:7px;">Logout</a>
+	<a th:href="@{/profile}" class="btn btn-default" style="float: right; margin: 7px;">Profile</a>
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="/" id="home">M-Store</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <li id="login" class="active"><a href="/login">Login</a></li>
+	      <li id="product"><a href="/vendor/products">Product Catalog</a></li>
+	      <li id="person"><a href="/vendor/addproduct">Add a product</a></li>
+	      <li id="order"><a href="/vendor/reports">Reports</a></li>
+	      <li id="shopping-cart" class="nav-item">
+               <a class="nav-link" th:href="@{/shopping-cart}">Shopping Cart</a>
+          </li>
+	    </ul>
+	  </div>
+	</nav>
+</div>
+
+<div th:fragment="menu_super_admin">
+	<nav class="navbar navbar-default">
+	<a th:href="@{/logout}" class="btn btn-default" style="float:right;margin:7px;">Logout</a>
+	<a th:href="@{/profile}" class="btn btn-default" style="float: right; margin: 7px;">Profile</a>
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="/" id="home">M-Store</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <li id="login" class="active"><a href="/login">Login</a></li>
+	      <li id="product"><a href="/super/reports">Reports</a></li>
+<!-- 	      <li id="person"><a href="/super/vendors">Vendor Management</a></li> -->
+	      <li id="admins"><a href="/super/admins">Manage Administrators</a></li>
+	    </ul>
+	  </div>
+	</nav>
+</div>
+
+
+
+
+<br/>
 </body>
 </html>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout">
 <head>
     <meta charset="UTF-8" />
     <title>Products</title>
@@ -9,15 +10,22 @@
 
     <script type="text/javascript" th:src="@{/js/jquery.min.js}" src="js/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/bootstrap.min.js}" src="js/bootstrap.min.js"></script>
+    <title>mStore</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+	<link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.0.13/css/all.css}"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script th:src="@{/js/main.js}" src="../../js/main.js" type="text/javascript"></script>
 </head>
 <body>
 
-    <div class="container">
-
+ <div class="container">
+ <div th:replace="fragments/menu :: menu_vendor"></div>
+		<h6 align="right" th:text="${execInfo.now.time}"></h6>
         <h1>Products</h1>
 
         <p>
-            <a href="/productsEdit" th:href="@{/productsEdit}">Add Product</a>
+            <a href="/products/productsEdit" th:href="@{/products/productsEdit}">Add Product</a>
         </p>
 
         <table class="table">
@@ -34,9 +42,6 @@
                 </tr>
             </thead>
                  
-               				
-               				
-                                
             <tbody>
                 <tr th:each="product : ${productsList}">
                     <td th:text="${product.productNumber}"></td>
@@ -47,8 +52,8 @@
                     <td th:text="${product.category.categoryName}"></td>
                     
                     <td>
-                        <a href="/productsEdit/1" th:href="@{/productsEdit/__${product.id}__}">Update</a>
-                        <a href="/productsDelete/1" th:href="@{/productsDelete/__${product.id}__}">Remove</a>
+                        <a href="/products/productsEdit/1" th:href="@{/products/productsEdit/__${product.id}__}">Update</a>
+                        <a href="/products/productsDelete/1" th:href="@{/products/productsDelete/__${product.id}__}">Remove</a>
                     </td>
                 </tr>
             </tbody>
