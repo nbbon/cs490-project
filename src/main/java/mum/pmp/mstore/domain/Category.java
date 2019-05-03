@@ -6,56 +6,71 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.validation.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import mum.pmp.mstore.model.Vendor;
 
 @Entity
 public class Category {
-	
 
 	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer categoryID;
-	@NotEmpty(message="{categoryName.empty}")
+	@NotEmpty(message = "{categoryName.empty}")
 	private String categoryName;
 	private String description;
-	
-	/*
-	 * @JsonIgnore
-	 * 
-	 * @OneToMany(mappedBy = "category")
-	 * 
-	 * @OrderBy("productName") private List<Product> products;
-	 */
-	
+	@ManyToOne
+	@JoinColumn(name = "VENDOR_ID")
+	private Vendor vendor;
+	@OneToMany
+	private List<Product> products;
 
-	public Category() {	}
+	public Vendor getVendor() {
+		return vendor;
+	}
 
-	
-	
+	public void setVendor(Vendor vendor) {
+		this.vendor = vendor;
+	}
+
+	public List<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
+
+	public Category() {
+	}
+
 	public Integer getCategoryID() {
 		return categoryID;
 	}
+
 	public void setCategoryID(Integer categoryID) {
 		this.categoryID = categoryID;
 	}
+
 	public String getCategoryName() {
 		return categoryName;
 	}
+
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	
+
 	/*
 	 * public List<Product> getProducts() { return products; }
 	 * 
@@ -76,9 +91,6 @@ public class Category {
 	 * 
 	 * return success; }
 	 */
-	
-	
-
 
 	@Override
 	public int hashCode() {
@@ -89,6 +101,7 @@ public class Category {
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -112,7 +125,5 @@ public class Category {
 			return false;
 		return true;
 	}
-	
-	
 
 }
