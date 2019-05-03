@@ -17,15 +17,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ch.qos.logback.core.net.server.Client;
-import mum.pmp.mstore.service.ReportBuilder;
-import mum.pmp.mstore.service.ReportBuilder.ReportType;
+import mum.pmp.mstore.service.report.ReportBuilder;
+import mum.pmp.mstore.service.report.ReportBuilder.ReportType;
 import net.sf.jasperreports.engine.DefaultJasperReportsContext;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -77,21 +79,21 @@ public class ReportController {
 	}
 	    	
 	@PostMapping("weekly")
-	public String weeklyReport(Model model, @RequestParam String weekDay, @RequestParam String type) {
-		model.addAttribute("weekDay", weekDay);
-		model.addAttribute("type", type);
+	public String weeklyReport(Model model, RedirectAttributes redirectAttributes, @RequestParam String weekDay, @RequestParam String type) {
+		redirectAttributes.addFlashAttribute("weekDay", weekDay);
+		redirectAttributes.addFlashAttribute("type", type);
 		return "redirect:/reports/weekly";
 	}
 	
 	@PostMapping("weekly/{export}")
-	public String exportWeeklyReport(Model model, @RequestParam String weekDay, @RequestParam String type, @PathVariable Integer export) {
-		model.addAttribute("weekDay", weekDay);
-		model.addAttribute("type", type);
+	public String exportWeeklyReport(Model model, RedirectAttributes redirectAttributes, @RequestParam String weekDay, @RequestParam String type, @PathVariable Integer export) {
+		redirectAttributes.addFlashAttribute("weekDay", weekDay);
+		redirectAttributes.addFlashAttribute("type", type);
 		return "redirect:/reports/weekly/" + export;
 	}
 	
 	@GetMapping("weekly/{export}")
-	public void saveFile(@RequestParam String weekDay, @RequestParam String type, @PathVariable Integer export, HttpServletResponse response) throws IOException {
+	public void saveFile(@ModelAttribute("weekDay") String weekDay, @ModelAttribute("type") String type, @PathVariable Integer export, Model model, HttpServletResponse response) throws IOException {
 		try {
 			
 			ReportType reportType = getReportType(type);
@@ -135,43 +137,43 @@ public class ReportController {
 	}
 	
 	@PostMapping("monthly")
-	public String monthlyReport(Model model, @RequestParam Integer year, @RequestParam String type) {
-		model.addAttribute("year", year);
-		model.addAttribute("type", type);
+	public String monthlyReport(Model model, RedirectAttributes redirectAttributes, @RequestParam Integer year, @RequestParam String type) {
+		redirectAttributes.addFlashAttribute("year", year);
+		redirectAttributes.addFlashAttribute("type", type);
 		return "redirect:/reports/monthly";
 	}
 	
 	@PostMapping("quarterly")
-	public String quarterlyReport(Model model, @RequestParam Integer year, @RequestParam String type) {
-		model.addAttribute("year", year);
-		model.addAttribute("type", type);
+	public String quarterlyReport(Model model, RedirectAttributes redirectAttributes, @RequestParam Integer year, @RequestParam String type) {
+		redirectAttributes.addFlashAttribute("year", year);
+		redirectAttributes.addFlashAttribute("type", type);
 		return "redirect:/reports/quarterly";
 	}
 	
 	@PostMapping("halfyearly")
-	public String halfyearlyReport(Model model, @RequestParam Integer year, @RequestParam String type) {
-		model.addAttribute("year", year);
-		model.addAttribute("type", type);
+	public String halfyearlyReport(Model model, RedirectAttributes redirectAttributes, @RequestParam Integer year, @RequestParam String type) {
+		redirectAttributes.addFlashAttribute("year", year);
+		redirectAttributes.addFlashAttribute("type", type);
 		return "redirect:/reports/halfyearly";
 	}
 	
 	@PostMapping("annually")
-	public String annuallyReport(Model model, @RequestParam Integer year, @RequestParam String type) {
-		model.addAttribute("year", year);
-		model.addAttribute("type", type);
+	public String annuallyReport(Model model, RedirectAttributes redirectAttributes, @RequestParam Integer year, @RequestParam String type) {
+		redirectAttributes.addFlashAttribute("year", year);
+		redirectAttributes.addFlashAttribute("type", type);
 		return "redirect:/reports/annually";
 	}
 	
 	@PostMapping("adhoc")
-	public String adhocReport(Model model, @RequestParam String adhocFromDate, @RequestParam String adhocToDate, @RequestParam String type) {
-		model.addAttribute("adhocFromDate", adhocFromDate);
-		model.addAttribute("adhocToDate", adhocToDate);
-		model.addAttribute("type", type);
+	public String adhocReport(Model model, RedirectAttributes redirectAttributes, @RequestParam String adhocFromDate, @RequestParam String adhocToDate, @RequestParam String type) {
+		redirectAttributes.addFlashAttribute("adhocFromDate", adhocFromDate);
+		redirectAttributes.addFlashAttribute("adhocToDate", adhocToDate);
+		redirectAttributes.addFlashAttribute("type", type);
 		return "redirect:/reports/adhoc";
 	}
 
 	@GetMapping(value = "weekly")
-	public void getWeeklyReport(@RequestParam String weekDay, @RequestParam String type, Model model, HttpServletResponse response) {
+	public void getWeeklyReport(@ModelAttribute("weekDay") String weekDay, @ModelAttribute("type") String type, Model model, HttpServletResponse response) {
 		try {
 			response.setContentType("text/html");
 			if(weekDay.isEmpty() || type.isEmpty()) {
@@ -206,7 +208,7 @@ public class ReportController {
 	}
 	
 	@GetMapping("monthly")
-	public void getMonthlyReport(Model model, @RequestParam Integer year, @RequestParam String type, HttpServletResponse response) {
+	public void getMonthlyReport(@ModelAttribute("year") Integer year, @ModelAttribute("type") String type, Model model, HttpServletResponse response) {
 		try {
 			response.setContentType("text/html");
 			if(type.isEmpty()) {
@@ -240,7 +242,7 @@ public class ReportController {
 	}
 	
 	@GetMapping("quarterly")
-	public void getQuarterlyReport(@RequestParam Integer year, @RequestParam String type, Model model, HttpServletResponse response) {
+	public void getQuarterlyReport(@ModelAttribute("year") Integer year, @ModelAttribute("type") String type, Model model, HttpServletResponse response) {
 		try {
 			response.setContentType("text/html");
 			
@@ -275,7 +277,7 @@ public class ReportController {
 	}
 	
 	@GetMapping("halfyearly")
-	public void getHalfyearlyReport(Model model, @RequestParam Integer year, @RequestParam String type, HttpServletResponse response) {
+	public void getHalfyearlyReport(@ModelAttribute("year") Integer year, @ModelAttribute("type") String type, Model model, HttpServletResponse response) {
 		try {
 			response.setContentType("text/html");
 			
@@ -310,7 +312,7 @@ public class ReportController {
 	}
 	
 	@GetMapping("annually")
-	public void getAnnuallyReport(Model model, @RequestParam Integer year, @RequestParam String type, HttpServletResponse response) {
+	public void getAnnuallyReport(@ModelAttribute("year") Integer year, @ModelAttribute("type") String type, Model model, HttpServletResponse response) {
 		try {
 			response.setContentType("text/html");		
 			if(type.isEmpty()) {
@@ -344,7 +346,7 @@ public class ReportController {
 	}
 	
 	@GetMapping("adhoc")
-	public void getAdhocReport(Model model, @RequestParam String adhocFromDate, @RequestParam String adhocToDate, @RequestParam String type, HttpServletResponse response) {
+	public void getAdhocReport(@ModelAttribute("adhocFromDate") String adhocFromDate, @ModelAttribute("adhocToDate") String adhocToDate, @ModelAttribute("type") String type, Model model, HttpServletResponse response) {
 		try {
 			response.setContentType("text/html");
 			

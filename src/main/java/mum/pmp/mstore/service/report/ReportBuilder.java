@@ -1,4 +1,4 @@
-package mum.pmp.mstore.service;
+package mum.pmp.mstore.service.report;
 
 import java.io.IOException;
 import java.time.LocalDate;

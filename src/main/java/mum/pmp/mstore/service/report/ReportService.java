@@ -1,20 +1,7 @@
-package mum.pmp.mstore.service;
+package mum.pmp.mstore.service.report;
 
 import java.time.LocalDate;
 import java.util.List;
-
-import mum.pmp.mstore.service.report.AdhocOverallReportData;
-import mum.pmp.mstore.service.report.AdhocReportData;
-import mum.pmp.mstore.service.report.AnnuallyOverallReportData;
-import mum.pmp.mstore.service.report.AnnuallyReportData;
-import mum.pmp.mstore.service.report.HalfYearlyOverallReportData;
-import mum.pmp.mstore.service.report.HalfYearlyReportData;
-import mum.pmp.mstore.service.report.MonthlyOverallReportData;
-import mum.pmp.mstore.service.report.MonthlyReportData;
-import mum.pmp.mstore.service.report.QuarterlyOverallReportData;
-import mum.pmp.mstore.service.report.QuarterlyReportData;
-import mum.pmp.mstore.service.report.WeeklyOverallReportData;
-import mum.pmp.mstore.service.report.WeeklyReportData;
 
 public interface ReportService {
 	public List<WeeklyReportData> getWeeklySalesByProductReport(LocalDate weekDay);

@@ -1,4 +1,4 @@
-package mum.pmp.mstore.service.impl;
+package mum.pmp.mstore.service.report.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,8 +15,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import mum.pmp.mstore.domain.Order;
-import mum.pmp.mstore.service.ReportBuilder;
-import mum.pmp.mstore.service.ReportService;
 import mum.pmp.mstore.service.report.AdhocOverallReportData;
 import mum.pmp.mstore.service.report.AdhocReportData;
 import mum.pmp.mstore.service.report.AnnuallyOverallReportData;
@@ -26,6 +24,8 @@ import mum.pmp.mstore.service.report.HalfYearlyReportData;
 import mum.pmp.mstore.service.report.MonthlyReportData;
 import mum.pmp.mstore.service.report.QuarterlyOverallReportData;
 import mum.pmp.mstore.service.report.QuarterlyReportData;
+import mum.pmp.mstore.service.report.ReportBuilder;
+import mum.pmp.mstore.service.report.ReportService;
 import mum.pmp.mstore.service.report.WeeklyReportData;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JREmptyDataSource;
@@ -353,7 +353,7 @@ public class ReportBuilderImpl implements ReportBuilder {
 		
 		Map<String, Object> parameters = new HashMap<>();
 		parameters.put("title", "Weekly Sales By Product Report");
-		parameters.put("weekPeriod", "Week period:");
+		parameters.put("period", "Week period:");
 		parameters.put("startDate", weekStartDay.format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
 		parameters.put("endDate", weekStartDay.plusDays(6).format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
 		parameters.put("itemId", "Product Number");
@@ -374,7 +374,7 @@ public class ReportBuilderImpl implements ReportBuilder {
 	private Map<String, Object> buildWeeklySalesByCategoryReportParameters(LocalDate weekStartDay) {
 		Map<String, Object> parameters = new HashMap<>();
 		parameters.put("title", "Weekly Sales By Product Category Report");
-		parameters.put("weekPeriod", "Week period:");
+		parameters.put("period", "Week period:");
 		parameters.put("startDate", weekStartDay.format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
 		parameters.put("endDate", weekStartDay.plusDays(6).format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
 		parameters.put("itemId", "Category ID");
