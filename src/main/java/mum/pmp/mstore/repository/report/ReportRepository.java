@@ -1,4 +1,4 @@
-package mum.pmp.mstore.repository;
+package mum.pmp.mstore.repository.report;
 
 import java.time.LocalDate;
 import java.util.List;

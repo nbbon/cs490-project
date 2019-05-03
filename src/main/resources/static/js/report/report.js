@@ -48,6 +48,7 @@ $(function () {
             
             console.log(url);
             console.log(param);
+            $('#reportView').html("");
             $.post(url, param)
                 .done(function (data) {
                 	$('#reportView').html(data);
