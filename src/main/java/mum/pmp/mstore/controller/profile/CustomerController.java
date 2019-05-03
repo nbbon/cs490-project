@@ -108,4 +108,5 @@ public class CustomerController {
 		model.addAttribute("products", productService.getProducts());
 		return "/catalog/catalog";
 	}
+	
 }

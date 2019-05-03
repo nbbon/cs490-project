@@ -14,7 +14,9 @@
       <div th:replace="fragments/menu :: menu"></div>
       
     <table id="cart" class="table">
-        <thead>
+    
+     <div class="alert alert-info" th:if="${outOfStockMessage}" th:utext="${outOfStockMessage}"></div>
+        <thead> 
         <tr>
             <th style="width:50%">Product</th>
             <th style="width:10%">Price</th>
@@ -23,40 +25,43 @@
             <th style="width:10%"></th>
         </tr>
         </thead>
-        <tbody th:if="${order != null and order.orderLines != null}">
-        <tr th:each="orderLine : ${order.orderLines}">
+        <tbody th:if="${products != null and products.entrySet() != null}">
+        <tr th:each="product : ${products.entrySet()}">
             <td data-th="Product">
                 <div class="row">
                     <div class="col-sm-10">
-                        <h4 class="nomargin" th:text="${orderLine.product.productName}">Product 1</h4>
-                        <p th:text="${orderLine.product.description}">Product Description</p>
+                        <h4 class="nomargin" th:text="${product.getKey().productName}">Product 1</h4>
+                        <p th:text="${product.getKey().description}">Product Description</p>
                     </div>
                 </div>
             </td>
-            <td data-th="Price" th:text="'$' + ${orderLine.product.price}">$1.99</td>
+            <td data-th="Price" th:text="'$' + ${product.getKey().price}"></td>
             <td data-th="Quantity">
-                <input type="number" class="form-control text-center quantity" th:value="${orderLine.quantity}"/>
+                <input type="number" class="form-control text-center quantity" th:value="${product.getValue()}"/>
             </td>
-            <td data-th="Subtotal" class="text-center" th:text="${orderLine.subTotal}">1.99</td>
+            <td data-th="total" class="text-center" th:text="${product.getKey().price} * ${product.getValue()}"></td>
             <td class="actions" data-th="">
-                <button th:attr="productId=${orderLine.product.id}" class="btn btn-default"><i class="fa fa-refresh"></i></button>
-                <button th:attr="productId=${orderLine.product.id}" class="btn btn-default"><i class="fa fa-trash"></i></button>
+                 <a th:href="@{'/shoppingCart/removeProduct/{id}'(id=${product.getKey().id})}" class="col-md-1">
+                <button type="button" class="btn btn-primary" th:text="Remove">Remove</button>
+            </a>
             </td>
         </tr>
+        
         </tbody>
         <tfoot>
         <tr>
-            <td><a th:href="@{/}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+            <td><a th:href="@{/catalogs}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
             <td colspan="2" class="hidden-xs"></td>
-            <td class="hidden-xs text-center"><strong>Total <p th:text="${total}">$1.99</p></strong></td>
+            <td class="hidden-xs text-center"><strong>Total <p th:text="${total}"></p></strong></td>
             <td>
                 <form th:action="@{/placeOrder}" method="POST" id="placeOrder-btn">
-                    <button th:if="${order != null and not #lists.isEmpty(order.orderLines)}" class="btn btn-default btn-block">Place Order <i class="fa fa-angle-right"></i></button>
+                    <button th:if="${products != null and products.entrySet() != null}" class="btn btn-default btn-block">Place Order <i class="fa fa-angle-right"></i></button>
                 </form>
             </td>
         </tr>
         </tfoot>
     </table>
+    
  </div>
 </body>
 </html>
