@@ -48,11 +48,11 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 
-			.antMatchers("/webjars/**", "/css/**", "/images/**" , "/", 
+			.antMatchers("/webjars/**", "/static/**", "/css/**", "/images/**" , "/",
 					"/forgotpassword", "/resetpassword", "/user/**",
 					"/signup", "/vendor/signup", "/admin/signup", "/customer/signup",
 					"/password/forgotpassword", "/forgotpassword", "/sendemailforgotpassword", "/resetpassword"
-					,"/products/**", "/category/**")
+					,"/products/**", "/category/**", "/reports/**")
 
 			.permitAll();
 		

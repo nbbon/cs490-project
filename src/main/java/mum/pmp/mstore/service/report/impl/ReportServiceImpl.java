@@ -1,4 +1,4 @@
-package mum.pmp.mstore.service.impl;
+package mum.pmp.mstore.service.report.impl;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -12,9 +12,8 @@ import org.springframework.ui.Model;
 
 import mum.pmp.mstore.domain.Order;
 import mum.pmp.mstore.domain.OrderLine;
-import mum.pmp.mstore.repository.ReportRepository;
+import mum.pmp.mstore.repository.report.ReportRepository;
 import mum.pmp.mstore.service.OrderService;
-import mum.pmp.mstore.service.ReportService;
 import mum.pmp.mstore.service.report.AdhocOverallReportData;
 import mum.pmp.mstore.service.report.AdhocReportData;
 import mum.pmp.mstore.service.report.AnnuallyOverallReportData;
@@ -26,6 +25,7 @@ import mum.pmp.mstore.service.report.MonthlyReportData;
 import mum.pmp.mstore.service.report.QuarterlyOverallReportData;
 import mum.pmp.mstore.service.report.QuarterlyReportData;
 import mum.pmp.mstore.service.report.ReportData;
+import mum.pmp.mstore.service.report.ReportService;
 import mum.pmp.mstore.service.report.WeeklyOverallReportData;
 import mum.pmp.mstore.service.report.WeeklyReportData;
 
