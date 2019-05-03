@@ -26,8 +26,8 @@
                     <p class="product-price" th:text="${product.price} + ' $'"></p>
                 </div>
                 <div class="card-footer">
-                    <button th:attr="productId=${product.id}" class="btn btn-default add-to-cart-btn">Add to cart</button>
-<!--                     <button th:href="@{'/shopping-cart/'+${product.id}}" class="btn btn-default"></button> -->
+<!--                     <button th:attr="productId=${product.id}" class="btn btn-default add-to-cart-btn">Add to cart</button> -->
+                    <button th:href="@{'/shopping-cart/'+${product.id}}" class="btn btn-default">Add to cart</button>
                 </div>
             </div>
         </div>

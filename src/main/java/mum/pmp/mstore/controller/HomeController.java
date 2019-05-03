@@ -1,4 +1,4 @@
-package mum.pmp.mstore.controller.profile;
+package mum.pmp.mstore.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,6 +40,7 @@ public class HomeController {
 		return "redirect:/secure/login?logout";
 	}
 
+	
 	@RequestMapping("/")
 	public String home(Model model) {
 		auth = SecurityContextHolder.getContext().getAuthentication();

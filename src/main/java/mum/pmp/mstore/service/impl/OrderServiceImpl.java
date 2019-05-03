@@ -27,11 +27,11 @@ public class OrderServiceImpl implements OrderService{
 	
 
 	@Override
-	public void createOrder(ShoppingCart shoppingCart) {
+	public Order createOrder(ShoppingCart shoppingCart) {
 
 		Order order = OrderFactory.createOrder(shoppingCart);
-		orderRepository.save(order);	
-		
+		Order order1 = orderRepository.save(order);	
+		return order1;
 	}
 
 
