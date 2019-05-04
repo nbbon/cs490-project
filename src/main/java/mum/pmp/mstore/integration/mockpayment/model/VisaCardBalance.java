@@ -11,6 +11,9 @@ public class VisaCardBalance {
 	private String cardNumber;
 	private LocalDate lastUpdated;
 	private Double balance;
+	public VisaCardBalance() {
+		
+	}
 	public VisaCardBalance(String cardNumber, LocalDate lastUpdated, Double balance) {
 		super();
 		this.cardNumber = cardNumber;

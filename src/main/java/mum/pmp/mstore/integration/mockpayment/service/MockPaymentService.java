@@ -4,15 +4,16 @@ import java.time.LocalDate;
 
 import org.springframework.stereotype.Service;
 
+import mum.pmp.mstore.integration.mockpayment.model.MasterCard;
 import mum.pmp.mstore.integration.mockpayment.model.MasterCardBalance;
 import mum.pmp.mstore.integration.mockpayment.model.MasterCardTransaction;
+import mum.pmp.mstore.integration.mockpayment.model.VisaCard;
 import mum.pmp.mstore.integration.mockpayment.model.VisaCardBalance;
 import mum.pmp.mstore.integration.mockpayment.model.VisaCardTransaction;
 
-@Service
 public interface MockPaymentService {
 	default public VisaCardTransaction processVisaCardPaymentRequest(String cardNumber, String cardName, String csv, String expireDate, Double amount, String description) {
-		if (isVerifedVisaCard(cardNumber, cardName, csv, expireDate)) {
+		if (getVisaCard(cardNumber, cardName, csv, expireDate) != null) {
 			VisaCardBalance cardBalance = getVisaCardBalance(cardNumber);
 			if (amount <= cardBalance.getBalance()) {
 				Double remainBalance = cardBalance.getBalance() - amount;
@@ -30,11 +31,11 @@ public interface MockPaymentService {
 	public VisaCardTransaction createVisaCardTransaction(VisaCardTransaction transaction);
 	public Boolean updateVisaCardBalance(VisaCardBalance cardBalance);
 	public VisaCardBalance getVisaCardBalance(String cardNumber);
-	public Boolean isVerifedVisaCard(String cardNumber, String cardName, String csv, String expireDate);
+	public VisaCard getVisaCard(String cardNumber, String cardName, String csv, String expireDate);
 
 	default public MasterCardTransaction processMasterCardPaymentRequest(String cardNumber, String cardName, String csv, String expireDate,
 			Double amount, String description) {
-		if (isVerifedMasterCard(cardNumber, cardName, csv, expireDate)) {
+		if (getMasterCard(cardNumber, cardName, csv, expireDate) != null) {
 			MasterCardBalance cardBalance = getMasterCardBalance(cardNumber);
 			if (amount <= cardBalance.getBalance()) {
 				Double remainBalance = cardBalance.getBalance() - amount;
@@ -52,6 +53,6 @@ public interface MockPaymentService {
 	public MasterCardTransaction createMasterCardTransaction(MasterCardTransaction transaction);
 	public Boolean updateMasterCardBalance(MasterCardBalance cardBalance);
 	public MasterCardBalance getMasterCardBalance(String cardNumber);
-	public Boolean isVerifedMasterCard(String cardNumber, String cardName, String csv, String expireDate);
+	public MasterCard getMasterCard(String cardNumber, String cardName, String csv, String expireDate);
 
 }

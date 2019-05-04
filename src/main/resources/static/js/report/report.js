@@ -119,4 +119,20 @@ $(function () {
         $('#resultPanel').show();
         $('#selectPanel').hide();
 	});
+	
+	$('#testPayment').on('click', function () {
+		var url = "/payment/1";
+        $.post(url, null)
+            .done(function (data) {
+            	$('#reportView').html(data);
+//            	console.log(data);
+            })
+            .fail(function () {
+            	$('#reportView').html("Failed to generate report");
+                console.log("FAILED - Failed to generate report !");
+                
+            });
+        $('#resultPanel').show();
+        $('#selectPanel').hide();
+	});
 })

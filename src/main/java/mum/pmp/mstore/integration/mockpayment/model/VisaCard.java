@@ -11,6 +11,10 @@ public class VisaCard {
 	private String csv;
 	private String expireDate;
 	private Double balance;
+	
+	public VisaCard() {
+		
+	}
 	public VisaCard(String cardNumber, String cardName, String csv, String expireDate, Double balance) {
 		super();
 		this.cardNumber = cardNumber;

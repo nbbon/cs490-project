@@ -3,6 +3,7 @@ package mum.pmp.mstore.integration.mockpayment.service.impl;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import mum.pmp.mstore.integration.mockpayment.model.MasterCard;
 import mum.pmp.mstore.integration.mockpayment.model.MasterCardBalance;
@@ -18,6 +19,7 @@ import mum.pmp.mstore.integration.mockpayment.repository.VisaCardRepository;
 import mum.pmp.mstore.integration.mockpayment.repository.VisaCardTransactionRepository;
 import mum.pmp.mstore.integration.mockpayment.service.MockPaymentService;
 
+@Service
 public class MockPaymentServiceImpl implements MockPaymentService {
 
 	@Autowired
@@ -50,38 +52,42 @@ public class MockPaymentServiceImpl implements MockPaymentService {
 
 	@Override
 	public VisaCardBalance getVisaCardBalance(String cardNumber) {
-		Optional<VisaCardBalance> cardBalance = visaCardBalanceRepository.findById(cardNumber);
-		return cardBalance.orElse(null);
+		Optional<VisaCardBalance> result = visaCardBalanceRepository.findById(cardNumber);
+		return result.orElse(null);
 	}
 
 	@Override
-	public Boolean isVerifedVisaCard(String cardNumber, String cardName, String csv, String expireDate) {
+	public VisaCard getVisaCard(String cardNumber, String cardName, String csv, String expireDate) {
 		Optional<VisaCard> result = visaCardRepository.findByCardNumberAndCardNameAndCsvAndExpireDate(cardNumber,
 				cardName, csv, expireDate);
-		return result.orElse(null) != null;
+		return result.orElse(null);
 	}
 
 	@Override
 	public MasterCardTransaction createMasterCardTransaction(MasterCardTransaction transaction) {
+		System.out.println("createMasterCardTransaction ");
 		return masterCardTransactionRepository.save(transaction);
 	}
 
 	@Override
 	public Boolean updateMasterCardBalance(MasterCardBalance cardBalance) {
+		System.out.println("updateMasterCardBalance ");
 		return masterCardBalanceRepository.save(cardBalance) != null;
 	}
 
 	@Override
 	public MasterCardBalance getMasterCardBalance(String cardNumber) {
-		Optional<MasterCardBalance> cardBalance = masterCardBalanceRepository.findById(cardNumber);
-		return cardBalance.orElse(null);
+		Optional<MasterCardBalance> result = masterCardBalanceRepository.findById(cardNumber);
+		System.out.println("getMasterCardBalance " + result.isPresent());
+		return result.orElse(null);
 	}
 
 	@Override
-	public Boolean isVerifedMasterCard(String cardNumber, String cardName, String csv, String expireDate) {
+	public MasterCard getMasterCard(String cardNumber, String cardName, String csv, String expireDate) {
 		Optional<MasterCard> result = masterCardRepository.findByCardNumberAndCardNameAndCsvAndExpireDate(cardNumber,
 				cardName, csv, expireDate);
-		return result.orElse(null) != null;
+		System.out.println("getMasterCard " + result.isPresent());
+		return result.orElse(null);
 	}
 
 }

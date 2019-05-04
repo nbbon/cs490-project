@@ -13,6 +13,8 @@ import javax.persistence.OneToOne;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import mum.pmp.mstore.model.Vendor;
+
 
 @Entity
 public class Product implements Serializable {
@@ -36,10 +38,20 @@ public class Product implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
 	private Category category;
 	
-
-	
-	
+	@ManyToOne
+	@JoinColumn(name = "vendor_id")
+	private Vendor vendor;
 		
+	public Vendor getVendor() {
+		return vendor;
+	}
+
+
+	public void setVendor(Vendor vendor) {
+		this.vendor = vendor;
+	}
+
+
 	public Product() {
 		super();
 	}

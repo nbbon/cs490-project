@@ -11,6 +11,9 @@ public class MasterCardBalance {
 	private String cardNumber;
 	private LocalDate lastUpdated;
 	private Double balance;
+	public MasterCardBalance() {
+		
+	}
 	public MasterCardBalance(String cardNumber, LocalDate lastUpdated, Double balance) {
 		super();
 		this.cardNumber = cardNumber;
