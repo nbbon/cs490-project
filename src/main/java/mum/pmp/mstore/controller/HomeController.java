@@ -1,4 +1,4 @@
-package mum.pmp.mstore.controller.profile;
+package mum.pmp.mstore.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import mum.pmp.mstore.model.Profile;
+import mum.pmp.mstore.service.ProductService;
 import mum.pmp.mstore.service.security.ProfileService;
 
 @Controller
@@ -24,6 +25,9 @@ public class HomeController {
 	
 	@Autowired
 	private ProfileService profileService;
+	
+	@Autowired
+	private ProductService productService;
 
 	@RequestMapping("/login")
 	public String loginPage() {
@@ -37,9 +41,40 @@ public class HomeController {
 		if (auth != null) {
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
-		return "redirect:/secure/login?logout";
+		return "redirect:/login";
 	}
 
+	@GetMapping("/forgotpwd")
+	public String forgotPwd()
+	{
+		System.out.println("click on forgot password link");
+		return "password/enter_email";
+	}
+	
+	private UserDetails secureOperations() {
+		UserDetails user = null;
+		System.out.println("auth:" + auth);
+		if (auth.getPrincipal() != null)
+			user = (UserDetails) auth.getPrincipal();
+		
+		return user;
+	}
+
+	private String authorizedRole() {
+		for (GrantedAuthority roles : auth.getAuthorities()) {
+			String authorizedRole = roles.getAuthority();
+			System.out.println(authorizedRole);
+			return authorizedRole;
+		}
+		return null;
+	}
+
+	private String userHome() {
+		String homeURL = "/index";
+		System.out.println("homeURL >>" + homeURL);
+		return homeURL;
+	}
+	
 	@RequestMapping("/")
 	public String home(Model model) {
 		auth = SecurityContextHolder.getContext().getAuthentication();
@@ -62,11 +97,13 @@ public class HomeController {
 				}
 			}
 		}
+		model.addAttribute("products", productService.getAllProducts());
 		return userHome();
 	}
-
+	
 	@RequestMapping("/profile")
 	public String profilePage() {
+		System.out.println("Here in profile.");
 		String url = "";
 		UserDetails user = secureOperations();
 		if (user != null) {
@@ -82,59 +119,11 @@ public class HomeController {
 			case "ROLE_VENDOR":
 				url = "redirect:/vendor/update";
 				break;
+			case "ROLE_SUPER_ADMIN":
+				url = "redirect:/admin/update";
+				break;
 			}
 		}
 		return url;
-	}
-	
-	@GetMapping("/forgotpwd")
-	public String forgotPwd()
-	{
-		System.out.println("click on forgot password link");
-		return "password/enter_email";
-	}
-	
-	private UserDetails secureOperations() {
-		UserDetails user = null;
-		if (auth.getPrincipal() != null)
-			user = (UserDetails) auth.getPrincipal();
-		
-		return user;
-	}
-
-	private String authorizedRole() {
-		for (GrantedAuthority roles : auth.getAuthorities()) {
-			String authorizedRole = roles.getAuthority();
-			System.out.println(authorizedRole);
-			return authorizedRole;
-		}
-		return null;
-	}
-
-	private String userHome() {
-		String homeURL = "";
-		UserDetails user = secureOperations();
-		if (user != null) {
-			String userRole = authorizedRole();
-			
-			switch (userRole) {
-			case "ROLE_ADMIN":
-				homeURL = "/menu/admin_index";
-				break;
-			case "ROLE_CUSTOMER":
-				homeURL = "/menu/customer_index";
-				break;
-			case "ROLE_VENDOR":
-				homeURL = "/menu/vendor_index";
-				break;
-			case "ROLE_SUPER_ADMIN":
-				homeURL = "/menu/super_admin_index";
-				break;
-			default:
-				homeURL = "/menu/index";
-			}
-		}
-		System.out.println("homeURL >>" + homeURL);
-		return homeURL;
 	}
 }

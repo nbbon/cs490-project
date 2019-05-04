@@ -27,14 +27,9 @@ public class ProductServiceImpl implements ProductService{
 	StockRepository stockRepository;
 
 	@Override
-	public Product getProduct(Integer id) {
+	public Optional<Product> getProduct(Integer id) {
 		Optional<Product> optional = productRepository.findById(id);
-		if (optional.isPresent()) {
-			
-			return optional.get();
-			
-		}
-		return null;
+		return optional;
 	}
 
 	@Override
@@ -44,7 +39,7 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public List<Product> getProducts() {
+	public List<Product> getAllProducts() {
 		return (List<Product>) productRepository.findAll();
 	}
 

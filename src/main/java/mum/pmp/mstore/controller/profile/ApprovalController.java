@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import mum.pmp.mstore.model.Admin;
@@ -18,15 +19,13 @@ import mum.pmp.mstore.model.Vendor;
 import mum.pmp.mstore.service.security.ProfileService;
 
 @Controller
+@RequestMapping("/approval")
 public class ApprovalController {
 
 	@Autowired
 	private ProfileService profileService;
 
-	/*	Admin Approval by Super Admin 
-	 * */
-	 
-	@GetMapping("/super/admins")
+	@GetMapping("/admins")
 	public String getAdminList(Model model) {
 		List<Admin> admins = profileService.findNewAdmins();
 		System.out.println(admins);
@@ -34,38 +33,26 @@ public class ApprovalController {
 		return "/approval/adminList";
 	}
 
-	@PostMapping("/admin/approve/{adminEmail}")
-	public String approveAdmin(@PathVariable("adminEmail") String adminEmail, @RequestParam(value="action", required=true) String action) throws AddressException, MessagingException {
+	@PostMapping("/admins/{adminEmail}")
+	public String approveAdmin(//@PathVariable("adminEmail") String adminEmail, 
+			@RequestParam(value="action", required=true) String action, @RequestParam(value="admin-email", required=true) String adminEmail) throws AddressException, MessagingException {
+		System.out.println("adminEmail :" + adminEmail);
 		profileService.approveAdmin(adminEmail, action);
-		return "redirect:/super/admins";
+		return "redirect:/approval/admins";
 	}
 	
-	@GetMapping("/admin/delete/{adminId}")
-	public String deletePerson(Admin person, @PathVariable("adminId") long adminId) {
-		Admin personToDelete = (Admin) profileService.findById(adminId);
-		//personService.removePerson(personToDelete);
-		return "redirect:/admins";
-	}
-	
-	@GetMapping("/admin/{adminId}")
-	public String updatePerson(@PathVariable("adminId") Long adminId, Model model) {
-		model.addAttribute("person", profileService.findById(adminId));
-		return "admins";
-	}
-	
-	
-	/* Vendor Approval by Admin */
-	@GetMapping("/admin/vendors")
+	@GetMapping("/vendors")
 	public String getVendorList(Model model) {
 		List<Vendor> vendors = profileService.findNewVendors();
 		model.addAttribute("vendors", vendors);
 		return "/approval/vendorList";	
 	}
 	
-	@PostMapping("/vendor/approve/{vendorEmail}")
-	public String approveVendor(@PathVariable("vendorEmail") String vendorEmail, @RequestParam(value="action", required=true) String action) throws AddressException, MessagingException {
+	@PostMapping("/vendors/{vendorEmail}")
+	public String approveVendor(//@PathVariable("vendorEmail") String vendorEmail, 
+			@RequestParam(value="action", required=true) String action , @RequestParam(value="vendor-email", required=true) String vendorEmail) throws AddressException, MessagingException {
 		System.out.println("In vendor approval..");
 		profileService.approveVendor(vendorEmail, action);
-		return "redirect:/admin/vendors";
+		return "redirect:/approval/vendors";
 	}
 }

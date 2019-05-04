@@ -2,6 +2,7 @@ package mum.pmp.mstore.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,12 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.DecimalMin;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import mum.pmp.mstore.model.Vendor;
-
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 public class Product implements Serializable {
@@ -27,13 +29,25 @@ public class Product implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
+	
 	private String productNumber;
+	
+	@Column(name = "name", nullable = false, unique = true)
+    @Length(min = 3, message = "*Name must have at least 5 characters")
+	
 	private String productName;
-	private int price;
+	
+	@Column(name = "price", nullable = false)
+    @DecimalMin(value = "0.00", message = "*Price has to be non negative number")
+	private double price;
+	
+	 @Column(name = "description")
 	private String description;
+	 
 	@OneToOne
 	@JoinColumn(name = "STOCK_ID")
 	private Stock stock;
+	
 	@ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
 	private Category category;
@@ -51,13 +65,14 @@ public class Product implements Serializable {
 		this.vendor = vendor;
 	}
 
-
 	public Product() {
 		super();
 	}
 
-
-	public Product(String productNumber, String productName, int price, String description) {
+	public Product(String productNumber,
+			@Length(min = 3, message = "*Name must have at least 5 characters") String productName,
+			@DecimalMin(value = "0.00", message = "*Price has to be non negative number") double price,
+			String description) {
 		super();
 		this.productNumber = productNumber;
 		this.productName = productName;
@@ -80,9 +95,6 @@ public class Product implements Serializable {
 		return productNumber;
 	}
 
-
-
-
 	public void setProductNumber(String productNumber) {
 		this.productNumber = productNumber;
 	}
@@ -97,10 +109,6 @@ public class Product implements Serializable {
 		this.productName = productName;
 	}
 
-
-	public int getPrice() {
-		return price;
-	}
 
 
 	public void setPrice(int price) {
@@ -143,13 +151,15 @@ public class Product implements Serializable {
 		int result = 1;
 		result = prime * result + ((category == null) ? 0 : category.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + price;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(price);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((productName == null) ? 0 : productName.hashCode());
 		result = prime * result + ((productNumber == null) ? 0 : productNumber.hashCode());
 		result = prime * result + ((stock == null) ? 0 : stock.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -170,7 +180,12 @@ public class Product implements Serializable {
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
-		if (price != other.price)
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (Double.doubleToLongBits(price) != Double.doubleToLongBits(other.price))
 			return false;
 		if (productName == null) {
 			if (other.productName != null)
@@ -189,10 +204,14 @@ public class Product implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-	
-	
-	
 
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	
 }

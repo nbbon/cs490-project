@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout">
+<head>
+    <meta charset="UTF-8" />
+    <title>Products</title>
+
+    <link rel="stylesheet" type="text/css" media="all" href="../../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}" src="js/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.min.js}" src="js/bootstrap.min.js"></script>
+    <title>mStore</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+	<link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.0.13/css/all.css}"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script th:src="@{/js/main.js}" src="../../js/main.js" type="text/javascript"></script>
+</head>
+<body>
+
+ <div class="container">
+ <div th:replace="fragments/menu :: menu"></div>
+		<h6 align="right" th:text="${execInfo.now.time}"></h6>
+        <h1>Products</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    
+                    <th>ProductNumber</th>
+                    <th>ProductName</th>
+                    <th>Price</th>
+                    <th>Description</th>
+                    <th>Stock</th>
+                    <th>Category</th> 
+                    <th>Vendor</th> 
+                </tr>
+            </thead>
+                 
+            <tbody>
+                <tr th:each="product : ${productsList}">
+                    <td th:text="${product.productNumber}"></td>
+                    <td th:text="${product.productName}"></td>
+                    <td th:text="${product.price}"></td>
+                     <td th:text="${product.description}"></td>
+                    <td th:text="${product.stock.quantity}"></td>
+                    <td th:text="${product.category.categoryName}"></td>
+                    <td>Vendor Name should be here</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
