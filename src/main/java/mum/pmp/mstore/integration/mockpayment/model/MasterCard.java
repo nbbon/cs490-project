@@ -1,7 +1,9 @@
 package mum.pmp.mstore.integration.mockpayment.model;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
 
+@Entity
 public class MasterCard {
 	@Id
 	private String cardNumber;
@@ -9,6 +11,10 @@ public class MasterCard {
 	private String csv;
 	private String expireDate;
 	private Double balance;
+	
+	public MasterCard() {
+		
+	}
 	public MasterCard(String cardNumber, String cardName, String csv, String expireDate, Double balance) {
 		this.cardNumber = cardNumber;
 		this.cardName = cardName;

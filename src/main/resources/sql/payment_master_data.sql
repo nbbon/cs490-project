@@ -11,7 +11,7 @@ use mstore_db;
 --   `card_number` varchar(16),
 --   `card_name` varchar(50) DEFAULT NULL,
 --   `csv` varchar(3) DEFAULT NULL,
---   `exprire_date` varchar(4) DEFAULT NULL,
+--   `expire_date` varchar(5) DEFAULT NULL,
 --   `balance` int(11) DEFAULT NULL,
 --   PRIMARY KEY (`card_number`)
 -- );
@@ -27,7 +27,7 @@ use mstore_db;
 --   `card_number` varchar(16),
 --   `card_name` varchar(50) DEFAULT NULL,
 --   `csv` varchar(3) DEFAULT NULL,
---   `exprire_date` varchar(4) DEFAULT NULL,
+--   `expire_date` varchar(5) DEFAULT NULL,
 --   `balance` int(11) DEFAULT NULL,
 --   PRIMARY KEY (`card_number`)
 -- );
@@ -51,24 +51,24 @@ use mstore_db;
 --   PRIMARY KEY (`id`)
 -- );
 
--- CREATE TABLE `visa_card_transaction` (
---   `id` int NOT NULL AUTO_INCREMENT,
---   `card_number` varchar(16),
---   `card_name` varchar(50) DEFAULT NULL,
---   `t_date` Date DEFAULT NULL,
---   `t_amount` int(11) DEFAULT NULL,
---   `prev_balance` int(11) DEFAULT NULL,
---   `remain_balance` int(11) DEFAULT NULL,
---   `description` varchar(256) DEFAULT NULL,
---   PRIMARY KEY (`id`)
--- );
+CREATE TABLE `visa_card_transaction` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `card_number` varchar(16),
+  `card_name` varchar(50) DEFAULT NULL,
+  `t_date` Date DEFAULT NULL,
+  `t_amount` int(11) DEFAULT NULL,
+  `prev_balance` int(11) DEFAULT NULL,
+  `remain_balance` int(11) DEFAULT NULL,
+  `description` varchar(256) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
 
-insert into master_card values('1234123412340001', 'Yee Mon', '123', '2023', 10000);
-insert into master_card values('1234123412340002', 'Jean', '123', '2023', 10000);
-insert into master_card values('1234123412340003', 'Stanley', '123', '2023', 10000);
-insert into master_card values('1234123412340004', 'Niveen', '123', '2023', 10000);
-insert into master_card values('1234123412340005', 'Ulugbek', '123', '2023', 10000);
-insert into master_card values('1234123412340006', 'Bon', '123', '2023', 10000);
+insert into master_card values('1234123412340001', 'Yee Mon', '123', '02/23', 10000);
+insert into master_card values('1234123412340002', 'Jean', '123', '02/23', 10000);
+insert into master_card values('1234123412340003', 'Stanley', '123', '02/23', 10000);
+insert into master_card values('1234123412340004', 'Niveen', '123', '02/23', 10000);
+insert into master_card values('1234123412340005', 'Ulugbek', '123', '02/23', 10000);
+insert into master_card values('1234123412340006', 'Bon', '123', '02/23', 10000);
 
 insert into master_card_balance values('1234123412340001', 10000, CURDATE());
 insert into master_card_balance values('1234123412340002', 10000, CURDATE());
@@ -77,12 +77,12 @@ insert into master_card_balance values('1234123412340004', 10000, CURDATE());
 insert into master_card_balance values('1234123412340005', 10000, CURDATE());
 insert into master_card_balance values('1234123412340006', 10000, CURDATE());
 
-insert into visa_card values('5678123412340001', 'Yee Mon', '123', '2023', 10000);
-insert into visa_card values('5678123412340002', 'Jean', '123', '2023', 10000);
-insert into visa_card values('5678123412340003', 'Stanley', '123', '2023', 10000);
-insert into visa_card values('5678123412340004', 'Niveen', '123', '2023', 10000);
-insert into visa_card values('5678123412340005', 'Ulugbek', '123', '2023', 10000);
-insert into visa_card values('5678123412340006', 'Bon', '123', '2023', 10000);
+insert into visa_card values('5678123412340001', 'Yee Mon', '123', '02/23', 10000);
+insert into visa_card values('5678123412340002', 'Jean', '123', '02/23', 10000);
+insert into visa_card values('5678123412340003', 'Stanley', '123', '02/23', 10000);
+insert into visa_card values('5678123412340004', 'Niveen', '123', '02/23', 10000);
+insert into visa_card values('5678123412340005', 'Ulugbek', '123', '02/23', 10000);
+insert into visa_card values('5678123412340006', 'Bon', '123', '02/23', 10000);
 
 insert into visa_card_balance values('5678123412340001', 10000, CURDATE());
 insert into visa_card_balance values('5678123412340002', 10000, CURDATE());

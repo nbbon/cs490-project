@@ -51,7 +51,7 @@ public class Order {
 	    }
 
 
-	    private double getTotalPrice() {
+	    public double getTotalPrice() {
 	        double totalPrice = 0.0;
 	        for (OrderLine oline : orderlineList) {
 	            totalPrice = totalPrice + (oline.getProduct().getPrice() * oline.getQuantity());

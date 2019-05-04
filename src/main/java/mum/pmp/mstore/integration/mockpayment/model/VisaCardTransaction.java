@@ -3,11 +3,14 @@ package mum.pmp.mstore.integration.mockpayment.model;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class VisaCardTransaction {
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	private String cardNumber;
 	private String cardName;
@@ -16,6 +19,9 @@ public class VisaCardTransaction {
 	private Double preBalance;
 	private Double remainBalance;
 	private String description;
+	public VisaCardTransaction() {
+		
+	}
 	public VisaCardTransaction(String cardNumber, String cardName, LocalDate tDate, Double tAmount, Double preBalance,
 			Double remainBalance, String description) {
 		this.cardNumber = cardNumber;
