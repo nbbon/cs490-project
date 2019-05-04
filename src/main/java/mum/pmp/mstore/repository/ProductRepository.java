@@ -1,5 +1,7 @@
 package mum.pmp.mstore.repository;
 
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,5 +12,4 @@ public interface ProductRepository extends CrudRepository<Product,Integer>{
 	
 	Product findByProductNumber(String productNumber);
 	
-
 }

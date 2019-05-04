@@ -119,6 +119,9 @@ public class HomeController {
 			case "ROLE_VENDOR":
 				url = "redirect:/vendor/update";
 				break;
+			case "ROLE_SUPER_ADMIN":
+				url = "redirect:/admin/update";
+				break;
 			}
 		}
 		return url;

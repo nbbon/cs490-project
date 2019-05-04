@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 import javax.swing.JList.DropLocation;
 
 import mum.pmp.mstore.model.Address;
+import mum.pmp.mstore.model.CreditCard;
 import mum.pmp.mstore.model.Customer;
 
 @Entity
@@ -33,6 +34,8 @@ public class Order {
 		@JoinColumn(name = "ADDRESS_ID2")
 	    private Address shippingAddress;
 	    
+	    @OneToOne
+	    private CreditCard creditCard;
 	  
 
 	    private ArrayList<OrderLine> orderlineList = new ArrayList<OrderLine>();
@@ -118,6 +121,14 @@ public class Order {
 
 		public void setShippingAddress(Address shippingAddress) {
 			this.shippingAddress = shippingAddress;
+		}
+
+		public CreditCard getCreditCard() {
+			return creditCard;
+		}
+
+		public void setCreditCard(CreditCard creditCard) {
+			this.creditCard = creditCard;
 		}
 	    
 }

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Search</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"
+	src="js/jquery.min.js"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"
+	src="js/bootstrap.min.js"></script>
+</head>
+<body>
+
+	<div class="container">
+
+		<h1>Search Results</h1>
+		<div id="productDiv" th:if="${productDiv}">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>ProductNumber</th>
+						<th>ProductName</th>
+						<th>price</th>
+						<th>description</th>
+						<!--  <th>stock</th>
+                    <th>category</th> -->
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr th:each="products: ${products}">
+						<td th:text="${products.productNumber}">1</td>
+						<td th:text="${products.productName}">Test</td>
+						<td th:text="${products.price}">Test</td>
+						<td th:text="${products.description}">1</td>
+						<td><a href="" th:href="select">Select</a></td>
+						<!--<td th:text="${products.stock.quantity}">Test</td>
+                    <td th:text="${products.category.categoryName}">Test</td>              
+                    <td>-->
+						<!--
+                    <td th:text="${product.productNumber}">1</td>
+                    <td th:text="${product.productName}">Test</td>
+                    <td th:text="${product.price}">Test</td>
+                    <td th:text="${product.description}">1</td>
+                    <td th:text="${product.stock.quantity}">Test</td>
+                    <td th:text="${product.category.categoryName}">Test</td>-->
+
+
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div id="categoryDiv" th:if="${categoryDiv}">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>ProductNumber</th>
+						<th>ProductName</th>
+						<th>price</th>
+						<th>description</th>
+						<!--  <th>stock</th>
+                    <th>category</th> -->
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr th:each="products: ${categories}">
+						<td th:text="${products.productNumber}">1</td>
+						<td th:text="${products.productName}">Test</td>
+						<td th:text="${products.price}">Test</td>
+						<td th:text="${products.description}">1</td>
+						<td><a href="" th:href="select">Select</a></td>
+						<!--<td th:text="${products.stock.quantity}">Test</td>
+                    <td th:text="${products.category.categoryName}">Test</td>              
+                    <td>-->
+						<!--
+                    <td th:text="${product.productNumber}">1</td>
+                    <td th:text="${product.productName}">Test</td>
+                    <td th:text="${product.price}">Test</td>
+                    <td th:text="${product.description}">1</td>
+                    <td th:text="${product.stock.quantity}">Test</td>
+                    <td th:text="${product.category.categoryName}">Test</td>-->
+
+
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div id="emptyDiv" th:if="${emptyDiv}">Type something to search for it</div>
+	</div>
+</body>
+</html>

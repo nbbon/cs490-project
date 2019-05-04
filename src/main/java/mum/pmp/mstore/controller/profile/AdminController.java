@@ -56,7 +56,8 @@ public class AdminController {
 	@GetMapping("/update")
 	public String updatePage(Model model) {
 		System.out.println("To update");
-		Admin adminProfile = (Admin) profileService.findByEmail(sessionListener.getUser().getEmail());
+		//Admin adminProfile = (Admin) profileService.findByEmail(sessionListener.getUser().getEmail());
+		Profile adminProfile = profileService.findByEmail(sessionListener.getUser().getEmail());
 		model.addAttribute("admin", adminProfile);
 		return "/profile/admin_profile";
 	}
