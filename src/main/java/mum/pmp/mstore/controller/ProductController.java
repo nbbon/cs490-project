@@ -21,6 +21,7 @@ import mum.pmp.mstore.service.CategoryService;
 import mum.pmp.mstore.service.ProductService;
 
 @Controller
+@RequestMapping("/products")
 public class ProductController {
 
 	@Autowired
@@ -29,14 +30,14 @@ public class ProductController {
 	@Autowired
 	CategoryService categoryService;
 
-	@GetMapping(value = "/products")
+	@GetMapping("/")
 	public String listProducts(Model model) {
 
-		model.addAttribute("productsList", productService.getProducts());
+		model.addAttribute("productsList", productService.getAllProducts());
 		return "product/productsList";
 	}
 
-	@GetMapping(value = { "/products/productsEdit", "/productsEdit/{id}" })
+	@GetMapping(value = { "/productsEdit", "/productsEdit/{id}" })
 	public String productsEdit(Model model, @PathVariable(required = false, name = "id") Integer id) {
 		if (null != id) {
 			List<Category> categories = categoryService.getCategories();
@@ -52,7 +53,7 @@ public class ProductController {
 		return "product/productsEdit";
 	}
 
-	@PostMapping(value = "/products/productsEdit")
+	@PostMapping(value = "/productsEdit")
 	public String addproducts(@Valid @ModelAttribute("products") Product product, BindingResult bindingResult,
 			Model model) {
 		if (bindingResult.hasErrors()) {
@@ -65,10 +66,10 @@ public class ProductController {
 		return "product/productsList";
 	}
 
-	@RequestMapping(value = "/products/productsDelete/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/productsDelete/{id}", method = RequestMethod.GET)
 	public String productsDelete(Model model, @PathVariable(required = true, name = "id") Integer id) {
 		productService.deleteProduct(id);
-		model.addAttribute("productsList", productService.getProducts());
+		model.addAttribute("productsList", productService.getAllProducts());
 		return "product/productsList";
 
 	}
@@ -76,7 +77,7 @@ public class ProductController {
 	@GetMapping(value = "/allproducts")
 	public String getAllProducts(Model model) {
 
-		model.addAttribute("productsList", productService.getProducts());
+		model.addAttribute("productsList", productService.getAllProducts());
 		return "product/allProducts";
 	}
 

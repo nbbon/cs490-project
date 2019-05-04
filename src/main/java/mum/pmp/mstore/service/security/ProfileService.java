@@ -115,6 +115,10 @@ public class ProfileService {
 		Profile adminProfile = findByEmail(adminEmail);
 		User user = userRepository.findByUsername(adminEmail);
 		
+		System.out.println(adminEmail);
+		System.out.println(">>>>" + adminProfile );
+		System.out.println(">>>>" + user);
+		
 		if(action.equals("Approve")) {
 			adminProfile.setEnable(true);
 			user.setEnabled(true);

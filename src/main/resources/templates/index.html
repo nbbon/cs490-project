@@ -14,19 +14,17 @@
 <body>
 <div class="container">
 	<div th:replace="fragments/menu :: menu"></div>
-		<h6 align="right" th:text="${execInfo.now.time}"></h6>
-		<h5 align="left">Welcome <span th:text="${userdetails?.getUsername()}"></span></h5>
         <div class="col-lg-3 col-md-6 mb-4" style="width:23%;height:500px" th:each="product, iter : ${products}">
             <div class="card">
-                <img style="width:200px;height:200px"  th:src="@{${'/images/blend' + (iter.index % 5) + '.jpg'}}" alt=""/>
+<!--                 <img style="width:200px;height:200px"  th:src="@{${'/images/blend' + (iter.index % 5) + '.jpg'}}" alt=""/> -->
+                <div id="status"></div>
                 <div class="card-body">
-                    <h4 class="card-title" th:text="${product.productName}">Card title</h4>
-                    <p class="card-text" th:text="${product.description}">M Store </p>
-                    <p class="product-price" th:text="${product.price} + ' $'"></p>
+                    <h4 class="card-title" th:text="${product.productName}">Product Name</h4>
+                    <p class="card-text" th:text="${product.description}">Product Description </p>
+                    <p class="product-price" th:text="${#numbers.formatDecimal(product.price,3,2,'COMMA')} + ' $'"></p>
                 </div>
                 <div class="card-footer">
-                    <button th:attr="productId=${product.id}" class="btn btn-default add-to-cart-btn">Add to cart</button>
-<!--                     <button th:href="@{'/shopping-cart/'+${product.id}}" class="btn btn-default"></button> -->
+                     <button th:attr="productId=${product.id}" class="btn btn-default add-to-cart-btn" id="add-to-cart-btn">Add to cart</button>
                 </div>
             </div>
         </div>

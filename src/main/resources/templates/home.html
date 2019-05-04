@@ -4,7 +4,13 @@
 <head>
 </head>
 <body>
-	Welcome to mStore!
+	
+<th:block sec:authorize="isAuthenticated()">
+      Hello
+      <a th:href="@{/admin/accountInfo}" th:utext="${#request.userPrincipal.name}">..</a>
+      &nbsp;|&nbsp;
+      <a th:href="@{/admin/logout}">Logout</a>
+</th:block>
 </body>
 
 </html>

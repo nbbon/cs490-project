@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="container">
-    <div th:replace="fragments/menu :: menu_admin"></div>
+    <div th:replace="fragments/menu :: menu"></div>
     <form class="form-horizontal" th:object="${admin}" role="form" method="POST" th:action="@{/admin/signup}">
         <div class="form-group row">
             <label for="firstName" class="col-sm-3 col-md-3 col-form-label">First Name</label>
