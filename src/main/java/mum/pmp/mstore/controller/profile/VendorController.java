@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import mum.pmp.mstore.config.security.Listener;
@@ -18,6 +19,7 @@ import mum.pmp.mstore.utilities.User_Type;
 import mum.pmp.mstore.validator.VendorValidator;
 
 @Controller
+@RequestMapping("/vendor")
 public class VendorController {
 
 	@Autowired
@@ -29,13 +31,13 @@ public class VendorController {
 	@Autowired
 	private Listener sessionListener;
 	
-	@GetMapping("/vendor/signup")
+	@GetMapping("/signup")
 	public String signupPage(Model model) {
 		model.addAttribute("vendor", new Vendor());
 		return "/profile/vendor_signup";
 	}
 	
-	@PostMapping("/vendor/signup")
+	@PostMapping("/signup")
 	public String signup(@ModelAttribute Vendor vendor, BindingResult bindingResult) {
 		//@RequestParam(value="action", required=true) String action
 		String url = "";
@@ -61,7 +63,7 @@ public class VendorController {
 		return url;
 	}
 	
-	@GetMapping("/vendor/update")
+	@GetMapping("/update")
 	public String updatePage(Model model) {
 		System.out.println("in update : " + sessionListener.getUser().getEmail());
 		Vendor vendorProfile = (Vendor) profileService.findByEmail(sessionListener.getUser().getEmail());
@@ -70,7 +72,7 @@ public class VendorController {
 		return "/profile/vendor_profile";
 	}
 	
-	@PostMapping("/vendor/update")
+	@PostMapping("/update")
 	public String update(@ModelAttribute Vendor vendor, BindingResult bindingResult) {
 		validator.validate(vendor, bindingResult);
 		boolean status = profileService.updateVendor(vendor);
@@ -80,7 +82,7 @@ public class VendorController {
 			return "redirect:/vendor/update";
 	}
 	
-	@PostMapping("/vendor/disable")
+	@PostMapping("/disable")
 	public String disableVendor(@ModelAttribute("vendor") Vendor vendor)
 	{
 		System.out.println(vendor);

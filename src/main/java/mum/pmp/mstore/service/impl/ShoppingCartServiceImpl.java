@@ -1,5 +1,6 @@
 package mum.pmp.mstore.service.impl;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,9 +12,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
+import mum.pmp.mstore.domain.Order;
 import mum.pmp.mstore.domain.Product;
+import mum.pmp.mstore.domain.ShoppingCart;
+import mum.pmp.mstore.domain.ShoppingCartLine;
 import mum.pmp.mstore.exception.NotEnoughProductsInStockException;
 import mum.pmp.mstore.repository.ProductRepository;
+import mum.pmp.mstore.service.OrderService;
 import mum.pmp.mstore.service.ShoppingCartService;
 
 @Service
@@ -22,6 +27,9 @@ import mum.pmp.mstore.service.ShoppingCartService;
 public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     private final ProductRepository productRepository;
+    
+    @Autowired
+    private OrderService orderService;
 
     private Map<Product, Integer> products = new HashMap<>();
 
@@ -63,35 +71,41 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public void checkout() throws NotEnoughProductsInStockException {
         Product product;
+        
+        ArrayList<ShoppingCartLine> cartLineList = new ArrayList<ShoppingCartLine>();
+        
+        System.out.println("In shopping Cart checkout.");
+        
+        //Update stock value
         for (Map.Entry<Product, Integer> entry : products.entrySet()) {
             // Refresh quantity for every product before checking
             product = productRepository.findById(entry.getKey().getId()).get();  
             if (product.getStock().getQuantity() < entry.getValue())
                 throw new NotEnoughProductsInStockException(product);
-            entry.getKey().getStock().setQuantity(product.getStock().getQuantity() - entry.getValue());
+            int quantity = product.getStock().getQuantity() - entry.getValue();
+            entry.getKey().getStock().setQuantity(quantity);
             
             productRepository.save(product);
+            
+            //Create cart line
+            ShoppingCartLine cartLine = new ShoppingCartLine();
+            cartLine.setProduct(product);
+            cartLine.setQuantity(quantity);
+            cartLineList.add(cartLine);
         }
-//        productRepository.save(products.keySet());
-//        productRepository.flush();
         
+        // Add to shopping Cart
+        ShoppingCart cart = new ShoppingCart();
+        cart.setCartid("Cart1");
+        cart.setCartlineList(cartLineList);
+        
+        Order order = orderService.createOrder(cart);
         
         products.clear();
     }
 
     @Override
     public Double getTotal() {
-//        return products.entrySet().stream()
-//                .map(entry -> entry.getKey().getPrice().multiply(BigDecimal.valueOf(entry.getValue())))
-//                .reduce(BigDecimal::add)
-//                .orElse(BigDecimal.ZERO);
-        
-//        return products.entrySet().stream()
-//        			.map(entry -> ((entry.getKey().getPrice()) * (BigDecimal.valueOf(entry.getValue()))))
-//        			 .reduce(BigDecimal::add)
-//        			 .orElse(BigDecimal.ZERO);
-//        			
-    	
     	return products.entrySet().stream()
     			.map(entry -> (entry.getKey().getPrice() * entry.getValue().doubleValue()))
     			.reduce(Double::sum)
