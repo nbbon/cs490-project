@@ -1,11 +1,16 @@
 package mum.pmp.mstore.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import mum.pmp.mstore.domain.Category;
 
 @Entity
 @DiscriminatorValue(value = "VENDOR")
@@ -22,8 +27,18 @@ public class Vendor extends Profile{
 	
 	@Column(name="CONTACT_PERSON")
 	private String contactPerson;
-
 	
+	@OneToMany(mappedBy="vendor")
+	private List<Category> categories;
+	
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
+	}
+
 	public String getVendorNumber() {
 		return vendorNumber;
 	}
