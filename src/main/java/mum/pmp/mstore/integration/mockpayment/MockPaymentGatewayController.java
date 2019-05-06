@@ -21,21 +21,26 @@ public class MockPaymentGatewayController {
 
 	@PostMapping("paymentgw/master")
 	public void requestForMasterPayment(HttpServletRequest request, HttpServletResponse response) {
-		String cardNumber = (String) request.getAttribute("cardNumber"); 
-		String cardName = (String) request.getAttribute("cardName");
-		String csv = (String) request.getAttribute("csv");	
-		String expireDate = (String) request.getAttribute("expireDate");
+		String fromCardNumber = (String) request.getAttribute("fromCardNumber");
+		String fromCardName = (String) request.getAttribute("fromCardName");
+		String fromCardCSV = (String) request.getAttribute("fromCardCSV");
+		String fromCardExpireDate = (String) request.getAttribute("fromCardExpireDate");
+		String toCardNumber = (String) request.getAttribute("toCardNumber");
+		String toCardName = (String) request.getAttribute("toCardName");
+		String toCardCSV = (String) request.getAttribute("toCardCSV");
+		String toCardExpireDate = (String) request.getAttribute("toCardExpireDate");
 		String orderNumber = (String) request.getAttribute("orderNumber");
 		Double amount = (Double) request.getAttribute("amount");
 		String fallbackUrl = (String) request.getAttribute("fallbackUrl");
 		Boolean result = false;
-		if (verifyCardInfo(cardNumber, cardName, csv, expireDate)) {
+		if (verifyCardInfo(fromCardNumber, fromCardName, fromCardCSV, fromCardExpireDate)) {
 
-			String description = "DATE:"+ LocalDate.now() + "," + cardName.toUpperCase() + ";ORDER:"
-					+ orderNumber + ";AMOUNT=" + amount;
-			if (mockPaymentService.processMasterCardPaymentRequest(cardNumber, cardName, csv, expireDate, amount,
-					description) != null) {
-				System.out.println("PAYMENT GATEWAY: resquest approved for " + cardNumber);
+			String description = "DATE:" + LocalDate.now() + "," + fromCardName.toUpperCase() + ";ORDER:" + orderNumber
+					+ ";AMOUNT=" + amount;
+			if (mockPaymentService.processMasterCardPaymentRequest(fromCardNumber, fromCardName, fromCardCSV,
+					fromCardExpireDate, toCardNumber, toCardName, toCardCSV, toCardExpireDate, amount,
+					description)) {
+				System.out.println("PAYMENT GATEWAY: payment resquest approved for " + fromCardNumber);
 				System.out.println("PAYMENT GATEWAY: transaction is approved: " + description);
 				result = true;
 			}
@@ -43,42 +48,45 @@ public class MockPaymentGatewayController {
 
 		try {
 			if (result) {
-				request.setAttribute("status", "approved");	
+				request.setAttribute("status", "approved");
 			} else {
-				System.out.println("PAYMENT GATEWAY: resquest declined for " + cardNumber);
+				System.out.println("PAYMENT GATEWAY: resquest declined for " + fromCardNumber);
 				request.setAttribute("status", "declined");
 			}
 			request.setAttribute("orderNumber", orderNumber);
-			
+
 			System.out.println("PAYMENT GATEWAY: fall back to the caller at: " + fallbackUrl);
 
 			RequestDispatcher rd = request.getRequestDispatcher(fallbackUrl);
 			rd.forward(request, response);
-		} catch (ServletException e) {
+		} catch (ServletException | IOException e) {
 			System.out.println(e.getMessage());
-//			e.printStackTrace();
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-//			e.printStackTrace();
+			// e.printStackTrace();
 		}
 	}
 
 	@PostMapping("paymentgw/visa")
 	public void requestForVisaPayment(HttpServletRequest request, HttpServletResponse response) {
-		String cardNumber = (String) request.getAttribute("cardNumber"); 
-		String cardName = (String) request.getAttribute("cardName");
-		String csv = (String) request.getAttribute("csv");	
-		String expireDate = (String) request.getAttribute("expireDate");
+		String fromCardNumber = (String) request.getAttribute("fromCardNumber");
+		String fromCardName = (String) request.getAttribute("fromCardName");
+		String fromCardCSV = (String) request.getAttribute("fromCardCSV");
+		String fromCardExpireDate = (String) request.getAttribute("fromCardExpireDate");
+		String toCardNumber = (String) request.getAttribute("toCardNumber");
+		String toCardName = (String) request.getAttribute("toCardName");
+		String toCardCSV = (String) request.getAttribute("toCardCSV");
+		String toCardExpireDate = (String) request.getAttribute("toCardExpireDate");
 		String orderNumber = (String) request.getAttribute("orderNumber");
 		Double amount = (Double) request.getAttribute("amount");
 		String fallbackUrl = (String) request.getAttribute("fallbackUrl");
 		Boolean result = false;
-		if (verifyCardInfo(cardNumber, cardName, csv, expireDate)) {
-			String description = LocalDate.now() + ";" + cardName.toUpperCase().replace(" ", "") + "ORDER:"
-					+ orderNumber + ";amount=" + amount;
-			if (mockPaymentService.processVisaCardPaymentRequest(cardNumber, cardName,
-					csv, expireDate, amount, description) != null) {
-				System.out.println("PAYMENT GATEWAY: resquest approved for " + cardNumber);
+		if (verifyCardInfo(fromCardNumber, fromCardName, fromCardCSV, fromCardExpireDate)) {
+
+			String description = "DATE:" + LocalDate.now() + "," + fromCardName.toUpperCase() + ";ORDER:" + orderNumber
+					+ ";AMOUNT=" + amount;
+			if (mockPaymentService.processVisaCardPaymentRequest(fromCardNumber, fromCardName, fromCardCSV,
+					fromCardExpireDate, toCardNumber, toCardName, toCardCSV, toCardExpireDate, amount,
+					description)) {
+				System.out.println("PAYMENT GATEWAY: payment resquest approved for " + fromCardNumber);
 				System.out.println("PAYMENT GATEWAY: transaction is approved: " + description);
 				result = true;
 			}
@@ -86,23 +94,20 @@ public class MockPaymentGatewayController {
 
 		try {
 			if (result) {
-				request.setAttribute("status", "approved");	
+				request.setAttribute("status", "approved");
 			} else {
-				System.out.println("PAYMENT GATEWAY: resquest declined for " + cardNumber);
+				System.out.println("PAYMENT GATEWAY: resquest declined for " + fromCardNumber);
 				request.setAttribute("status", "declined");
 			}
 			request.setAttribute("orderNumber", orderNumber);
-			
+
 			System.out.println("PAYMENT GATEWAY: fall back to the caller at: " + fallbackUrl);
 
 			RequestDispatcher rd = request.getRequestDispatcher(fallbackUrl);
 			rd.forward(request, response);
-		} catch (ServletException e) {
+		} catch (ServletException | IOException e) {
 			System.out.println(e.getMessage());
-//			e.printStackTrace();
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-//			e.printStackTrace();
+			// e.printStackTrace();
 		}
 	}
 
