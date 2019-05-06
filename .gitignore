@@ -31,3 +31,4 @@ HELP.md
 ### File ###
 application.properties
 EmailControllerTest
+src/main/resources/application.properties

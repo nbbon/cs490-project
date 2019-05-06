@@ -27,10 +27,10 @@ public class PaymentController {
 	@Autowired
 	OrderService orderService;
 
-	@PostMapping({ "/{orderNumber}" })
+	@PostMapping({ "/" })
 	public void processPayment(@PathVariable String orderNumber, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
-		Order order = orderService.getOrder(orderNumber);
+		Order order = (Order) request.getAttribute("order"); //orderService.getOrder(orderNumber);
 		if (order != null) {
 			String paymentUrl = "";
 			String fallbackUrl = ""; // "http://localhost:8080/payment";
