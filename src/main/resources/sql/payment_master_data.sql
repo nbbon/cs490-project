@@ -70,6 +70,8 @@ insert into master_card values('1234123412340004', 'Niveen', '123', '02/23', 100
 insert into master_card values('1234123412340005', 'Ulugbek', '123', '02/23', 10000);
 insert into master_card values('1234123412340006', 'Bon', '123', '02/23', 10000);
 
+insert into master_card values('1234123412340079', 'Company', '123', '02/23', 1000000);
+
 insert into master_card_balance values('1234123412340001', 10000, CURDATE());
 insert into master_card_balance values('1234123412340002', 10000, CURDATE());
 insert into master_card_balance values('1234123412340003', 10000, CURDATE());
@@ -83,6 +85,8 @@ insert into visa_card values('5678123412340003', 'Stanley', '123', '02/23', 1000
 insert into visa_card values('5678123412340004', 'Niveen', '123', '02/23', 10000);
 insert into visa_card values('5678123412340005', 'Ulugbek', '123', '02/23', 10000);
 insert into visa_card values('5678123412340006', 'Bon', '123', '02/23', 10000);
+                                       
+insert into visa_card values('5678123412340079', 'Company', '123', '02/23', 1000000);                                   
 
 insert into visa_card_balance values('5678123412340001', 10000, CURDATE());
 insert into visa_card_balance values('5678123412340002', 10000, CURDATE());
