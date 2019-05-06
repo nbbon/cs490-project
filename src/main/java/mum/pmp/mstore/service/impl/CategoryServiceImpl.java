@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mum.pmp.mstore.domain.Category;
+import mum.pmp.mstore.domain.Product;
 import mum.pmp.mstore.repository.CategoryRepository;
 import mum.pmp.mstore.service.CategoryService;
 
@@ -17,7 +18,6 @@ public class CategoryServiceImpl implements CategoryService{
 
 	@Override
 	public void addCategory(Category category) {
-
 		categoryRepository.save(category);
 	}
 
@@ -26,24 +26,30 @@ public class CategoryServiceImpl implements CategoryService{
 	     Optional<Category> optional = categoryRepository.findById(id);
 	     if (optional.isPresent()) {
 	    	 return optional.get();
-			
 		}
-	
-
 		return null;
 	}
 
 	@Override
 	public List<Category> getCategories() {
-		// TODO Auto-generated method stub
 		return (List<Category>) categoryRepository.findAll();
 	}
 
 	@Override
 	public void deleteCategory(Integer id) {
-		
 	    	 categoryRepository.deleteById(id);	
 				
+	}
+
+	@Override
+	public List<Category> getCategoriesByVendorId(String vendornum) {
+		System.out.println("getCategoriesByVendorId: "+vendornum);
+		return categoryRepository.getVendorCategories(vendornum);
+	}
+
+	@Override
+	public List<Product> getAllCategoryProduct(String categoryName) {
+		return categoryRepository.getAllCategoryProduct(categoryName);
 	}
 
 }

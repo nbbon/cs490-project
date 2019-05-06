@@ -4,6 +4,7 @@ package mum.pmp.mstore.domain;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,8 +25,8 @@ public class Category {
 	@NotEmpty(message = "{categoryName.empty}")
 	private String categoryName;
 	private String description;
-	@ManyToOne
-	@JoinColumn(name = "VENDOR_ID")
+	@ManyToOne(fetch =  FetchType.EAGER)
+	@JoinColumn(name = "VENDOR_NUMBER")
 	private Vendor vendor;
 	@OneToMany
 	private List<Product> products;

@@ -1,3 +1,4 @@
+
 package mum.pmp.mstore.config.security;
 
 import javax.sql.DataSource;
@@ -87,3 +88,4 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 }
+
