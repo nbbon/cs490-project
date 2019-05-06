@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/layout">
+<head>
+	<meta charset="UTF-8" />
+	<title>Home</title>
+	<link rel="stylesheet"
+		th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}" />
+	<link rel="stylesheet"
+		th:href="@{https://use.fontawesome.com/releases/v5.0.13/css/all.css}" />
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet"
+		type="text/css" th:href="@{/css/styles.css}"/>
+     <style>
+		.carousel-caption { 
+			font-size: 120px;
+			padding-bottom: 265px;
+			font-family: Arial, Helvetica, sans-serif;
+			opacity: 0.8;
+			text-shadow: 0px 0px 30px rgba(255,255,255,1);
+			font-weight: bold;
+			-webkit-text-stroke: 4px black;
+		}
+	</style>
+		
+		
+</head>
+<body style="height: 100%">
+	<div style="position: fixed; z-index: 999;" class="container-fluid">
+		<div th:replace="fragments/menu :: menu-black"></div>	
+	</div>
+	<div style="height: 100%; z-index: 2; padding: 0" class="container-fluid">
+		<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+	  <!-- Indicators -->
+	  <!-- <ol class="carousel-indicators">
+	    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+	    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+	    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+	    <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+	    <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+	  </ol>
+	 -->
+	  <!-- Wrapper for slides -->
+	  <div class="carousel-inner" role="listbox">
+	    <div class="item active">
+	      <a href="/laptops">
+	      <img src="https://i.ibb.co/1bCVsfY/welcome.jpg" alt="COME ON MAN SHOW SOMETHING">
+			<span class="carousel-caption">Welcome to M-Store</span>
+		    <span>Check our most popular categories --></span>
+	      </a>
+	    </div>
+	    <div class="item">
+	      <a href="/laptops">
+	      <img src="http://www.ucatx.cat/wallpic/full/9/95388/laptop-desktop-wallpaper.jpg" alt="...">
+			<span class="carousel-caption">Laptops</span>
+	      </a>
+	    </div>
+	    <div class="item">
+	      <a href="#">
+	      <img src="https://gadgetstouse.com/wp-content/uploads/2018/09/Screenshot-246.png" alt="...">
+	      	<span class="carousel-caption">	Cell phones</span>
+	      </a>
+	    </div>
+	    <div class="item">
+	    <a href="#">
+	      <img src="http://lastmen.ru/wp-content/uploads/2015/05/Rolex-oboi-1366x768.jpg" alt="...">
+	      	<span class="carousel-caption">Watches</span>
+	      </a>
+	    </div>
+	    <div class="item">
+	    <a href="#">
+	      <img src="https://cg0.cgsociety.org/uploads/images/medium/silverwing-diamond-rings-1-436b869b-dy7m.jpg" alt="...">
+	      	<span class="carousel-caption">Jewelry</span>
+	      </a>
+	    </div>
+	  </div>
+	  
+	
+	  <!-- Controls -->
+	  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+	    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+	    <span class="sr-only">Previous</span>
+	  </a>
+	  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+	    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+	    <span class="sr-only">Next</span>
+	  </a>
+	</div>
+	</div>
+	
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script>
+		//$('.active').removeClass('active');
+		//$('#login').addClass('active');
+		$('.carousel').carousel({
+			pause: null,
+			interval: 5000,
+		});
+	</script>
+	
+</body>
+</html>
