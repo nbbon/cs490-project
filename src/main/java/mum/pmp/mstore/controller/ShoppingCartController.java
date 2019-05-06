@@ -53,7 +53,12 @@ public class ShoppingCartController {
     public ModelAndView checkout() {
         try {
            shoppingCartService.checkout();
-        } catch (NotEnoughProductsInStockException e) {
+           
+           // forward to order controller with shopping cart parameter
+           
+          // ("/order/create") - cart
+           //  session
+         } catch (NotEnoughProductsInStockException e) {
             return shoppingCart().addObject("outOfStockMessage", e.getMessage());
         }
         return shoppingCart();
