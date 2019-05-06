@@ -52,5 +52,4 @@ public class MasterCard {
 	public void setBalance(Double balance) {
 		this.balance = balance;
 	}
-	
 }

@@ -34,27 +34,34 @@ public class PaymentController {
 		if (order != null) {
 			String paymentUrl = "";
 			String fallbackUrl = ""; // "http://localhost:8080/payment";
-			CreditCard card = order.getCreditCard();
-			if (card.getCardType() == 1) { // Visa
+			CreditCard fromCard = order.getCreditCard();
+			CreditCard toCard;;
+			if (fromCard.getCardType() == 1) { // Visa
 				paymentUrl = "/paymentgw/visa";
 				fallbackUrl = fallbackUrl + "/payment/visa/confirm";
+				toCard = new CreditCard("5678123412340079", "Company", "02/23", "123");
 			} else {
 				paymentUrl = "/paymentgw/master";
 				fallbackUrl = fallbackUrl + "/payment/master/confirm";
+				toCard = new CreditCard("1234123412340079", "Company", "02/23", "123");
 			}
 
 			try {
 				RequestDispatcher rd = request.getRequestDispatcher(paymentUrl);
-				request.setAttribute("cardNumber", card.getCardNumber());
-				request.setAttribute("cardName", card.getCardName());
-				request.setAttribute("csv", card.getCsv());
-				request.setAttribute("expireDate", card.getExpireDate());
+				request.setAttribute("fromCardNumber", fromCard.getCardNumber());
+				request.setAttribute("fromCardName", fromCard.getCardName());
+				request.setAttribute("fromCardCSV", fromCard.getCsv());
+				request.setAttribute("fromCardExpireDate", fromCard.getExpireDate());
+				request.setAttribute("toCardNumber", toCard.getCardNumber());
+				request.setAttribute("toCardName", toCard.getCardName());
+				request.setAttribute("toCardCSV", toCard.getCsv());
+				request.setAttribute("toCardExpireDate", toCard.getExpireDate());
 				request.setAttribute("orderNumber", order.getOrdernumber());
 				request.setAttribute("amount", order.getTotalPrice());
-				// request.setAttribute("cardNumber", "1234123412340001");
-				// request.setAttribute("cardName", "Yee Mon");
-				// request.setAttribute("csv", "123");
-				// request.setAttribute("expireDate", "02/23");
+				// request.setAttribute("fromCardNumber", "1234123412340001");
+				// request.setAttribute("fromCardName", "Yee Mon");
+				// request.setAttribute("fromCardCSV", "123");
+				// request.setAttribute("fromCardExpireDate", "02/23");
 				// request.setAttribute("orderNumber", "1");
 				// request.setAttribute("amount", 1000.00);
 				request.setAttribute("fallbackUrl", fallbackUrl);
