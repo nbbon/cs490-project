@@ -82,6 +82,12 @@ public class ProductServiceImpl implements ProductService{
 	        }
 	        return null;
 	    }
+
+	@Override
+	public List<Product> findProductsByProductName(String name) {
+		// TODO Auto-generated method stub
+		return productRepository.findProductsByProductName(name);
+	}
 	
 	
 	

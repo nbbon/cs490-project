@@ -40,16 +40,13 @@ public class CategoryServiceImpl implements CategoryService{
 	    	 categoryRepository.deleteById(id);	
 				
 	}
-
-	@Override
-	public List<Category> getCategoriesByVendorId(String vendornum) {
-		System.out.println("getCategoriesByVendorId: "+vendornum);
-		return categoryRepository.getVendorCategories(vendornum);
-	}
-
-	@Override
-	public List<Product> getAllCategoryProduct(String categoryName) {
-		return categoryRepository.getAllCategoryProduct(categoryName);
-	}
+	/*
+	 * @Override public List<Category> getCategoriesByVendorId(String vendornum) {
+	 * System.out.println("getCategoriesByVendorId: "+vendornum); return
+	 * categoryRepository.getVendorCategories(vendornum); }
+	 * 
+	 * @Override public List<Product> getAllCategoryProduct(String categoryName) {
+	 * return categoryRepository.getAllCategoryProduct(categoryName); }
+	 */
 
 }

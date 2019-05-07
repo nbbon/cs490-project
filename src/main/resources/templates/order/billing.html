@@ -14,31 +14,40 @@
 </head>
 <body>
 <div class="container">
-	<div th:replace="fragments/menu :: menu_vendor"></div>
-		<h6 align="right" th:text="${execInfo.now.time}"></h6>
+<!-- 	<div th:replace="fragments/menu :: menu_vendor"></div>
+ -->		<h6 align="right" th:text="${execInfo.now.time}"></h6>
 <!-- 		<h5 align="left">Welcome <span th:text="${userdetails?.getUsername()}"></span></h5>
  -->     
-        <h1>Product</h1>
+        <h1>Billing Address</h1>
 
-        <form class="form-group" action="/order/billing" th:action="@{/order/billing}" method="post">
+        <form class="form-group"     action="/order/billing" th:action="@{/order/billing}" method="post">
             <div class="form-group">
-                <label for="order.billingAddress.city">City</label>
-                <input type="text" class="form-control" id="billingAddress" th:field="${order.billingAddress.city}" />
+                <label for="city">City</label>
+                <input type="text" class="form-control" id="city" th:field="${order.billingAddress.city}" />
             </div>
             
             <div class="form-group">
-                <label for="order.billingAddress.street">Street</label>
-                <input type="text" class="form-control" id="billingAddress" th:field="${order.billingAddress.street}" />
+                <label for="street">Street</label>
+                <input type="text" class="form-control" id="street" th:field="${order.billingAddress.street}" />
             </div>
             
               <div class="form-group">
-                <label for="order.billingAddress.state">State</label>
-                <input type="text" class="form-control" id="billingAddress" th:field="${order.billingAddress.state}" />
+                <label for="state">State</label>
+                <input type="text" class="form-control" id="state" th:field="${order.billingAddress.state}" />
             </div>
             
+            
+            
+             <div class="form-group">
+                <label for="country">Zip Code</label>
+                <input type="text" class="form-control" id="country" th:field="${order.billingAddress.country}" />
+            </div> 
+            
+            
+            
             <div class="form-group">
-                <label for="order.billingAddress.zipcode">Zip Code</label>
-                <input type="text" class="form-control" id="billingAddress" th:field="${order.billingAddress.zipcode}" />
+                <label for="zipcode">Zip Code</label>
+                <input type="text" class="form-control" id="zipcode" th:field="${order.billingAddress.zipcode}" />
             </div>      
                                               
             <button type="submit" class="btn btn-primary">Add Billing Address</button>

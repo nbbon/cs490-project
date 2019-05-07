@@ -38,14 +38,6 @@ public class Vendor extends Profile{
 		this.categories = categories;
 	}
 
-//	public CreditCard getCreditCard() {
-//		return creditCard;
-//	}
-//
-//	public void setCreditCard(CreditCard creditCard) {
-//		this.creditCard = creditCard;
-//	}
-
 	public String getVendorNumber() {
 		return vendorNumber;
 	}
