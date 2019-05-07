@@ -2,6 +2,8 @@ package mum.pmp.mstore.controller.profile;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -83,7 +85,17 @@ public class VendorController {
 					c.setCardName(vendor.getCreditCard().getCardName());
 					c.setCardNumber(vendor.getCreditCard().getCardNumber());
 					c.setCsv(vendor.getCreditCard().getCsv());
-					c.setExpireDate(vendor.getCreditCard().getExpireDate());
+					
+					
+					//
+					String date = vendor.getCreditCard().getExpireDate();
+					System.out.println("Expiry date" + date);
+					
+					LocalDate d = LocalDate.parse(date + "-01", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+					String newDate = String.format("%tm", d) + "/" + String.format("%ty", d);
+					System.out.println(">>>" + newDate);
+					
+					c.setExpireDate(newDate);
 					
 					CreditCard toCard = new CreditCard();
 					
@@ -119,7 +131,8 @@ public class VendorController {
 						request.setAttribute("toCardName", toCard.getCardName());
 						request.setAttribute("toCardCSV", toCard.getCsv());
 						request.setAttribute("toCardExpireDate", toCard.getExpireDate());
-					
+						request.setAttribute("amount", 2500.00);
+						
 						request.setAttribute("fallbackUrl", fallbackUrl);
 						rd.forward(request, response);
 					} catch (ServletException | IOException e) {
@@ -141,18 +154,12 @@ public class VendorController {
 		String status = (String) request.getAttribute("status");
 		System.out.println("Fall back from payment gateway..." + status );
 		try {
-		String targetURL = "";
-			if (status.equals("approved")) {
-				request.setAttribute("status", status);
-				targetURL = "redirect:/login";
-			} else {
-				request.setAttribute("status", status);
-			}
-			RequestDispatcher rd = request.getRequestDispatcher(targetURL);
-			rd.forward(request, response);
-		} catch (ServletException | IOException e) {
-			System.out.println(e.getMessage());
+			response.sendRedirect("/login");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+//			e.printStackTrace();
 		}
+		
 	}
 	
 	
