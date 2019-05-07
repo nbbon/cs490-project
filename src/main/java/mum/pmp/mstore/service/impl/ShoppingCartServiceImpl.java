@@ -69,7 +69,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
      * @throws NotEnoughProductsInStockException
      */
     @Override
-    public void checkout() throws NotEnoughProductsInStockException {
+    public ShoppingCart checkout() throws NotEnoughProductsInStockException {
         Product product;
         
         ArrayList<ShoppingCartLine> cartLineList = new ArrayList<ShoppingCartLine>();
@@ -102,6 +102,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         Order order = orderService.createOrder(cart);
         
         products.clear();
+        
+        return cart;
     }
 
     @Override

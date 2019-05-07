@@ -1,5 +1,7 @@
 package mum.pmp.mstore.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import mum.pmp.mstore.domain.Order;
+import mum.pmp.mstore.domain.ShoppingCart;
 import mum.pmp.mstore.exception.NotEnoughProductsInStockException;
 import mum.pmp.mstore.service.ProductService;
 import mum.pmp.mstore.service.ShoppingCartService;
@@ -50,14 +52,16 @@ public class ShoppingCartController {
     }
 
     @PostMapping("/placeOrder")
-    public ModelAndView checkout() {
+    public ModelAndView checkout(HttpServletRequest request ) {
         try {
-           shoppingCartService.checkout();
-           
-           // forward to order controller with shopping cart parameter
-           
-          // ("/order/create") - cart
-           //  session
+        	
+        	ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("Shopping_Cart");
+        	if(cart == null)
+        	{
+        		cart = shoppingCartService.checkout();
+        		request.getSession().setAttribute("Shopping_Cart", cart);
+        	}
+        	
          } catch (NotEnoughProductsInStockException e) {
             return shoppingCart().addObject("outOfStockMessage", e.getMessage());
         }

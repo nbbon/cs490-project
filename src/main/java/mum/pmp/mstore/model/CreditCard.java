@@ -29,6 +29,9 @@ public class CreditCard {
 	// private String cardNumber;
 
 	@Id
+	private int id;
+	
+	@NotEmpty(message = "Validation card number is required")
 	private Integer cardNumber;
 
 	@NotEmpty(message = "Validation name on card is required")
@@ -59,12 +62,9 @@ public class CreditCard {
 		this.csv = csv;
 	}
 
-	/*
-	 * public String getCardNumber() { return cardNumber; }
-	 * 
-	 * public void setCardNumber(String cardNumber) { this.cardNumber = cardNumber;
-	 * }
-	 */
+	public void setCardNumber(Integer cardNumber) {
+		this.cardNumber = cardNumber;
+	}
 
 	public String getCardName() {
 		return cardName;
@@ -106,8 +106,7 @@ public class CreditCard {
 		return cardNumber;
 	}
 
-	/*
-	 * public int getId() { return this.id; }
-	 */
+	public int getId() { return this.id; }
+	
 
 }
