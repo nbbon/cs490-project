@@ -13,35 +13,16 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<link rel="stylesheet"
 		type="text/css" th:href="@{/static/css/styles.css}"/>
-     <style>
-		.carousel-caption { 
-			font-size: 120px;
-			padding-bottom: 265px;
-			font-family: Arial, Helvetica, sans-serif;
-			opacity: 0.8;
-			text-shadow: 0px 0px 30px rgba(255,255,255,1);
-			font-weight: bold;
-			-webkit-text-stroke: 4px black;
-		}
-	</style>
 		
 		
 </head>
 <body style="height: 100%">
+<div class="container">
 	<div style="position: fixed; z-index: 999;" class="container-fluid">
 		<div th:replace="fragments/menu :: menu-black"></div>	
 	</div>
 	<div style="height: 100%; z-index: 2; padding: 0" class="container-fluid">
 		<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-	  <!-- Indicators -->
-	  <!-- <ol class="carousel-indicators">
-	    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-	    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-	    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-	    <li data-target="#carousel-example-generic" data-slide-to="3"></li>
-	    <li data-target="#carousel-example-generic" data-slide-to="4"></li>
-	  </ol>
-	 -->
 	  <!-- Wrapper for slides -->
 	  <div class="carousel-inner" role="listbox">
 	    <div class="item active">
@@ -89,8 +70,7 @@
 	  </a>
 	</div>
 	</div>
-	
-	
+</div>	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script>
