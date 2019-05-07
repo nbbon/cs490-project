@@ -10,10 +10,10 @@ public class CompanyCardConfig {
 
 	// Visa Card
 	
-	@Value("${company.credit.visa.card.number}")
+	@Value("${company.credit.visa.card.name}")
 	private String visaCardName;
 
-	@Value("${company.credit.visa.card.name}")
+	@Value("${company.credit.visa.card.number}")
 	private String visaCardNumber;
 
 	@Value("${company.credit.visa.card.csv}")
@@ -25,10 +25,10 @@ public class CompanyCardConfig {
 
 
 	// Master Card
-	@Value("${company.credit.master.card.number}")
+	@Value("${company.credit.master.card.name}")
 	private String masterCardName;
 
-	@Value("${company.credit.master.card.name}")
+	@Value("${company.credit.master.card.number}")
 	private String masterCardNumber;
 
 	@Value("${company.credit.master.card.csv}")
