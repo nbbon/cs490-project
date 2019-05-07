@@ -3,6 +3,9 @@ package mum.pmp.mstore.domain;
 
 import java.time.LocalDate;
 
+import org.springframework.stereotype.Component;
+
+
 public class OrderFactory {
 
 	public static Order createOrder(ShoppingCart cart) {

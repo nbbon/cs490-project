@@ -60,6 +60,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public Map<Product, Integer> getProductsInCart() {
+    	System.out.println("products >> " + products);
         return Collections.unmodifiableMap(products);
     }
 

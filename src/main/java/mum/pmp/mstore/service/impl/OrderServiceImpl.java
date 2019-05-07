@@ -4,6 +4,7 @@ package mum.pmp.mstore.service.impl;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import mum.pmp.mstore.domain.Order;
 import mum.pmp.mstore.domain.OrderFactory;
@@ -15,6 +16,7 @@ import mum.pmp.mstore.repository.OrderRepository;
 import mum.pmp.mstore.service.OrderService;
 import mum.pmp.mstore.service.security.ProfileService;
 
+@Service
 public class OrderServiceImpl implements OrderService{
 	@Autowired
 	ProfileService profileService;
@@ -46,8 +48,7 @@ public class OrderServiceImpl implements OrderService{
 			
 		Optional<Order> optOrder = orderRepository.findById(orderNumber);
         if (optOrder.isPresent()) {
-            Order order = optOrder.get();
-            
+            Order order = optOrder.get();           
             Customer customer = (Customer)profileService.findByEmail(email);       
             if (customer != null) {
             	

@@ -3,7 +3,11 @@ package mum.pmp.mstore.domain;
 
 import java.util.ArrayList;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+@Entity
 public class ShoppingCart {
+	@Id
 	private String cartid;
     private double totalPrice;
     private ArrayList<ShoppingCartLine> cartlineList = new ArrayList<>();
