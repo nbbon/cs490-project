@@ -29,13 +29,25 @@ public class MockPaymentGatewayController {
 		String toCardName = (String) request.getAttribute("toCardName");
 		String toCardCSV = (String) request.getAttribute("toCardCSV");
 		String toCardExpireDate = (String) request.getAttribute("toCardExpireDate");
-		String orderNumber = (String) request.getAttribute("orderNumber");
 		Double amount = (Double) request.getAttribute("amount");
 		String fallbackUrl = (String) request.getAttribute("fallbackUrl");
 		Boolean result = false;
-		if (verifyCardInfo(fromCardNumber, fromCardName, fromCardCSV, fromCardExpireDate)) {
+		
+		System.out.println("PAYMENT GATEWAY: payment resquest ");
+		System.out.println("From card");
+		System.out.println("\tNumber: " + fromCardNumber);
+		System.out.println("\tName: " + fromCardName); 
+		System.out.println("\tCSV "+ fromCardCSV);
+		System.out.println("\tExpire Date: " + fromCardExpireDate);
+		System.out.println("To card");
+		System.out.println("\tNumber: " + toCardNumber);
+		System.out.println("\tName: " + toCardName); 
+		System.out.println("\tCSV "+ toCardCSV);
+		System.out.println("\tExpire Date: " + toCardExpireDate);
+		if (verifyCardInfo(fromCardNumber, fromCardName, fromCardCSV, fromCardExpireDate)
+			&& verifyCardInfo(toCardNumber, toCardName, toCardCSV, toCardExpireDate)) {
 
-			String description = "DATE:" + LocalDate.now() + "," + fromCardName.toUpperCase() + ";ORDER:" + orderNumber
+			String description = "DATE:" + LocalDate.now() + "," + fromCardName.toUpperCase() + ";ORDER:"
 					+ ";AMOUNT=" + amount;
 			if (mockPaymentService.processMasterCardPaymentRequest(fromCardNumber, fromCardName, fromCardCSV,
 					fromCardExpireDate, toCardNumber, toCardName, toCardCSV, toCardExpireDate, amount,
@@ -44,6 +56,8 @@ public class MockPaymentGatewayController {
 				System.out.println("PAYMENT GATEWAY: transaction is approved: " + description);
 				result = true;
 			}
+		} else {
+			System.out.println("Cannot verified credit card!!");
 		}
 
 		try {
@@ -53,8 +67,7 @@ public class MockPaymentGatewayController {
 				System.out.println("PAYMENT GATEWAY: resquest declined for " + fromCardNumber);
 				request.setAttribute("status", "declined");
 			}
-			request.setAttribute("orderNumber", orderNumber);
-
+			
 			System.out.println("PAYMENT GATEWAY: fall back to the caller at: " + fallbackUrl);
 
 			RequestDispatcher rd = request.getRequestDispatcher(fallbackUrl);
@@ -75,13 +88,13 @@ public class MockPaymentGatewayController {
 		String toCardName = (String) request.getAttribute("toCardName");
 		String toCardCSV = (String) request.getAttribute("toCardCSV");
 		String toCardExpireDate = (String) request.getAttribute("toCardExpireDate");
-		String orderNumber = (String) request.getAttribute("orderNumber");
 		Double amount = (Double) request.getAttribute("amount");
 		String fallbackUrl = (String) request.getAttribute("fallbackUrl");
 		Boolean result = false;
-		if (verifyCardInfo(fromCardNumber, fromCardName, fromCardCSV, fromCardExpireDate)) {
+		if (verifyCardInfo(fromCardNumber, fromCardName, fromCardCSV, fromCardExpireDate) 
+			&& verifyCardInfo(toCardNumber, toCardName, toCardCSV, toCardExpireDate)) {
 
-			String description = "DATE:" + LocalDate.now() + "," + fromCardName.toUpperCase() + ";ORDER:" + orderNumber
+			String description = "DATE:" + LocalDate.now() + "," + fromCardName.toUpperCase()
 					+ ";AMOUNT=" + amount;
 			if (mockPaymentService.processVisaCardPaymentRequest(fromCardNumber, fromCardName, fromCardCSV,
 					fromCardExpireDate, toCardNumber, toCardName, toCardCSV, toCardExpireDate, amount,
@@ -99,8 +112,7 @@ public class MockPaymentGatewayController {
 				System.out.println("PAYMENT GATEWAY: resquest declined for " + fromCardNumber);
 				request.setAttribute("status", "declined");
 			}
-			request.setAttribute("orderNumber", orderNumber);
-
+			
 			System.out.println("PAYMENT GATEWAY: fall back to the caller at: " + fallbackUrl);
 
 			RequestDispatcher rd = request.getRequestDispatcher(fallbackUrl);
@@ -112,6 +124,7 @@ public class MockPaymentGatewayController {
 	}
 
 	private Boolean verifyCardInfo(String cardNumber, String cardName, String csv, String expireDate) {
+System.out.println(cardNumber.length());
 		if (cardNumber.length() != 16) {
 			System.out.println("PAYMENT GATEWAY: Invalid card number");
 			return false;
