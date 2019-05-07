@@ -1,3 +1,12 @@
+/*
+ * Author: Bon Nguyen
+ * Date: 25-Apr-2019
+ * Class Name: ReportService
+ * Module: Report
+ * Description: The report service interface, defined methods for generate report  
+ * 
+ */
+
 package mum.pmp.mstore.service.report;
 
 import java.time.LocalDate;

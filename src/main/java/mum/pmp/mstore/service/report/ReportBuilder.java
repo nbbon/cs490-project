@@ -1,3 +1,12 @@
+/*
+ * Author: Bon Nguyen
+ * Date: 25-Apr-2019
+ * Class Name: ReportBuilder
+ * Module: Report
+ * Description: The report builder interface, defined methods for building Jasper report from template 
+ * 
+ */
+
 package mum.pmp.mstore.service.report;
 
 import java.io.IOException;

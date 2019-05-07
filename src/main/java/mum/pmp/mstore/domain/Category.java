@@ -28,6 +28,7 @@ public class Category {
 	@ManyToOne(fetch =  FetchType.EAGER)
 	@JoinColumn(name = "VENDOR_NUMBER")
 	private Vendor vendor;
+	
 	@OneToMany
 	private List<Product> products;
 

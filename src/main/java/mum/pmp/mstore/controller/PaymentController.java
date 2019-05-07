@@ -1,3 +1,16 @@
+/*
+ * Author: Bon Nguyen
+ * Date: 25-Apr-2019
+ * Class Name: PaymentController
+ * Package: controller
+ * Description: The main entry point of Payment module for processing order payment request
+ * 		When receive order payment request from Order Module. It will send payment request with 
+ * credit card info to Mock Payment gateway for making payment transaction. After that transaction 
+ * successful return from the gateway. It will send request to 
+ * Settlement module for fulfillment the order
+ * 
+ */
+
 package mum.pmp.mstore.controller;
 
 import java.io.IOException;
@@ -28,26 +41,26 @@ public class PaymentController {
 	OrderService orderService;
 
 	@PostMapping({ "/" })
-	public void processPayment(@PathVariable String orderNumber, Model model, HttpServletRequest request,
+	public String processPayment(@PathVariable String orderNumber, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
 		Order order = (Order) request.getAttribute("order"); //orderService.getOrder(orderNumber);
 		if (order != null) {
-			String paymentUrl = "";
+			String paymentGatewayUrl = "";
 			String fallbackUrl = ""; // "http://localhost:8080/payment";
 			CreditCard fromCard = order.getCreditCard();
-			CreditCard toCard;;
+			CreditCard toCard;
 			if (fromCard.getCardType() == 1) { // Visa
-				paymentUrl = "/paymentgw/visa";
+				paymentGatewayUrl = "/paymentgw/visa";
 				fallbackUrl = fallbackUrl + "/payment/visa/confirm";
 				toCard = new CreditCard("5678123412340079", "Company", "02/23", "123");
 			} else {
-				paymentUrl = "/paymentgw/master";
+				paymentGatewayUrl = "/paymentgw/master";
 				fallbackUrl = fallbackUrl + "/payment/master/confirm";
 				toCard = new CreditCard("1234123412340079", "Company", "02/23", "123");
 			}
 
-			try {
-				RequestDispatcher rd = request.getRequestDispatcher(paymentUrl);
+//			try {
+//				RequestDispatcher rd = request.getRequestDispatcher(paymentUrl);
 				request.setAttribute("fromCardNumber", fromCard.getCardNumber());
 				request.setAttribute("fromCardName", fromCard.getCardName());
 				request.setAttribute("fromCardCSV", fromCard.getCsv());
@@ -65,45 +78,43 @@ public class PaymentController {
 				// request.setAttribute("orderNumber", "1");
 				// request.setAttribute("amount", 1000.00);
 				request.setAttribute("fallbackUrl", fallbackUrl);
-				rd.forward(request, response);
-			} catch (ServletException | IOException e) {
-				System.out.println(e.getMessage());
-				// e.printStackTrace();
-			}
+//				rd.forward(request, response);
+				return "forward:" + paymentGatewayUrl;
+//			} catch (ServletException | IOException e) {
+//				System.out.println(e.getMessage());
+//				// e.printStackTrace();
+//			}
+		} else {
+			model.addAttribute("status", "Invalid Order");
+			return "payment_error";
 		}
 	}
 
 	@PostMapping("/{type}/confirm")
-	public void paymentFallBack(@PathVariable String type, RedirectAttributes redirectAttributes,
+	public String paymentFallBack(@PathVariable String type, RedirectAttributes redirectAttributes,
 			HttpServletRequest request, HttpServletResponse response) {
 		String status = (String) request.getAttribute("status");
 		String orderNumber = (String) request.getAttribute("orderNumber");
 		System.out.println("Fall back from payment gateway..." + status + "," + orderNumber);
 		// redirectAttributes.addFlashAttribute("orderNumber", orderNumber);
-		try {
-			String targetURL = "";
-			if (status.equals("approved")) {
-				Order order = orderService.getOrder(orderNumber);
-				request.setAttribute("order", order);
-				targetURL = "/settlement";
-			} else {
-				request.setAttribute("status", status);
-				targetURL = "/payment";
-			}
-			RequestDispatcher rd = request.getRequestDispatcher(targetURL);
-			rd.forward(request, response);
-		} catch (ServletException | IOException e) {
-			System.out.println(e.getMessage());
-			// e.printStackTrace();
+		String targetURL = "";
+		if (status.equals("approved")) {
+			Order order = orderService.getOrder(orderNumber);
+			request.setAttribute("order", order);
+			targetURL = "forward:/settlement";
+		} else {
+			redirectAttributes.addFlashAttribute("status", status);
+			targetURL = "redirect:/payment";
 		}
+		return targetURL;
 	}
 
-	@PostMapping("")
-	public String paymentErrorHandler(RedirectAttributes redirectAttributes, HttpServletRequest request,
-			HttpServletResponse response) {
-		redirectAttributes.addFlashAttribute("status", (String) request.getAttribute("status"));
-		return "redirect:/payment";
-	}
+//	@PostMapping("")
+//	public String paymentErrorHandler(RedirectAttributes redirectAttributes, HttpServletRequest request,
+//			HttpServletResponse response) {
+//		redirectAttributes.addFlashAttribute("status", (String) request.getAttribute("status"));
+//		return "redirect:/payment";
+//	}
 
 	@GetMapping("")
 	public String displayError(@ModelAttribute("status") String status, Model model) {
