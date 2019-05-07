@@ -17,7 +17,7 @@
 </head>
 <body>
 <div class="container">
-	<div th:replace="fragments/menu :: menu_admin"></div>
+	<div th:replace="fragments/menu :: menu"></div>
 		<h6 align="right" th:text="${execInfo.now.time}"></h6>
 		<div id="selectPanel">
 			<h3>Select Report</h3>
@@ -73,6 +73,8 @@
 				<div>
 					<input name="genReport" id="genReport" type="submit" class="btn btn-primary"
 					value="Generate"/>
+					<input name="testPayment" id="testPayment" type="button" class="btn btn-primary"
+					value="Test Payment"/>
 				</div>
 			</div>
 		</div>

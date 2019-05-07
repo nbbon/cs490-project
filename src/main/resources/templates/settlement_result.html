@@ -1,0 +1,25 @@
+<!-- <!-- <!DOCTYPE html> -->
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/layout">
+<head>
+<meta charset="UTF-8" />
+<title>Login</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
+<link rel="stylesheet"
+	th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}" />
+<link rel="stylesheet"
+	th:href="@{https://use.fontawesome.com/releases/v5.0.13/css/all.css}" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div style="margin: auto; width: 860px; text-align: center">
+			<h1><span th:field="*{status }" th:text="${status }"></span> </h1>
+			<h3><span th:field="*{message }" th:text="${message }"></span> </h3>
+			<span th:field="*{detail }" th:text="${detail }"></span>
+		</div>
+	</div>
+</body>
+</html>

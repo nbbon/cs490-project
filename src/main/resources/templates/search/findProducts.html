@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Search</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/bootstrap.min.css" th:href="@{/static/css/bootstrap.min.css}" />
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"
+	src="js/jquery.min.js"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"
+	src="js/bootstrap.min.js"></script>
+</head>
+<body>
+
+	<div class="container">
+
+		<h1>Search</h1>
+		
+	
+		<form class="form-group" action="/adsearch" th:action="@{/adsearch}" method="post">
+			
+			<div>
+				<label for="searchmenu">Search By:</label>
+				<select name="searchmenu" id="searchmenu">
+				<option th:each="entry:${searchMenu.entrySet() }" th:value="${entry.value}" th:text="${entry.key}"/>
+				</select>
+			</div>
+			
+			<div class="form-group">
+				<label for="word"></label> 
+				<input type="text" class="form-control" id="word" name="word"/>
+			</div>
+
+			<button type="submit" class="btn btn-primary">Search</button>
+		</form> 
+		
+		
+<!-- 		
+	<form class="form-group" th:object="${searchMenu}" action="/adsearch" th:action="@{/adsearch}"
+			method="post">
+			<div>
+				<label for="searchmenu">Search By:</label>
+				<select name="searchmenu" id="searchmenu">
+				<option th:each="entry:${searchMenu.entrySet() }" th:value="${entry.key}" th:text="${entry.value}"/>
+				</select>
+			</div>
+			
+			<button type="submit" class="btn btn-primary">Search</button>
+	</form>	 -->
+		
+<!-- 
+		<form class="form-group" th:object="${product}" action="/adsearch" th:action="@{/adsearch}"
+			method="post">
+			
+			<div class="form-group">
+				<label for="productNumber">Product Number</label> <input type="text"
+					class="form-control" id="productNumber"
+					th:field="${product.productNumber}" />
+			</div>
+			<div class="form-group">
+				<label for="productName">Product Name</label>
+				<textarea class="form-control" id="productName"
+					th:field="${product.productName}"></textarea>
+			</div>
+			<div class="form-group">
+				<label for="price">Price</label> <input type="text"
+					class="form-control" id="price"
+					th:field="${product.price}" />
+			</div>
+			<div class="form-group">
+				<label for="category">Category</label> <input type="text"
+					class="form-control" id="category"
+					th:field="${product.category}" />
+			</div> 
+			<button type="submit" class="btn btn-primary">Search</button>
+		</form> -->
+	
+	</div>
+</body>
+</html>

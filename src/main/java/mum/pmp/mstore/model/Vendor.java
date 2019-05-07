@@ -1,11 +1,14 @@
 package mum.pmp.mstore.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import mum.pmp.mstore.domain.Category;
 
 @Entity
 @DiscriminatorValue(value = "VENDOR")
@@ -22,8 +25,27 @@ public class Vendor extends Profile{
 	
 	@Column(name="CONTACT_PERSON")
 	private String contactPerson;
-
 	
+	@OneToMany(mappedBy="vendor")
+	private List<Category> categories;
+	
+	
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
+	}
+
+//	public CreditCard getCreditCard() {
+//		return creditCard;
+//	}
+//
+//	public void setCreditCard(CreditCard creditCard) {
+//		this.creditCard = creditCard;
+//	}
+
 	public String getVendorNumber() {
 		return vendorNumber;
 	}
@@ -59,8 +81,10 @@ public class Vendor extends Profile{
 	@Override
 	public String toString() {
 		return "Vendor [vendorNumber=" + vendorNumber + ", vendorName=" + vendorName + ", regId=" + regId
-				+ ", contactPerson=" + contactPerson + "]";
+				+ ", contactPerson=" + contactPerson + ", categories=" + categories // + ", creditCard=" + creditCard
+				+ "]";
 	}
 
+	
 	
 }

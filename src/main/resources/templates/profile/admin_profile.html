@@ -4,7 +4,7 @@
 	layout:decorate="layout/layout">
 <head>
 <meta charset="UTF-8" />
-<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/static/css/styles.css}" />
 <link rel="stylesheet"
 	th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}" />
 <link rel="stylesheet"
@@ -12,7 +12,7 @@
 </head>
 <body>
 	<div class="container">
-		<div th:replace="fragments/menu :: menu_admin"></div>
+		<div th:replace="fragments/menu :: menu"></div>
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">

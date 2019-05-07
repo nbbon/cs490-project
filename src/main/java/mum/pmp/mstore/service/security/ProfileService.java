@@ -9,11 +9,12 @@ import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import mum.pmp.mstore.integration.mockpayment.model.MasterCard;
+import mum.pmp.mstore.integration.mockpayment.model.VisaCard;
 import mum.pmp.mstore.model.Admin;
 import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.model.Role;
@@ -80,23 +81,46 @@ public class ProfileService {
 		// Check if user already exist.
 		User existingUser = userRepository.findByUsername(profile.getEmail());
 		System.out.println("existing user >>" + existingUser);
+		
 		if (existingUser == null) {
 			User user = new User();
 			// add user Role
 			Role userRole = roleRepository.findByRole(user_type.toString());
 			user.setUsername(profile.getEmail());
 			user.addRole(userRole);
-			if (userRole.getRole().equals("ADMIN") || userRole.getRole().equals("VENDOR")) {
+			if (userRole.getRole().equals("ADMIN")) { 
 				user.setEnabled(false);
 				profile.setEnable(false);
-			} else {
+			} else if(userRole.getRole().equals("VENDOR")) {
+				user.setEnabled(false);
+				profile.setEnable(false);
+				int cardType = profile.getCreditCard().getCardType();
+				if(cardType == 1)
+				{ 
+					MasterCard c = new MasterCard();
+					c.setCardName(profile.getCreditCard().getCardName());
+					c.setCardNumber("" + profile.getCreditCard().getCardNumber());
+					c.setCsv(profile.getCreditCard().getCsv());
+					c.setExpireDate(profile.getCreditCard().getExpireDate());
+				}
+				else if(cardType == 2)
+				{
+					VisaCard c = new VisaCard();
+					c.setCardName(profile.getCreditCard().getCardName());
+					c.setCardNumber("" + profile.getCreditCard().getCardNumber());
+					c.setCsv(profile.getCreditCard().getCsv());
+					c.setExpireDate(profile.getCreditCard().getExpireDate());
+				}
+			}
+			else {
 				user.setEnabled(true);
 				profile.setEnable(true);
 			}
 			// encrypt the password with bCrypt
 			user.setPassword(passwordEncoder.encode(profile.getPassword()));
-
+			
 			// save the user
+		
 			profile = saveProfile(profile);
 			userRepository.save(user);
 			return true;
@@ -115,9 +139,19 @@ public class ProfileService {
 		Profile adminProfile = findByEmail(adminEmail);
 		User user = userRepository.findByUsername(adminEmail);
 		
+		System.out.println(adminEmail);
+		System.out.println(">>>>" + adminProfile );
+		System.out.println(">>>>" + user);
+		
 		if(action.equals("Approve")) {
 			adminProfile.setEnable(true);
 			user.setEnabled(true);
+			
+			// send acknowledge email to admin
+			String subject = "M-Store admin Registration confirmation";
+			String body = "Your admin account " + adminEmail + " has been successfully approved. You may login to system using your email and password.";
+			emailService.sendEmail(adminEmail, subject, body);
+			
 		}else if(action.equals("Reject"))
 		{
 			adminProfile.setEnable(false);
@@ -125,11 +159,6 @@ public class ProfileService {
 		}
 		userRepository.save(user);
 		saveProfile(adminProfile);
-		
-		// send acknowledge email to admin
-		String subject = "M-Store admin Registration confirmation";
-		String body = "Your admin account " + adminEmail + " has been successfully approved. You may login to system using your email and password.";
-		emailService.sendEmail(adminEmail, subject, body);
 		
 	}
 	

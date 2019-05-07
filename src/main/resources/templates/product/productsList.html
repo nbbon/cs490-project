@@ -6,7 +6,7 @@
     <meta charset="UTF-8" />
     <title>Products</title>
 
-    <link rel="stylesheet" type="text/css" media="all" href="../../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" media="all" href="../../css/bootstrap.min.css" th:href="@{/static/css/bootstrap.min.css}" />
 
     <script type="text/javascript" th:src="@{/js/jquery.min.js}" src="js/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/bootstrap.min.js}" src="js/bootstrap.min.js"></script>
@@ -20,7 +20,7 @@
 <body>
 
  <div class="container">
- <div th:replace="fragments/menu :: menu_vendor"></div>
+ <div th:replace="fragments/menu :: menu"></div>
 		<h6 align="right" th:text="${execInfo.now.time}"></h6>
         <h1>Products</h1>
 

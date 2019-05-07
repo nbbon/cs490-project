@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import mum.pmp.mstore.repository.profile.UserRepository;
 import mum.pmp.mstore.service.email.EmailService;
 import mum.pmp.mstore.service.security.ProfileService;
 import mum.pmp.mstore.service.security.UserService;
+import mum.pmp.mstore.validator.ResetPasswordValidator;
 
 @Controller
 public class PasswordResetController {
@@ -31,6 +33,9 @@ public class PasswordResetController {
 	
 	@Autowired
 	EmailService emailService;
+	
+	@Autowired
+	ResetPasswordValidator resetPasswordValidator;
 	
 	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
@@ -99,9 +104,17 @@ public class PasswordResetController {
 	}
 	
 	@PostMapping(value = "/resetpassword")
-	public String resetPassword(Model model, @ModelAttribute("passwordObj") Password passwordObj)
+	public String resetPassword(Model model, @ModelAttribute("passwordObj") Password passwordObj, BindingResult bindingResult)
 	{
+		//resetPasswordValidator = new ResetPasswordValidator();
+		resetPasswordValidator.validate(passwordObj, bindingResult);
+		if(bindingResult.hasErrors())
+		{
+			return "password/forgot_password";
+		}
 		Profile profile = profileService.findProfileByToken(passwordObj.getToken());
+		
+		
 		//System.out.println(person.getToken());
 		System.out.println("Profile: "+profile);
 		if(profile == null)
@@ -119,6 +132,6 @@ public class PasswordResetController {
 		user.setPassword(passwordEncoder.encode(passwordObj.getPassword()));
 		userRepository.save(user);
 		
-		return "password/forgot_password";
+		return "redirect:/login";
 	}
 }

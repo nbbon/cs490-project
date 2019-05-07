@@ -43,6 +43,10 @@ public class Profile {
 	// 2: Disable.
 	private byte status = 1;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	private CreditCard creditCard;
+	
+	
 	public long getId() {
 		return id;
 	}
@@ -111,6 +115,13 @@ public class Profile {
 		this.confirmPassword = confirmPassword;
 	}
 	
+	public CreditCard getCreditCard() {
+		return creditCard;
+	}
+
+	public void setCreditCard(CreditCard creditCard) {
+		this.creditCard = creditCard;
+	}
 
 	public byte getStatus() {
 		return status;

@@ -1,9 +1,9 @@
 package mum.pmp.mstore.service;
 
-import java.math.BigDecimal;
 import java.util.Map;
 
 import mum.pmp.mstore.domain.Product;
+import mum.pmp.mstore.domain.ShoppingCart;
 import mum.pmp.mstore.exception.NotEnoughProductsInStockException;
 
 public interface ShoppingCartService {
@@ -14,7 +14,7 @@ public interface ShoppingCartService {
 
     Map<Product, Integer> getProductsInCart();
 
-    void checkout() throws NotEnoughProductsInStockException;
+    ShoppingCart checkout() throws NotEnoughProductsInStockException;
 
     Double getTotal();
 }

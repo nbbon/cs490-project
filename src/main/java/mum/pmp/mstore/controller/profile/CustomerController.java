@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import mum.pmp.mstore.config.security.Listener;
 import mum.pmp.mstore.model.Customer;
@@ -17,6 +18,7 @@ import mum.pmp.mstore.utilities.User_Type;
 import mum.pmp.mstore.validator.CustomerValidator;
 
 @Controller
+@RequestMapping("/customer")
 public class CustomerController {
 	
 	@Autowired
@@ -31,13 +33,13 @@ public class CustomerController {
 	@Autowired
 	private ProductService productService;
 	
-	@GetMapping("/customer/signup")
+	@GetMapping("/signup")
 	public String signupPage(Model model) {
 		model.addAttribute("customer", new Customer());
 		return "/profile/customer_signup";
 	}
 
-	@PostMapping("/customer/signup")
+	@PostMapping("/signup")
 	public String signup(@ModelAttribute Customer customer, BindingResult bindingResult) {
 		
 		String url = "";
@@ -59,7 +61,7 @@ public class CustomerController {
 		return url;
 	}
 	
-	@GetMapping("/customer/update")
+	@GetMapping("/update")
 	public String updatePage(Model model) {
 		Customer customerProfile = (Customer) profileService.findByEmail(sessionListener.getUser().getEmail());
 
@@ -68,7 +70,7 @@ public class CustomerController {
 		return "/profile/customer_profile";
 	}
 	
-	@PostMapping("/customer/update")
+	@PostMapping("/update")
 	public String update(@ModelAttribute Customer customer, BindingResult bindingResult) {
 		
 		//validate the admin details.
@@ -86,10 +88,10 @@ public class CustomerController {
 			customerToUpdate.setAddress(customer.getAddress());
 			profileService.saveProfile(customerToUpdate);
 		}
-		return "redirect:/customer/update";
+		return "redirect:/update";
 	}
 	
-	@PostMapping("/customer/disable")
+	@PostMapping("/disable")
 	public String disableCustomer(@ModelAttribute("customer") Customer customer)
 	{
 		System.out.println(customer);
@@ -105,7 +107,7 @@ public class CustomerController {
 	
 	@GetMapping("/catalogs")
 	public String getAllCatalogs(Model model) {
-		model.addAttribute("products", productService.getProducts());
+		model.addAttribute("products", productService.getAllProducts());
 		return "/catalog/catalog";
 	}
 	

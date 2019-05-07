@@ -1,5 +1,10 @@
 package mum.pmp.mstore.controller.profile;
 
+import java.lang.annotation.Annotation;
+
+import javax.validation.Payload;
+
+import org.hibernate.validator.constraints.CreditCardNumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,21 +12,28 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import mum.pmp.mstore.config.security.Listener;
+import mum.pmp.mstore.model.CreditCard;
 import mum.pmp.mstore.model.Customer;
 import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.model.Vendor;
 import mum.pmp.mstore.service.security.ProfileService;
 import mum.pmp.mstore.utilities.User_Type;
+import mum.pmp.mstore.validator.CreditCardValidator;
 import mum.pmp.mstore.validator.VendorValidator;
 
 @Controller
+@RequestMapping("/vendor")
 public class VendorController {
 
 	@Autowired
 	private  VendorValidator validator;
+	
+	@Autowired
+	private CreditCardValidator ccValidator;
 
 	@Autowired
 	private ProfileService profileService;
@@ -29,19 +41,21 @@ public class VendorController {
 	@Autowired
 	private Listener sessionListener;
 	
-	@GetMapping("/vendor/signup")
+	@GetMapping("/signup")
 	public String signupPage(Model model) {
 		model.addAttribute("vendor", new Vendor());
+		model.addAttribute("creditCard", new CreditCard());
+		System.out.println("In signup credit card");
 		return "/profile/vendor_signup";
 	}
 	
-	@PostMapping("/vendor/signup")
+	@PostMapping("/signup")
 	public String signup(@ModelAttribute Vendor vendor, BindingResult bindingResult) {
-		//@RequestParam(value="action", required=true) String action
 		String url = "";
 		//validate the vendor  details
-		//if(action.equals("Save")) {
 			validator.validate(vendor, bindingResult);
+			
+			ccValidator.validate(vendor.getCreditCard(), bindingResult);
 			
 			if(bindingResult.hasErrors()) {
 				url =  "/profile/vendor_signup";
@@ -54,14 +68,10 @@ public class VendorController {
 					url =  "/profile/vendor_signup";
 				}
 			}
-//		}
-//		if(action.equals("Cancel")) {
-//			url = "redirect:/login";
-//		}
 		return url;
 	}
 	
-	@GetMapping("/vendor/update")
+	@GetMapping("/update")
 	public String updatePage(Model model) {
 		System.out.println("in update : " + sessionListener.getUser().getEmail());
 		Vendor vendorProfile = (Vendor) profileService.findByEmail(sessionListener.getUser().getEmail());
@@ -70,7 +80,7 @@ public class VendorController {
 		return "/profile/vendor_profile";
 	}
 	
-	@PostMapping("/vendor/update")
+	@PostMapping("/update")
 	public String update(@ModelAttribute Vendor vendor, BindingResult bindingResult) {
 		validator.validate(vendor, bindingResult);
 		boolean status = profileService.updateVendor(vendor);
@@ -80,7 +90,7 @@ public class VendorController {
 			return "redirect:/vendor/update";
 	}
 	
-	@PostMapping("/vendor/disable")
+	@PostMapping("/disable")
 	public String disableVendor(@ModelAttribute("vendor") Vendor vendor)
 	{
 		System.out.println(vendor);
