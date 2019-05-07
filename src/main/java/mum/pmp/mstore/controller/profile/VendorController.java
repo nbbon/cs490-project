@@ -22,6 +22,7 @@ import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.model.Vendor;
 import mum.pmp.mstore.service.security.ProfileService;
 import mum.pmp.mstore.utilities.User_Type;
+import mum.pmp.mstore.validator.CreditCardValidator;
 import mum.pmp.mstore.validator.VendorValidator;
 
 @Controller
@@ -30,6 +31,9 @@ public class VendorController {
 
 	@Autowired
 	private  VendorValidator validator;
+	
+	@Autowired
+	private CreditCardValidator ccValidator;
 
 	@Autowired
 	private ProfileService profileService;
@@ -50,6 +54,8 @@ public class VendorController {
 		String url = "";
 		//validate the vendor  details
 			validator.validate(vendor, bindingResult);
+			
+			ccValidator.validate(vendor.getCreditCard(), bindingResult);
 			
 			if(bindingResult.hasErrors()) {
 				url =  "/profile/vendor_signup";
