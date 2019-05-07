@@ -204,10 +204,4 @@ public class CustomerController {
 		return "redirect:/login";
 	}
 	
-	@GetMapping("/catalogs")
-	public String getAllCatalogs(Model model) {
-		model.addAttribute("products", productService.getAllProducts());
-		return "/catalog/catalog";
-	}
-	
 }

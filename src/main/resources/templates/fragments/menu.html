@@ -17,9 +17,9 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 	      
 	      <li id="allproducts" sec:authorize="hasAuthority('ROLE_ADMIN')"><a href="/products/allproducts">Product List</a></li>
 	      
-	      <li id="catalogs" sec:authorize="hasAuthority('ROLE_CUSTOMER')"><a class="nav-link" th:href="@{/customer/catalogs}">Product Catalog</a></li> 
+	      <li id="catalogs"><a class="nav-link" th:href="@{/catalogs}">Product Catalog</a></li> 
 	      
-	      <li id="shoppingCart" sec:authorize="hasAuthority('ROLE_CUSTOMER')"><a class="nav-link" th:href="@{/shoppingCart}">Shopping Cart</a></li>
+	      <li id="shoppingCart"><a class="nav-link" th:href="@{/shoppingCart}">Shopping Cart</a></li>
 		  
 	      <li id="vendors" sec:authorize="hasAuthority('ROLE_ADMIN')"><a href="/approval/vendors">Vendor Management</a></li>
 	      
@@ -42,7 +42,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 	    </div>
 	    <ul class="nav navbar-nav">
 	      <li id="login"><a href="/login">Login</a></li>
-	      <li id="product"><a class="nav-link" th:href="@{/customer/catalogs}">Product Catalog</a></li>
+	      <li id="product"><a class="nav-link" th:href="@{/catalogs}">Product Catalog</a></li>
 	      <li id="shopping-cart" class="nav-item">
                <a class="nav-link" th:href="@{/shoppingCart}">Shopping Cart</a>
           </li>

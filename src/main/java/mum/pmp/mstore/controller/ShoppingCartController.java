@@ -1,6 +1,11 @@
 package mum.pmp.mstore.controller;
 
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,20 +57,24 @@ public class ShoppingCartController {
     }
 
     @PostMapping("/placeOrder")
-    public ModelAndView checkout(HttpServletRequest request ) {
+    public String checkout(HttpServletRequest request,
+			HttpServletResponse response) {
         try {
-        	
+        	System.out.println("In placeorder shopping cart");
         	ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("Shopping_Cart");
         	if(cart == null)
         	{
         		cart = shoppingCartService.checkout();
+        		System.out.println("In place order" + cart);
         		request.getSession().setAttribute("Shopping_Cart", cart);
+        		RequestDispatcher rd = request.getRequestDispatcher("/order/create");
+        		rd.forward(request, response);
         	}
         	
-         } catch (NotEnoughProductsInStockException e) {
-            return shoppingCart().addObject("outOfStockMessage", e.getMessage());
+         } catch (NotEnoughProductsInStockException | ServletException | IOException e) {
+            //return shoppingCart().addObject("outOfStockMessage", e.getMessage());
         }
-        return shoppingCart();
+        return "redirect: /order/create";
     }
     
 }

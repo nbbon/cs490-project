@@ -44,10 +44,10 @@ public class OrderController {
     ProfileService	profileService;
 	
 
-	@PostMapping("/create")
+	@GetMapping("/create")
     public String createOrder(HttpServletRequest request,HttpServletResponse response, ModelMap model) throws ServletException, IOException {
 		
-		ShoppingCart cart =(ShoppingCart) request.getAttribute("cart");
+		ShoppingCart cart =(ShoppingCart) request.getAttribute("Shopping_Cart");
 		
 		Order order = OrderFactory.createOrder(cart);
 		String getCustomerURL = "/get_customer";

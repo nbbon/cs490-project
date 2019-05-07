@@ -47,7 +47,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers("/webjars/**", "/static/**", "/css/**", "/images/**" , "/", "/home",
+			.antMatchers("/webjars/**", "/static/**", "/css/**", "/images/**" , "/", "/home", "/catalogs" , 
 					"/forgotpassword", "/resetpassword", "/user/**",
 					"/signup", "/vendor/signup", "/admin/signup", "/customer/signup",
 					"/password/forgotpassword", "/forgotpassword", "/sendemailforgotpassword", "/resetpassword"
@@ -60,7 +60,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/login").permitAll()
 			.antMatchers("/index").permitAll()
 			.antMatchers("/profile/**").hasAnyRole("ADMIN","CUSTOMER","VENDOR")
-			.antMatchers("/catalogs").hasAnyRole("CUSTOMER")
+			//.antMatchers("/catalogs").hasAnyRole("CUSTOMER")
 			.antMatchers("/approval/*", "/approval/admins/*").hasRole("SUPER_ADMIN")
 			.antMatchers("/approval/*", "/approval/vendors/*", "/admin/update/**").hasRole("ADMIN")
 			.antMatchers("/vendor/**", "/products/allproducts" ).hasRole("VENDOR")

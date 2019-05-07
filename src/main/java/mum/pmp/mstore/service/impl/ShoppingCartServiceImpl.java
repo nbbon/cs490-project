@@ -99,11 +99,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCart cart = new ShoppingCart();
         cart.setCartid("Cart1");
         cart.setCartlineList(cartLineList);
-        
-        Order order = orderService.createOrder(cart);
-        
         products.clear();
-        
         return cart;
     }
 

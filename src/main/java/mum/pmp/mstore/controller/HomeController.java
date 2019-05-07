@@ -127,4 +127,10 @@ public class HomeController {
 		}
 		return url;
 	}
+	
+	@GetMapping("/catalogs")
+	public String getAllCatalogs(Model model) {
+		model.addAttribute("products", productService.getAllProducts());
+		return "/catalog/catalog";
+	}
 }
