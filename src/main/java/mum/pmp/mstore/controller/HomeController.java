@@ -98,7 +98,8 @@ public class HomeController {
 			}
 		}
 		model.addAttribute("products", productService.getAllProducts());
-		return "/index";
+		//return "/index";
+		return "/home/home";
 	}
 	
 	@RequestMapping("/profile")
