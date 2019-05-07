@@ -85,9 +85,11 @@ public class ProfileService {
 		if (existingUser == null) {
 			User user = new User();
 			// add user Role
+			System.out.println("user_type:"+user_type.toString());
 			Role userRole = roleRepository.findByRole(user_type.toString());
 			user.setUsername(profile.getEmail());
 			user.addRole(userRole);
+			System.out.println("Check userRole:"+userRole);
 			if (userRole.getRole().equals("ADMIN")) { 
 				user.setEnabled(false);
 				profile.setEnable(false);
