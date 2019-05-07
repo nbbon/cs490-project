@@ -19,13 +19,13 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 	      
 	      <li id="catalogs" sec:authorize="hasAuthority('ROLE_CUSTOMER')"><a class="nav-link" th:href="@{/customer/catalogs}">Product Catalog</a></li> 
 	      
-	      <li id="shoppingCart"><a class="nav-link" th:href="@{/shoppingCart}">Shopping Cart</a></li>
+	      <li id="shoppingCart" sec:authorize="hasAuthority('ROLE_CUSTOMER')"><a class="nav-link" th:href="@{/shoppingCart}">Shopping Cart</a></li>
 		  
 	      <li id="vendors" sec:authorize="hasAuthority('ROLE_ADMIN')"><a href="/approval/vendors">Vendor Management</a></li>
 	      
 	      <li id="reports" sec:authorize="hasAuthority('ROLE_ADMIN')"><a href="/reports">Reports</a></li>
 	      
-	      <li id="products" sec:authorize="hasAuthority('ROLE_VENDOR')"><a href="/products">Product List</a></li>
+	      <li id="products" sec:authorize="hasAuthority('ROLE_VENDOR')"><a href="/products/">Product List</a></li>
 	       
 	      <li id="admins" sec:authorize="hasAuthority('ROLE_SUPER_ADMIN')"><a href="/approval/admins">Manage Administrators</a></li>
 	     

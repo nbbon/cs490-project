@@ -21,12 +21,13 @@ import mum.pmp.mstore.model.Vendor;
 import mum.pmp.mstore.service.CategoryService;
 
 @Controller
+@RequestMapping("/category")
 public class CategoryController {
 
 	@Autowired
 	CategoryService categoryService;
 
-	@GetMapping(value = "/category")
+	@GetMapping("/")
 	public String categoriesList(Model model) {
 		model.addAttribute("categoriesList", categoryService.getCategories());
 		return "category/categoriesList";
@@ -41,14 +42,7 @@ public class CategoryController {
 		model.addAttribute("vendorCategories", vendorList);
 		return "category/vendorcategoriesList";
 	}
-	
-	@GetMapping(value = "/categoryProducts")
-	public String categoryProducts(@RequestParam("category") Category category, Model model) {
-		List<Product> productsList = categoryService.getAllCategoryProduct(category.getCategoryName());
-		model.addAttribute("productsList", productsList);
-		return "category/categoriesList";
-	}
-	
+
 
 	@GetMapping(value = { "/categoriesEdit", "/categoriesEdit/{id}" })
 	public String editCategory(Model model, @PathVariable(required = false, name = "id") Integer id) {

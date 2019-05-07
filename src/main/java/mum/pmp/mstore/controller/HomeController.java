@@ -69,12 +69,6 @@ public class HomeController {
 		return null;
 	}
 
-	private String userHome() {
-		String homeURL = "/index";
-		System.out.println("homeURL >>" + homeURL);
-		return homeURL;
-	}
-	
 	@GetMapping("/home")
 	public String homepage()
 	{
@@ -104,7 +98,7 @@ public class HomeController {
 			}
 		}
 		model.addAttribute("products", productService.getAllProducts());
-		return userHome();
+		return "/index";
 	}
 	
 	@RequestMapping("/profile")

@@ -52,7 +52,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 					"/forgotpassword", "/resetpassword", "/user/**",
 					"/signup", "/vendor/signup", "/admin/signup", "/customer/signup",
 					"/password/forgotpassword", "/forgotpassword", "/sendemailforgotpassword", "/resetpassword"
-					,"/products/**", "/category/**" , "/shoppingCart/**", "/reports/**" , "/placeOrder", "/payment/**", "/paymentgw/**", "/settlement/**")
+					,"/products/**", "/category/**"  , "/shoppingCart/**", "/reports/**" , "/placeOrder", 
+					"/payment/**", "/paymentgw/**", "/settlement/**")
 			.permitAll();
 		
 		http.csrf().disable()		//disable cross-side scripting
@@ -65,8 +66,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/approval/*", "/approval/vendors/*", "/admin/update/**").hasRole("ADMIN")
 			.antMatchers("/vendor/**", "/products/allproducts" ).hasRole("VENDOR")
 			.antMatchers("/customer/**" ).hasRole("CUSTOMER")
-			.antMatchers("/products" , "/products/**").hasRole("VENDOR")
-			.antMatchers("/category" , "/category/**").hasRole("ADMIN")
+			.antMatchers("/products" , "/products/*").hasRole("VENDOR")
+			.antMatchers("/category" , "/category/*").hasRole("ADMIN")
 			.anyRequest().authenticated()
 			.and()
 			.formLogin()
