@@ -42,9 +42,9 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 	    </div>
 	    <ul class="nav navbar-nav">
 	      <li id="login"><a href="/login">Login</a></li>
-	      <li id="product"><a href="/user/products">Product Details</a></li>
+	      <li id="product"><a class="nav-link" th:href="@{/customer/catalogs}">Product Catalog</a></li>
 	      <li id="shopping-cart" class="nav-item">
-               <a class="nav-link" th:href="@{/user/shopping-cart}">Shopping Cart</a>
+               <a class="nav-link" th:href="@{/shoppingCart}">Shopping Cart</a>
           </li>
        	  <li style="padding: 10px">	 	
 			  <form class="form-inline">
