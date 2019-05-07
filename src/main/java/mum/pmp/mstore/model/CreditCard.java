@@ -32,7 +32,7 @@ public class CreditCard {
 	private int id;
 	
 	@NotEmpty(message = "Validation card number is required")
-	private Integer cardNumber;
+	private String cardNumber;
 
 	@NotEmpty(message = "Validation name on card is required")
 	private String cardName;
@@ -56,14 +56,10 @@ public class CreditCard {
 
 			@NotEmpty(message = "Validation security code is required") String csv) {
 		super();
-		this.cardNumber = Integer.valueOf(cardNumber);
+		this.cardNumber = cardNumber;
 		this.cardName = cardName;
 		this.expireDate = expireDate;
 		this.csv = csv;
-	}
-
-	public void setCardNumber(Integer cardNumber) {
-		this.cardNumber = cardNumber;
 	}
 
 	public String getCardName() {
@@ -98,12 +94,12 @@ public class CreditCard {
 		this.cardType = cardType;
 	}
 
-	public void setCardNumber(int cardNumber) {
-		this.cardNumber = cardNumber;
+	public String getCardNumber() {
+		return cardNumber;
 	}
 
-	public Integer getCardNumber() {
-		return cardNumber;
+	public void setCardNumber(String cardNumber) {
+		this.cardNumber = cardNumber;
 	}
 
 	public int getId() { return this.id; }
