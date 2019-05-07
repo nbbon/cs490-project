@@ -75,6 +75,12 @@ public class HomeController {
 		return homeURL;
 	}
 	
+	@GetMapping("/home")
+	public String homepage()
+	{
+		return "/home/home";
+	}
+	
 	@RequestMapping("/")
 	public String home(Model model) {
 		auth = SecurityContextHolder.getContext().getAuthentication();

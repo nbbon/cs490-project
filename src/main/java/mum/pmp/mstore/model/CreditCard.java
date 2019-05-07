@@ -21,6 +21,8 @@ public class CreditCard {
 	
 	private Integer cardType; // 1: Visa; 2: Master
 	
+	public CreditCard() {}
+	
 	public CreditCard(@NotEmpty(message = "Validation card number is required") String cardNumber,
 			@NotEmpty(message = "Validation name on card is required") String cardName,
 			@NotEmpty(message = "Validation expire date is required") String expireDate,

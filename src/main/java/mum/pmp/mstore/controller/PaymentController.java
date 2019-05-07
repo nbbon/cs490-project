@@ -35,7 +35,7 @@ public class PaymentController {
 			String paymentUrl = "";
 			String fallbackUrl = ""; // "http://localhost:8080/payment";
 			CreditCard fromCard = order.getCreditCard();
-			CreditCard toCard;;
+			CreditCard toCard;
 			if (fromCard.getCardType() == 1) { // Visa
 				paymentUrl = "/paymentgw/visa";
 				fallbackUrl = fallbackUrl + "/payment/visa/confirm";
