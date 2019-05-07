@@ -1,5 +1,7 @@
 package mum.pmp.mstore.controller.profile;
 
+import java.io.IOException;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
@@ -18,6 +20,7 @@ import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.model.User;
 import mum.pmp.mstore.repository.profile.UserRepository;
 import mum.pmp.mstore.service.email.EmailService;
+import mum.pmp.mstore.service.email.EmailServiceInterface;
 import mum.pmp.mstore.service.security.ProfileService;
 import mum.pmp.mstore.service.security.UserService;
 import mum.pmp.mstore.validator.ResetPasswordValidator;
@@ -32,7 +35,7 @@ public class PasswordResetController {
 	UserRepository userRepository;
 	
 	@Autowired
-	EmailService emailService;
+	EmailServiceInterface emailService;
 	
 	@Autowired
 	ResetPasswordValidator resetPasswordValidator;
@@ -59,7 +62,7 @@ public class PasswordResetController {
 	}
 	
 	@GetMapping(value = "/sendemailforgotpassword")
-	public String sendEmailToResetPassword(Model model, @ModelAttribute("email") Email emailParam) throws AddressException, MessagingException
+	public String sendEmailToResetPassword(Model model, @ModelAttribute("email") Email emailParam) throws AddressException, MessagingException, IOException
 	{
 		System.out.println("emailParam: "+emailParam);
 		
