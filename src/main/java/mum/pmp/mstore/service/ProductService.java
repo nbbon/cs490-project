@@ -14,6 +14,8 @@ public interface ProductService {
 	void setStock(String productNumber, int quantity, String locationCode);
     Stock getStock(String productNumber);
     
+    List<Product> findProductsByProductName(String name);
+    
    
 
 }

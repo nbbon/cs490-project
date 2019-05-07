@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -19,11 +22,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import mum.pmp.mstore.config.security.Listener;
 import mum.pmp.mstore.domain.Order;
 import mum.pmp.mstore.domain.OrderFactory;
 import mum.pmp.mstore.domain.ShoppingCart;
+import mum.pmp.mstore.model.Admin;
 import mum.pmp.mstore.model.Customer;
+import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.service.OrderService;
+import mum.pmp.mstore.service.security.ProfileService;
+import mum.pmp.mstore.validator.AdminValidator;
 
 @Controller
 @RequestMapping("/order")
@@ -32,38 +40,83 @@ public class OrderController {
 	@Autowired
 	OrderService orderService;
 	
-//	@Autowired
-	//OrderFactory orderFactory;
-	
+	@Autowired
+    ProfileService	profileService;
 	
 
 	@PostMapping("/create")
-    public void createOrder(HttpServletRequest request,HttpServletResponse response, ModelMap model) throws ServletException, IOException {
+    public String createOrder(HttpServletRequest request,HttpServletResponse response, ModelMap model) throws ServletException, IOException {
 		
 		ShoppingCart cart =(ShoppingCart) request.getAttribute("cart");
 		
 		Order order = OrderFactory.createOrder(cart);
 		String getCustomerURL = "/get_customer";
 		
+		String getUserURL="/signup";
+		String getShippingURL= "/shopping_address";
 		
-		 Customer user = (Customer)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	     String email = user.getEmail();
-		
-		if (email!=null) {
-			order.setCustomer(user);
-
-          			
-		}else {
-		String	customerURL = "/customer/create";
-			
-		RequestDispatcher rd=	request.getRequestDispatcher(getCustomerURL);
-		request.setAttribute("order", order);
-		rd.forward(request, response);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Boolean isCus = false;
+		if (auth != null && !auth.getPrincipal().equals("anonymousUser")) {
+			for (GrantedAuthority roles : auth.getAuthorities()) {
+				String authorizedRole = roles.getAuthority();
+				if(authorizedRole.equals("ROLE_CUSTOMER")) {
+					UserDetails user = (UserDetails) auth.getPrincipal();
+					Profile customer = profileService.findByEmail(user.getUsername());
+					if(customer != null) {
+						order.setCustomer((Customer) customer);
+						return "forward:/shipping";
+					}
+				}
+			}
 		}
-	
 		
+		if(!isCus) {
+			if (auth == null ) {
+				
+				RequestDispatcher rd=request.getRequestDispatcher(getCustomerURL);
+				request.setAttribute("order", order);
+  			    rd.forward(request, response);
+  			    return getShippingURL;
+			}
+			
+			if (auth.getPrincipal().equals("anonymousUser")) {
+				
+				RequestDispatcher rd=request.getRequestDispatcher(getUserURL);
+				request.setAttribute("order", order);
+  			    rd.forward(request, response);
+				
+  			    return getShippingURL;
+				
+			}
+			
+			// Show UI to ask customer
+			// If they want to chackout with logged user
+			// OR checkout as guest
+			// If user chooses to checkout as logged user
+			//    --> show login page
+			//    --> if user successful logged in
+			//	  --> get user from
+			// else	
+			//    --> show UI to get customer info
+			//	  --> create new Customer obj
+		}
+		return null;
+			
 		
 	}	
+	
+
+
+
+	@GetMapping("/signup")
+	public String adminSignupPage(Model model) {
+		model.addAttribute("admin", new Admin());
+		return "/profile/admin_signup";
+	}
+
+	
+	
 	
 	@PostMapping("/get_customer")
     public String trggerGetCustomer(RedirectAttributes redirectAttributes, Model model, HttpServletRequest request) {
@@ -87,7 +140,7 @@ public class OrderController {
 	@GetMapping("/shopping_address")
 	public String getShippinAddress(@ModelAttribute("order") Order order, Model model) {
 		model.addAttribute("order", order);
-		return "shopping_address"; // shopping_address.html
+		return "order/shopping_address"; // shopping_address.html
 	}
 	
 	@PostMapping("/billing")
@@ -99,7 +152,7 @@ public class OrderController {
 	@GetMapping("/billing")
 	public String getBillingAddress(@ModelAttribute("order") Order order, Model model) {
 		model.addAttribute("order", order);
-		return "billing"; // billing.html
+		return "order/billing"; // billing.html
 	}
 	
 	
