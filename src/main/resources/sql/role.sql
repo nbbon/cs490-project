@@ -9,8 +9,7 @@ insert into mstore_db.role values (5, "SUPER_ADMIN");
 
 
 
----- 
-vendor name should be in product 
+-- vendor name should be in product 
 
 
 -- Vendor approval - to fix
