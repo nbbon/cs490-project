@@ -1,3 +1,12 @@
+/*
+ * Author: Bon Nguyen
+ * Date: 25-Apr-2019
+ * Class Name: MockPaymentServiceImpl
+ * Module: MockPayment
+ * Description: The implementation of mock payment service  
+ * 
+ */
+
 package mum.pmp.mstore.integration.mockpayment.service.impl;
 
 import java.util.Optional;

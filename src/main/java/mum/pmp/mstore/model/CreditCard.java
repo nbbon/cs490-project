@@ -1,34 +1,16 @@
 package mum.pmp.mstore.model;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
-import org.hibernate.id.Assigned;
 
 @Entity
-//@Table(name = "Credit")
 public class CreditCard {
-	/*
-	 * @Id
-	 * 
-	 * @GeneratedValue(strategy = GenerationType.AUTO) private int id;
-	 */
-
-	/*
-	 * @EmbeddedId
-	 * 
-	 * @NotEmpty(message = "Validation card number is required") CreditCardNumber
-	 * cardNumber
-	 */;
-
-	// private String cardNumber;
-
+	
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO) 
 	private int id;
 	
 	@NotEmpty(message = "Validation card number is required")

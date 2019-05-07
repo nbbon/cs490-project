@@ -96,23 +96,6 @@ public class ProfileService {
 			} else if(userRole.getRole().equals("VENDOR")) {
 				user.setEnabled(false);
 				profile.setEnable(false);
-				int cardType = profile.getCreditCard().getCardType();
-				if(cardType == 1)
-				{ 
-					MasterCard c = new MasterCard();
-					c.setCardName(profile.getCreditCard().getCardName());
-					c.setCardNumber("" + profile.getCreditCard().getCardNumber());
-					c.setCsv(profile.getCreditCard().getCsv());
-					c.setExpireDate(profile.getCreditCard().getExpireDate());
-				}
-				else if(cardType == 2)
-				{
-					VisaCard c = new VisaCard();
-					c.setCardName(profile.getCreditCard().getCardName());
-					c.setCardNumber("" + profile.getCreditCard().getCardNumber());
-					c.setCsv(profile.getCreditCard().getCsv());
-					c.setExpireDate(profile.getCreditCard().getExpireDate());
-				}
 			}
 			else {
 				user.setEnabled(true);
@@ -128,8 +111,8 @@ public class ProfileService {
 			return true;
 		} else
 			return false;
-
 	}
+	
 
 	public Profile findProfileByToken(String token) {
 		return profileRepository.findByToken(token);

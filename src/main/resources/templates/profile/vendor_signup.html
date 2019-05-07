@@ -77,10 +77,10 @@
          <div class="form-group row">
          <label for="cardType" class="col-sm-3 col-md-3 col-form-label">Payment Type</label>
             <div class="col-sm-9 form-check form-check-inline">
-               <input class="form-check-input" type="radio" th:field="*{creditCard.cardType}" value="1"/><label class="form-check-label"> 
-                &nbsp; Master Card</label> &nbsp; &nbsp;
+               <input class="form-check-input" type="radio" selected th:field="*{creditCard.cardType}" value="1"/><label class="form-check-label"> 
+                &nbsp; Visa Card</label> &nbsp; &nbsp;
 	    	   <input class="form-check-input" type="radio" th:field="*{creditCard.cardType}" value="2"/><label class="form-check-label">  
-	    	   &nbsp; Visa Card</label>  &nbsp; &nbsp;
+	    	   &nbsp; Master Card</label>  &nbsp; &nbsp;
             </div>
 		</div>
 		
@@ -117,7 +117,8 @@
       		</div>
         </div>
         
-         <input type="submit" class="btn btn-primary" value="Save" th:if="*{id} == 0"/>
+         <input type="submit" class="btn btn-primary" value="Save" th:if="*{id} == 0"/> &nbsp;&nbsp;
+         <input type="reset" class="btn btn-primary" id="resetButton" name="reset" th:value="Reset"/>
      
 <!--         <input type="submit" class="btn btn-primary" value="Save" th:if="*{id} == 0"/> -->
 <!--         <input type="submit" class="btn btn-primary" value="Update" th:if="*{id} != 0"/> -->

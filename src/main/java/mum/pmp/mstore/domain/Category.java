@@ -25,23 +25,28 @@ public class Category {
 	@NotEmpty(message = "{categoryName.empty}")
 	private String categoryName;
 	private String description;
+	@ManyToOne(fetch =  FetchType.EAGER)
+	@JoinColumn(name = "VENDOR_NUMBER")
+	private Vendor vendor;
 	
-	  @ManyToOne(fetch = FetchType.EAGER)
-	  
-	  @JoinColumn(name = "VENDOR_NUMBER") private Vendor vendor;
-	  
-	  @OneToMany private List<Product> products;
-	 
+	@OneToMany
+	private List<Product> products;
 
-	
-	  public Vendor getVendor() { return vendor; }
-	  
-	  public void setVendor(Vendor vendor) { this.vendor = vendor; }
-	  
-	  public List<Product> getProducts() { return products; }
-	  
-	  public void setProducts(List<Product> products) { this.products = products; }
-	 
+	public Vendor getVendor() {
+		return vendor;
+	}
+
+	public void setVendor(Vendor vendor) {
+		this.vendor = vendor;
+	}
+
+	public List<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
 
 	public Category() {	}
 

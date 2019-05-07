@@ -79,6 +79,8 @@ insert into visa_card_balance values('5678123412340004', 10000, CURDATE());
 insert into visa_card_balance values('5678123412340005', 10000, CURDATE());
 insert into visa_card_balance values('5678123412340006', 10000, CURDATE());
 
+insert into visa_card_balance values('5678123412340079', 10000, CURDATE());
+
 insert into master_card values('1234123412340001', 'Yee Mon', '123', '02/23', 10000);
 insert into master_card values('1234123412340002', 'Jean', '123', '02/23', 10000);
 insert into master_card values('1234123412340003', 'Stanley', '123', '02/23', 10000);
@@ -94,3 +96,5 @@ insert into master_card_balance values('1234123412340003', 10000, CURDATE());
 insert into master_card_balance values('1234123412340004', 10000, CURDATE());
 insert into master_card_balance values('1234123412340005', 10000, CURDATE());
 insert into master_card_balance values('1234123412340006', 10000, CURDATE());
+
+insert into master_card_balance values('1234123412340079', 10000, CURDATE());

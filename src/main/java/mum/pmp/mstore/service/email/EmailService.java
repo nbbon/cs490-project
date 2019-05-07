@@ -23,6 +23,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService implements EmailServiceInterface {
 
+	public int sendEmailI(int i)
+	{
+		return 1;
+	}
+	
 	@Override
 	public void sendEmail() throws AddressException, MessagingException, IOException {
 
@@ -49,10 +54,13 @@ public class EmailService implements EmailServiceInterface {
 	}
 	
 	@Override
-	public void sendEmail(String emailAddresses, String subject, String body) throws AddressException, MessagingException {
+	public int sendEmail(String emailAddresses, String subject, String body) throws AddressException, MessagingException {
+		int status = -1;
 		Address emailAddress = new InternetAddress(emailAddresses);// {stanley, store};
 		Message msg = message(emailAddress, subject, body);
 		Transport.send(msg);
+		status = 1;
+		return status;
 	}
 
 	@Override
