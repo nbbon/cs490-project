@@ -8,15 +8,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.DecimalMin;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.validator.constraints.Length;
 
 import mum.pmp.mstore.model.Vendor;
-import org.hibernate.validator.constraints.Length;
 
 @Entity
 public class Product implements Serializable {
@@ -43,6 +44,9 @@ public class Product implements Serializable {
 	
 	 @Column(name = "description")
 	private String description;
+	 
+	@Lob
+	private Byte[] image;
 	 
 	@OneToOne
 	@JoinColumn(name = "STOCK_ID")
@@ -213,5 +217,14 @@ public class Product implements Serializable {
 		this.price = price;
 	}
 
-	
+
+	public Byte[] getImage() {
+		return image;
+	}
+
+
+	public void setImage(Byte[] image) {
+		this.image = image;
+	}
+
 }

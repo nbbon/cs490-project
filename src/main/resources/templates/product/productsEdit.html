@@ -20,7 +20,8 @@
      
         <h1>Product</h1>
 
-        <form class="form-group" action="/products/productsEdit" th:action="@{/products/productsEdit}" method="post">
+        <form class="form-group" action="/products/productsEdit" th:action="@{/products/productsEdit}" method="post" 
+        enctype="multipart/form-data">
             <input th:type="hidden" name="id" th:field="${products.id}" />
             <div class="form-group">
                 <label for="productNumber">ProductNumber</label>
@@ -42,6 +43,10 @@
                 <textarea class="form-control" id="description" th:field="${products.description}"></textarea>
             </div>
             
+            <div class="form-group">
+                <label for="image">Product Image</label>
+                <input type="file" class="form-control" id="image" th:field="${products.image}"></input>
+            </div>
             
              <div class="form-group">
                 <label for="stock">Stock</label>

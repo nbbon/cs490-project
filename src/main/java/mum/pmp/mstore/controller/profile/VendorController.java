@@ -1,7 +1,12 @@
 package mum.pmp.mstore.controller.profile;
 
+import java.io.IOException;
 import java.lang.annotation.Annotation;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Payload;
 
 import org.hibernate.validator.constraints.CreditCardNumber;
@@ -11,11 +16,17 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import mum.pmp.mstore.config.CompanyCardConfig;
 import mum.pmp.mstore.config.security.Listener;
+import mum.pmp.mstore.domain.Order;
+import mum.pmp.mstore.integration.mockpayment.model.MasterCard;
+import mum.pmp.mstore.integration.mockpayment.model.VisaCard;
 import mum.pmp.mstore.model.CreditCard;
 import mum.pmp.mstore.model.Customer;
 import mum.pmp.mstore.model.Profile;
@@ -41,6 +52,9 @@ public class VendorController {
 	@Autowired
 	private Listener sessionListener;
 	
+	@Autowired
+	private CompanyCardConfig cards;
+	
 	@GetMapping("/signup")
 	public String signupPage(Model model) {
 		model.addAttribute("vendor", new Vendor());
@@ -50,17 +64,67 @@ public class VendorController {
 	}
 	
 	@PostMapping("/signup")
-	public String signup(@ModelAttribute Vendor vendor, BindingResult bindingResult) {
+	public String signup(@ModelAttribute Vendor vendor, BindingResult bindingResult, HttpServletRequest request,
+			HttpServletResponse response) {
 		String url = "";
 		//validate the vendor  details
 			validator.validate(vendor, bindingResult);
 			
 			ccValidator.validate(vendor.getCreditCard(), bindingResult);
+			String paymentUrl = "";
+			String fallbackUrl = ""; // "http://localhost:8080/payment";
 			
 			if(bindingResult.hasErrors()) {
 				url =  "/profile/vendor_signup";
 			}else {
 				if(profileService.signup(vendor, User_Type.VENDOR)) {
+					int cardType = vendor.getCreditCard().getCardType();
+					CreditCard c = new CreditCard();
+					c.setCardName(vendor.getCreditCard().getCardName());
+					c.setCardNumber(vendor.getCreditCard().getCardNumber());
+					c.setCsv(vendor.getCreditCard().getCsv());
+					c.setExpireDate(vendor.getCreditCard().getExpireDate());
+					
+					CreditCard toCard = new CreditCard();
+					
+					if(cardType == 1)
+					{ 
+						toCard.setCardName(cards.getVisaCardName());
+						toCard.setCardNumber(cards.getVisaCardNumber());
+						toCard.setCsv(cards.getVisaCardCSV());
+						toCard.setExpireDate(cards.getVisaCardexpireDate());
+						
+						paymentUrl = "/paymentgw/visa";
+						fallbackUrl = fallbackUrl + "/vendor/visa/confirm";
+					}
+					else if(cardType == 2)
+					{
+						toCard.setCardName(cards.getMasterCardName());
+						toCard.setCardNumber(cards.getMasterCardNumber());
+						toCard.setCsv(cards.getMasterCardCSV());
+						toCard.setExpireDate(cards.getMasterCardexpireDate());
+						
+						paymentUrl = "/paymentgw/master";
+						fallbackUrl = fallbackUrl + "/vendor/master/confirm";
+					}
+					
+					try {
+						RequestDispatcher rd = request.getRequestDispatcher(paymentUrl);
+						request.setAttribute("fromCardNumber", c.getCardNumber());
+						request.setAttribute("fromCardName", c.getCardName());
+						request.setAttribute("fromCardCSV", c.getCsv());
+						request.setAttribute("fromCardExpireDate", c.getExpireDate());
+						
+						request.setAttribute("toCardNumber", toCard.getCardNumber());
+						request.setAttribute("toCardName", toCard.getCardName());
+						request.setAttribute("toCardCSV", toCard.getCsv());
+						request.setAttribute("toCardExpireDate", toCard.getExpireDate());
+					
+						request.setAttribute("fallbackUrl", fallbackUrl);
+						rd.forward(request, response);
+					} catch (ServletException | IOException e) {
+						System.out.println(e.getMessage());
+					}
 					url = "redirect:/login";
 				}
 				else {
@@ -70,6 +134,27 @@ public class VendorController {
 			}
 		return url;
 	}
+	
+	@PostMapping("/{type}/confirm")
+	public void paymentFallBack(@PathVariable String type, RedirectAttributes redirectAttributes,
+			HttpServletRequest request, HttpServletResponse response) {
+		String status = (String) request.getAttribute("status");
+		System.out.println("Fall back from payment gateway..." + status );
+		try {
+		String targetURL = "";
+			if (status.equals("approved")) {
+				request.setAttribute("status", status);
+				targetURL = "redirect:/login";
+			} else {
+				request.setAttribute("status", status);
+			}
+			RequestDispatcher rd = request.getRequestDispatcher(targetURL);
+			rd.forward(request, response);
+		} catch (ServletException | IOException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
 	
 	@GetMapping("/update")
 	public String updatePage(Model model) {
