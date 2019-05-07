@@ -1,3 +1,12 @@
+/*
+ * Author: Bon Nguyen
+ * Date: 25-Apr-2019
+ * Class Name: ReportBuilderImpl
+ * Module: Report
+ * Description: The implementation of report builder  
+ * 
+ */
+
 package mum.pmp.mstore.service.report.impl;
 
 import java.io.IOException;

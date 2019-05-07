@@ -53,7 +53,7 @@ public class Product implements Serializable {
 	private Category category;
 	
 	@ManyToOne
-	@JoinColumn(name = "vendor_id")
+	@JoinColumn(name = "VENDOR_NUMBER")
 	private Vendor vendor;
 		
 	public Vendor getVendor() {
