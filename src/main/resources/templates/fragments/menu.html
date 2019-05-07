@@ -13,14 +13,6 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 	      <a class="navbar-brand" href="/" id="home">M-Store</a>
 	    </div>
 	    <ul class="nav navbar-nav">
-<<<<<<< HEAD
-	      <li th:if="${#authorization?.expression('!isAuthenticated()')}" id="login" class="active"><a href="/login">Login</a></li>
-	      <li id="product"><a href="/catalogs">View Catalogs</a></li>
-	      <li id="person"><a href="/customer/orders">Orders</a></li>
-	      <li id="shoppingCart" class="nav-item">
-               <a class="nav-link" th:href="@{/shoppingCart}">Shopping Cart</a>
-          </li>
-=======
 	      <li id="login" class="active"><a href="/login">Login</a></li>
 	      
 	      <li id="allproducts" sec:authorize="hasAuthority('ROLE_ADMIN')"><a href="/products/allproducts">Product List</a></li>
@@ -37,7 +29,6 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 	       
 	      <li id="admins" sec:authorize="hasAuthority('ROLE_SUPER_ADMIN')"><a href="/approval/admins">Manage Administrators</a></li>
 	     
->>>>>>> e03c4bb5b3c298048155cd5e12d83d81811b6d29
 	    </ul>
 	  </div>
 	</nav>
