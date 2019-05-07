@@ -76,11 +76,11 @@
         
          <div class="form-group row">
          <label for="cardType" class="col-sm-3 col-md-3 col-form-label">Payment Type</label>
-            <div class="col-sm-3 col-md-3 col-form-label">
-               <input type="radio" th:field="*{creditCard.cardType}" value="1"/><label class="col-sm-6 col-md-6 col-form-label">Master Card</label>
-            </div>
-            <div class="col-sm-3 col-md-3 col-form-label">
-	    	   <input type="radio" th:field="*{creditCard.cardType}" value="2"/><label class="col-sm-6 col-md-6 col-form-label">Visa Card</label>
+            <div class="col-sm-9 form-check form-check-inline">
+               <input class="form-check-input" type="radio" th:field="*{creditCard.cardType}" value="1"/><label class="form-check-label"> 
+                &nbsp; Master Card</label> &nbsp; &nbsp;
+	    	   <input class="form-check-input" type="radio" th:field="*{creditCard.cardType}" value="2"/><label class="form-check-label">  
+	    	   &nbsp; Visa Card</label>  &nbsp; &nbsp;
             </div>
 		</div>
 		
@@ -103,7 +103,7 @@
          <div class="form-group row">
             <label for="expDate" class="col-sm-3 col-md-3 col-form-label">Expiry Date</label>
             <div class="col-sm-9 col-md-9">
-                <input th:field="*{creditCard.expireDate}" type="text" class="form-control" id="expireDate" required="true"/>
+                <input th:field="*{creditCard.expireDate}" type="month" class="form-control" id="expireDate" required="true"/>
                 <label th:if="${#fields.hasErrors('creditCard.expireDate')}" class="text-danger align-middle" th:errors="*{creditCard.expireDate}">
                 </label>
       		</div>

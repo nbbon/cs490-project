@@ -146,6 +146,12 @@ public class ProfileService {
 		if(action.equals("Approve")) {
 			adminProfile.setEnable(true);
 			user.setEnabled(true);
+			
+			// send acknowledge email to admin
+			String subject = "M-Store admin Registration confirmation";
+			String body = "Your admin account " + adminEmail + " has been successfully approved. You may login to system using your email and password.";
+			emailService.sendEmail(adminEmail, subject, body);
+			
 		}else if(action.equals("Reject"))
 		{
 			adminProfile.setEnable(false);
@@ -153,11 +159,6 @@ public class ProfileService {
 		}
 		userRepository.save(user);
 		saveProfile(adminProfile);
-		
-		// send acknowledge email to admin
-		String subject = "M-Store admin Registration confirmation";
-		String body = "Your admin account " + adminEmail + " has been successfully approved. You may login to system using your email and password.";
-		emailService.sendEmail(adminEmail, subject, body);
 		
 	}
 	
