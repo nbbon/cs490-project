@@ -43,7 +43,7 @@ public class Profile {
 	// 2: Disable.
 	private byte status = 1;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private CreditCard creditCard;
 	
 	
