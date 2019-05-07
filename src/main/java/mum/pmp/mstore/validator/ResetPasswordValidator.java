@@ -10,6 +10,15 @@ import org.springframework.web.bind.annotation.InitBinder;
 import mum.pmp.mstore.model.Password;
 //import mum.pmp.mstore.model.Vendor;
 
+/*
+ * Author: Stanley Julien
+ * Date: 25-Apr-2019
+ * Class Name: ResetPasswordValidator
+ * Module: Reset Password
+ * Description: The implementation of reset password  
+ * 
+ */
+
 @Component
 public class ResetPasswordValidator implements Validator{
 
