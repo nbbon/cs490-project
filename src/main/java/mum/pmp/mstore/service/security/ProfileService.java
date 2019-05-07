@@ -99,7 +99,7 @@ public class ProfileService {
 				{ 
 					MasterCard c = new MasterCard();
 					c.setCardName(profile.getCreditCard().getCardName());
-					c.setCardNumber(profile.getCreditCard().getCardNumber());
+					c.setCardNumber("" + profile.getCreditCard().getCardNumber());
 					c.setCsv(profile.getCreditCard().getCsv());
 					c.setExpireDate(profile.getCreditCard().getExpireDate());
 				}
@@ -107,7 +107,7 @@ public class ProfileService {
 				{
 					VisaCard c = new VisaCard();
 					c.setCardName(profile.getCreditCard().getCardName());
-					c.setCardNumber(profile.getCreditCard().getCardNumber());
+					c.setCardNumber("" + profile.getCreditCard().getCardNumber());
 					c.setCsv(profile.getCreditCard().getCsv());
 					c.setExpireDate(profile.getCreditCard().getExpireDate());
 				}
