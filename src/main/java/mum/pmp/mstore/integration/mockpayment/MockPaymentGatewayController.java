@@ -124,7 +124,6 @@ public class MockPaymentGatewayController {
 	}
 
 	private Boolean verifyCardInfo(String cardNumber, String cardName, String csv, String expireDate) {
-System.out.println(cardNumber.length());
 		if (cardNumber.length() != 16) {
 			System.out.println("PAYMENT GATEWAY: Invalid card number");
 			return false;

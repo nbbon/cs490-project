@@ -120,8 +120,8 @@ public class VendorController {
 						fallbackUrl = fallbackUrl + "/vendor/master/confirm";
 					}
 					
-					try {
-						RequestDispatcher rd = request.getRequestDispatcher(paymentUrl);
+//					try {
+//						RequestDispatcher rd = request.getRequestDispatcher(paymentUrl);
 						request.setAttribute("fromCardNumber", c.getCardNumber());
 						request.setAttribute("fromCardName", c.getCardName());
 						request.setAttribute("fromCardCSV", c.getCsv());
@@ -134,11 +134,12 @@ public class VendorController {
 						request.setAttribute("amount", 2500.00);
 						
 						request.setAttribute("fallbackUrl", fallbackUrl);
-						rd.forward(request, response);
-					} catch (ServletException | IOException e) {
-						System.out.println(e.getMessage());
-					}
-					url = "redirect:/login";
+//						rd.forward(request, response);
+						return "forward:" + paymentUrl;
+//					} catch (ServletException | IOException e) {
+//						System.out.println(e.getMessage());
+//					}
+//					url = "redirect:/login";
 				}
 				else {
 					bindingResult.rejectValue("email", "vendor.email.exist");
@@ -149,17 +150,18 @@ public class VendorController {
 	}
 	
 	@PostMapping("/{type}/confirm")
-	public void paymentFallBack(@PathVariable String type, RedirectAttributes redirectAttributes,
+	public String paymentFallBack(@PathVariable String type, RedirectAttributes redirectAttributes,
 			HttpServletRequest request, HttpServletResponse response) {
 		String status = (String) request.getAttribute("status");
 		System.out.println("Fall back from payment gateway..." + status );
-		try {
-			response.sendRedirect("/login");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e.getMessage());
-//			e.printStackTrace();
-		}
+//		try {
+//			response.sendRedirect("/login");
+		return "redirect:/login";
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			System.out.println(e.getMessage());
+////			e.printStackTrace();
+//		}
 		
 	}
 	
