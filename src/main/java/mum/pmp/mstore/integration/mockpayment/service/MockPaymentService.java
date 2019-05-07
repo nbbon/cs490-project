@@ -19,7 +19,7 @@ public interface MockPaymentService {
 		if (getVisaCard(fromCardNumber, fromCardName, fromCardCSV, fromCardExpireDate) != null 
 				&& getVisaCard(toCardNumber, toCardName, toCardCSV, toCardExpireDate) != null) {
 			VisaCardBalance fromCardBalance = getVisaCardBalance(fromCardNumber);
-			if (amount <= fromCardBalance.getBalance()) {
+			if (fromCardBalance != null && amount <= fromCardBalance.getBalance()) {
 				Double fromCardNewBalance = fromCardBalance.getBalance() - amount;
 				fromCardBalance.setBalance(fromCardNewBalance);
 				updateVisaCardBalance(fromCardBalance);
@@ -28,8 +28,11 @@ public interface MockPaymentService {
 				createVisaCardTransaction(fromTrans);
 				
 				VisaCardBalance toCardBalance = getVisaCardBalance(toCardNumber);
+				if(toCardBalance == null) {
+					toCardBalance = new VisaCardBalance(toCardNumber, LocalDate.now(), 0.0);
+				}
 				Double toCardNewBalance = toCardBalance.getBalance() + amount;
-				fromCardBalance.setBalance(toCardNewBalance);
+				toCardBalance.setBalance(toCardNewBalance);
 				updateVisaCardBalance(toCardBalance);
 				VisaCardTransaction toTrans = new VisaCardTransaction(toCardNumber, toCardName, LocalDate.now(),
 						amount, toCardBalance.getBalance(), toCardNewBalance, description);
@@ -55,7 +58,7 @@ public interface MockPaymentService {
 		if (getMasterCard(fromCardNumber, fromCardName, fromCardCSV, fromCardExpireDate) != null 
 				&& getMasterCard(toCardNumber, toCardName, toCardCSV, toCardExpireDate) != null) {
 			MasterCardBalance fromCardBalance = getMasterCardBalance(fromCardNumber);
-			if (amount <= fromCardBalance.getBalance()) {
+			if (fromCardBalance != null && amount <= fromCardBalance.getBalance()) {
 				Double fromCardNewBalance = fromCardBalance.getBalance() - amount;
 				fromCardBalance.setBalance(fromCardNewBalance);
 				updateMasterCardBalance(fromCardBalance);
@@ -64,8 +67,11 @@ public interface MockPaymentService {
 				createMasterCardTransaction(fromTrans);
 				
 				MasterCardBalance toCardBalance = getMasterCardBalance(toCardNumber);
-				Double toCardNewBalance = toCardBalance.getBalance() + amount;
-				fromCardBalance.setBalance(toCardNewBalance);
+				if(toCardBalance == null) {
+					toCardBalance = new MasterCardBalance(toCardNumber, LocalDate.now(), 0.0);
+				}
+				Double toCardNewBalance =  toCardBalance.getBalance() + amount;
+				toCardBalance.setBalance(toCardNewBalance);
 				updateMasterCardBalance(toCardBalance);
 				MasterCardTransaction toTrans = new MasterCardTransaction(toCardNumber, toCardName, LocalDate.now(),
 						amount, toCardBalance.getBalance(), toCardNewBalance, description);
