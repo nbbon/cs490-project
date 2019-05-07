@@ -1,5 +1,10 @@
 package mum.pmp.mstore.controller.profile;
 
+import java.lang.annotation.Annotation;
+
+import javax.validation.Payload;
+
+import org.hibernate.validator.constraints.CreditCardNumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import mum.pmp.mstore.config.security.Listener;
+import mum.pmp.mstore.model.CreditCard;
 import mum.pmp.mstore.model.Customer;
 import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.model.Vendor;
@@ -34,15 +40,15 @@ public class VendorController {
 	@GetMapping("/signup")
 	public String signupPage(Model model) {
 		model.addAttribute("vendor", new Vendor());
+		model.addAttribute("creditCard", new CreditCard());
+		System.out.println("In signup credit card");
 		return "/profile/vendor_signup";
 	}
 	
 	@PostMapping("/signup")
 	public String signup(@ModelAttribute Vendor vendor, BindingResult bindingResult) {
-		//@RequestParam(value="action", required=true) String action
 		String url = "";
 		//validate the vendor  details
-		//if(action.equals("Save")) {
 			validator.validate(vendor, bindingResult);
 			
 			if(bindingResult.hasErrors()) {
@@ -56,10 +62,6 @@ public class VendorController {
 					url =  "/profile/vendor_signup";
 				}
 			}
-//		}
-//		if(action.equals("Cancel")) {
-//			url = "redirect:/login";
-//		}
 		return url;
 	}
 	
