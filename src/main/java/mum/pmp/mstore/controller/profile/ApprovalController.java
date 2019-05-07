@@ -27,8 +27,9 @@ public class ApprovalController {
 
 	@GetMapping("/admins")
 	public String getAdminList(Model model) {
+		System.out.println("Check admin");
 		List<Admin> admins = profileService.findNewAdmins();
-		System.out.println(admins);
+		
 		model.addAttribute("admins", admins);
 		return "/approval/adminList";
 	}

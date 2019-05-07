@@ -82,9 +82,6 @@ public class ProfileService {
 		User existingUser = userRepository.findByUsername(profile.getEmail());
 		System.out.println("existing user >>" + existingUser);
 		
-
-		int cardType = profile.getCreditCard().getCardType();
-		
 		if (existingUser == null) {
 			User user = new User();
 			// add user Role
@@ -97,8 +94,9 @@ public class ProfileService {
 			} else if(userRole.getRole().equals("VENDOR")) {
 				user.setEnabled(false);
 				profile.setEnable(false);
+				int cardType = profile.getCreditCard().getCardType();
 				if(cardType == 1)
-				{
+				{ 
 					MasterCard c = new MasterCard();
 					c.setCardName(profile.getCreditCard().getCardName());
 					c.setCardNumber(profile.getCreditCard().getCardNumber());

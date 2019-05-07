@@ -17,7 +17,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 	      
 	      <li id="allproducts" sec:authorize="hasAuthority('ROLE_ADMIN')"><a href="/products/allproducts">Product List</a></li>
 	      
-	      <li id="catalogs"><a class="nav-link" th:href="@{/customer/catalogs}">Catalogs</a></li> 
+	      <li id="catalogs" sec:authorize="hasAuthority('ROLE_CUSTOMER')"><a class="nav-link" th:href="@{/customer/catalogs}">Catalogs</a></li> 
 	      
 	      <li id="shoppingCart"><a class="nav-link" th:href="@{/shoppingCart}">Shopping Cart</a></li>
 		  
