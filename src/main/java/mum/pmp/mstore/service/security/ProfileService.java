@@ -13,9 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import mum.pmp.mstore.integration.mockpayment.model.MasterCard;
-import mum.pmp.mstore.integration.mockpayment.model.VisaCard;
 import mum.pmp.mstore.model.Admin;
+import mum.pmp.mstore.model.Customer;
 import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.model.Role;
 import mum.pmp.mstore.model.User;
@@ -194,6 +193,53 @@ public class ProfileService {
 			userRepository.save(user);
 			saveProfile(vendorToUpdate);
 
+			return true;
+		}
+
+		return false;
+	}
+	
+	public boolean updateAdmin(Admin admin) {
+		Profile person = findByEmail(admin.getEmail());
+		Admin adminToUpdate;
+
+		System.out.println("adminToupdate" + person);
+		if (person instanceof Admin) {
+			adminToUpdate = (Admin) person;
+			adminToUpdate.setFirstName(admin.getFirstName());
+			adminToUpdate.setLastName(admin.getLastName());
+			adminToUpdate.setPassword(admin.getPassword());
+			adminToUpdate.setPassword(passwordEncoder.encode(admin.getPassword()));
+			adminToUpdate.setPhone(admin.getPhone());
+
+			User user = userRepository.findByUsername(admin.getEmail());
+			user.setPassword(passwordEncoder.encode(admin.getPassword()));
+			userRepository.save(user);
+			saveProfile(adminToUpdate);
+
+			return true;
+		}
+
+		return false;
+	}
+	
+	public boolean updateCustomer(Customer customer) {
+		Profile person = findByEmail(customer.getEmail());
+		Customer customerToUpdate;
+
+		System.out.println("customerToupdate" + person);
+		if (person instanceof Customer) {
+			customerToUpdate = (Customer) person;
+			customerToUpdate.setFirstName(customer.getFirstName());
+			customerToUpdate.setLastName(customer.getLastName());
+			customerToUpdate.setPassword(passwordEncoder.encode(customer.getPassword()));
+			customerToUpdate.setPhone(customer.getPhone());
+			customerToUpdate.setAddress(customer.getAddress());
+			
+			User user = userRepository.findByUsername(customer.getEmail());
+			user.setPassword(passwordEncoder.encode(customer.getPassword()));
+			userRepository.save(user);
+			saveProfile(customerToUpdate);
 			return true;
 		}
 

@@ -83,8 +83,6 @@ public class CustomerController {
 				c.setCardNumber(customer.getCreditCard().getCardNumber());
 				c.setCsv(customer.getCreditCard().getCsv());
 				
-				
-				//
 				String date = customer.getCreditCard().getExpireDate();
 				System.out.println("Expiry date" + date);
 				
@@ -117,27 +115,19 @@ public class CustomerController {
 					fallbackUrl = fallbackUrl + "/vendor/master/confirm";
 				}
 				
-				try {
-					RequestDispatcher rd = request.getRequestDispatcher(paymentUrl);
-					request.setAttribute("fromCardNumber", c.getCardNumber());
-					request.setAttribute("fromCardName", c.getCardName());
-					request.setAttribute("fromCardCSV", c.getCsv());
-					request.setAttribute("fromCardExpireDate", c.getExpireDate());
-					
-					request.setAttribute("toCardNumber", toCard.getCardNumber());
-					request.setAttribute("toCardName", toCard.getCardName());
-					request.setAttribute("toCardCSV", toCard.getCsv());
-					request.setAttribute("toCardExpireDate", toCard.getExpireDate());
-					request.setAttribute("amount", 2500.00);
-					
-					request.setAttribute("fallbackUrl", fallbackUrl);
-					rd.forward(request, response);
-				} catch (ServletException | IOException e) {
-					System.out.println(e.getMessage());
-				}
+				request.setAttribute("fromCardNumber", c.getCardNumber());
+				request.setAttribute("fromCardName", c.getCardName());
+				request.setAttribute("fromCardCSV", c.getCsv());
+				request.setAttribute("fromCardExpireDate", c.getExpireDate());
 				
+				request.setAttribute("toCardNumber", toCard.getCardNumber());
+				request.setAttribute("toCardName", toCard.getCardName());
+				request.setAttribute("toCardCSV", toCard.getCsv());
+				request.setAttribute("toCardExpireDate", toCard.getExpireDate());
+				request.setAttribute("amount", 2500.00);
 				
-				url = "redirect:/login";
+				request.setAttribute("fallbackUrl", fallbackUrl);
+				return "forward:" + paymentUrl;
 			}
 			else {
 				bindingResult.rejectValue("email", "There is already an account registered with that email");
@@ -148,16 +138,11 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/{type}/confirm")
-	public void paymentFallBack(@PathVariable String type, RedirectAttributes redirectAttributes,
+	public String paymentFallBack(@PathVariable String type, RedirectAttributes redirectAttributes,
 			HttpServletRequest request, HttpServletResponse response) {
 		String status = (String) request.getAttribute("status");
 		System.out.println("Fall back from payment gateway..." + status );
-		try {
-			response.sendRedirect("/login");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-//			e.printStackTrace();
-		}
+		return "redirect:/login";
 	}
 	
 	@GetMapping("/update")
@@ -174,20 +159,11 @@ public class CustomerController {
 		
 		//validate the admin details.
 		validator.validate(customer, bindingResult);
-		System.out.println("email in update: "+customer.getEmail());
-		Profile person = profileService.findByEmail(customer.getEmail());
-		Customer customerToUpdate;
-		if(person instanceof Customer)
-		{
-			customerToUpdate = (Customer) person;
-			customerToUpdate.setFirstName(customer.getFirstName());
-			customerToUpdate.setLastName(customer.getLastName());
-			customerToUpdate.setPassword(customer.getPassword());
-			customerToUpdate.setPhone(customer.getPhone());
-			customerToUpdate.setAddress(customer.getAddress());
-			profileService.saveProfile(customerToUpdate);
-		}
-		return "redirect:/update";
+		boolean status = profileService.updateCustomer(customer);
+		if(status)
+			return "/secure/login";
+		else
+			return "redirect:/customer/update";
 	}
 	
 	@PostMapping("/disable")
