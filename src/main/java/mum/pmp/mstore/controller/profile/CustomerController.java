@@ -43,6 +43,7 @@ public class CustomerController {
 	public String signup(@ModelAttribute Customer customer, BindingResult bindingResult) {
 		
 		String url = "";
+		System.out.println("bindingResult: "+ bindingResult.getClass());
 		//Validate the customer details.
 		validator.validate(customer, bindingResult);
 		
