@@ -3,7 +3,8 @@
  * Date: 25-Apr-2019
  * Class Name: ReportService
  * Module: Report
- * Description: The report service interface, defined methods for generate report  
+ * Description: The report service interface, defined necessary methods for generating report. 
+ * Used by ReportBuilderImpl class to provide report service to ReportController  
  * 
  */
 

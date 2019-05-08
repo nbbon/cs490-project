@@ -1,4 +1,10 @@
-
+/*
+ * Author: Niveen Abdelaatty
+ * Date: 1-May-2019
+ * Class Name: SearchController
+ * Package: controller
+ * Description: contains the handler methods that are used to handles GET and POST requests for searching
+ */
 package mum.pmp.mstore.controller;
 
 import java.util.ArrayList;
@@ -25,7 +31,7 @@ public class SearchController {
 		modelMap.addAttribute("product", new Product());
 		return "/search/findProducts";
 	}
-	
+
 	@GetMapping(value = "/adsearch")
 	public String showAdSearchForm(ModelMap modelMap) {
 		modelMap.addAttribute("product", new Product());

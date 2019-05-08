@@ -3,7 +3,7 @@
  * Date: 25-Apr-2019
  * Class Name: MockPaymentService
  * Module: MockPayment
- * Description: The definition of mock payment service  
+ * Description: Define necessary methods provided for mock payment service  
  * 
  */
 
