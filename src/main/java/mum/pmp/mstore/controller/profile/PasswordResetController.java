@@ -26,6 +26,15 @@ import mum.pmp.mstore.service.security.ProfileService;
 import mum.pmp.mstore.service.security.UserService;
 import mum.pmp.mstore.validator.ResetPasswordValidator;
 
+/*
+ * Author: Stanley Julien
+ * Date: 25-Apr-2019
+ * Class Name: PasswordResetController
+ * Module: Reset Password
+ * Description: The implementation of reset password  
+ * 
+ */
+
 @Controller
 public class PasswordResetController {
 
