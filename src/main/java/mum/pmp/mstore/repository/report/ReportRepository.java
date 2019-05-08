@@ -1,3 +1,13 @@
+/*
+ * Author: Bon Nguyen
+ * Date: 25-Apr-2019
+ * Class Name: ReportRepository
+ * Module: Report
+ * Description: The repository interface of ReportData entity. Used as interface from ER to DB for 
+ * report's entities. Used by MockPaymentService
+ * 
+ */
+
 package mum.pmp.mstore.repository.report;
 
 import java.time.LocalDate;

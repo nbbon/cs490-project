@@ -1,3 +1,12 @@
+/*
+ * Author: Bon Nguyen
+ * Date: 25-Apr-2019
+ * Class Name: ReportData
+ * Module: Report
+ * Description: The entity class. Used by ReportRepository querying data from DB
+ * 
+ */
+
 package mum.pmp.mstore.service.report;
 
 import java.time.LocalDate;

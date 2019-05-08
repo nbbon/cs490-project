@@ -1,3 +1,13 @@
+/*
+ * Author: Bon Nguyen
+ * Date: 25-Apr-2019
+ * Class Name: VisaCardTransaction
+ * Module: Mock Payment
+ * Description: The entity class that holding information of all transactions made on a visa card. Used by
+ * MockPaymentService
+ * 
+ */
+
 package mum.pmp.mstore.integration.mockpayment.model;
 
 import java.time.LocalDate;
