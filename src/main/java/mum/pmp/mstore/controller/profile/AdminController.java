@@ -67,20 +67,11 @@ public class AdminController {
 
 		// validate the admin details.
 		validator.validate(admin, bindingResult);
-
-		Profile person = profileService.findByEmail(admin.getEmail());
-		Admin adminToUpdate;
-		if (person instanceof Admin) {
-			adminToUpdate = (Admin) person;
-			adminToUpdate.setFirstName(admin.getFirstName());
-			adminToUpdate.setLastName(admin.getLastName());
-			adminToUpdate.setPassword(admin.getPassword());
-			adminToUpdate.setPhone(admin.getPhone());
-			profileService.saveProfile(adminToUpdate);
-			
-			//need to update password ins user table.
-		}
-		return "redirect:/admin/update";
+		boolean status = profileService.updateAdmin(admin);
+		if(status)
+			return "/secure/login";
+		else
+			return "redirect:/admin/update";
 	}
 	
 }

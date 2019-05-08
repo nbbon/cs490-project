@@ -86,8 +86,6 @@ public class VendorController {
 					c.setCardNumber(vendor.getCreditCard().getCardNumber());
 					c.setCsv(vendor.getCreditCard().getCsv());
 					
-					
-					//
 					String date = vendor.getCreditCard().getExpireDate();
 					System.out.println("Expiry date" + date);
 					
@@ -120,8 +118,6 @@ public class VendorController {
 						fallbackUrl = fallbackUrl + "/vendor/master/confirm";
 					}
 					
-//					try {
-//						RequestDispatcher rd = request.getRequestDispatcher(paymentUrl);
 						request.setAttribute("fromCardNumber", c.getCardNumber());
 						request.setAttribute("fromCardName", c.getCardName());
 						request.setAttribute("fromCardCSV", c.getCsv());
@@ -134,12 +130,7 @@ public class VendorController {
 						request.setAttribute("amount", 2500.00);
 						
 						request.setAttribute("fallbackUrl", fallbackUrl);
-//						rd.forward(request, response);
 						return "forward:" + paymentUrl;
-//					} catch (ServletException | IOException e) {
-//						System.out.println(e.getMessage());
-//					}
-//					url = "redirect:/login";
 				}
 				else {
 					bindingResult.rejectValue("email", "vendor.email.exist");
@@ -154,17 +145,8 @@ public class VendorController {
 			HttpServletRequest request, HttpServletResponse response) {
 		String status = (String) request.getAttribute("status");
 		System.out.println("Fall back from payment gateway..." + status );
-//		try {
-//			response.sendRedirect("/login");
 		return "redirect:/login";
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			System.out.println(e.getMessage());
-////			e.printStackTrace();
-//		}
-		
 	}
-	
 	
 	@GetMapping("/update")
 	public String updatePage(Model model) {
