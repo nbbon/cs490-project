@@ -49,7 +49,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 			.antMatchers("/webjars/**", "/static/**", "/css/**", "/images/**" , "/", "/home", "/catalogs" , 
 					"/forgotpassword", "/resetpassword", "/user/**",
-					"/signup", "/vendor/signup", "/admin/signup", "/customer/signup",
+					"/signup", "/vendor/signup", "/admin/signup", "/customer/signup", "/search", "/adsearch", 
 					"/password/forgotpassword", "/forgotpassword", "/sendemailforgotpassword", "/resetpassword"
 					,"/products/**", "/category/**" , "/category" , "/shoppingCart/**", "/reports/**" , "/placeOrder", 
 					"/payment/**", "/paymentgw/**", "/settlement/**")
