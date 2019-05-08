@@ -123,36 +123,4 @@ public class PasswordResetController {
 		
 	}
 	
-	/*@PostMapping(value = "/resetpassword")
-	public String resetPassword(@ModelAttribute("passwordObj") Password passwordObj, BindingResult bindingResult)
-	{
-		//resetPasswordValidator = new ResetPasswordValidator();
-		resetPasswordValidator.validate(passwordObj, bindingResult);
-		if(bindingResult.hasErrors())
-		{
-			return "password/forgot_password";
-		}
-		Profile profile = profileService.findProfileByToken(passwordObj.getToken());
-		
-		
-		//System.out.println(person.getToken());
-		System.out.println("Profile: "+profile);
-		if(profile == null)
-		{
-			return "password/forgot_password";
-		}
-		
-		profile.setPassword(passwordEncoder.encode(passwordObj.getPassword()));
-		profile.setToken(null);
-		profileService.saveProfile(profile);
-		
-		//set for user details.
-		User user = userRepository.findByUsername(profile.getEmail());
-		System.out.println("user >>" + user);
-		user.setPassword(passwordEncoder.encode(passwordObj.getPassword()));
-		userRepository.save(user);
-		
-		return "redirect:/login";
-	}
-	*/
 }

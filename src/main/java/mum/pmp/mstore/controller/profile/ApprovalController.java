@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,9 +26,7 @@ public class ApprovalController {
 
 	@GetMapping("/admins")
 	public String getAdminList(Model model) {
-		System.out.println("Check admin");
 		List<Admin> admins = profileService.findNewAdmins();
-		
 		model.addAttribute("admins", admins);
 		return "/approval/adminList";
 	}
@@ -37,7 +34,6 @@ public class ApprovalController {
 	@PostMapping("/admins/{adminEmail}")
 	public String approveAdmin(//@PathVariable("adminEmail") String adminEmail, 
 			@RequestParam(value="action", required=true) String action, @RequestParam(value="admin-email", required=true) String adminEmail) throws AddressException, MessagingException {
-		System.out.println("adminEmail :" + adminEmail);
 		profileService.approveAdmin(adminEmail, action);
 		return "redirect:/approval/admins";
 	}
@@ -52,7 +48,6 @@ public class ApprovalController {
 	@PostMapping("/vendors/{vendorEmail}")
 	public String approveVendor(//@PathVariable("vendorEmail") String vendorEmail, 
 			@RequestParam(value="action", required=true) String action , @RequestParam(value="vendor-email", required=true) String vendorEmail) throws AddressException, MessagingException {
-		System.out.println("In vendor approval..");
 		profileService.approveVendor(vendorEmail, action);
 		return "redirect:/approval/vendors";
 	}

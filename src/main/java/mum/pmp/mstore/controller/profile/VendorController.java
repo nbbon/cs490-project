@@ -1,17 +1,11 @@
 package mum.pmp.mstore.controller.profile;
 
-import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Payload;
 
-import org.hibernate.validator.constraints.CreditCardNumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,16 +15,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mum.pmp.mstore.config.CompanyCardConfig;
 import mum.pmp.mstore.config.security.Listener;
-import mum.pmp.mstore.domain.Order;
-import mum.pmp.mstore.integration.mockpayment.model.MasterCard;
-import mum.pmp.mstore.integration.mockpayment.model.VisaCard;
 import mum.pmp.mstore.model.CreditCard;
-import mum.pmp.mstore.model.Customer;
 import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.model.Vendor;
 import mum.pmp.mstore.service.security.ProfileService;
@@ -74,7 +63,7 @@ public class VendorController {
 			
 			ccValidator.validate(vendor.getCreditCard(), bindingResult);
 			String paymentUrl = "";
-			String fallbackUrl = ""; // "http://localhost:8080/payment";
+			String fallbackUrl = ""; 
 			
 			if(bindingResult.hasErrors()) {
 				url =  "/profile/vendor_signup";
@@ -150,9 +139,7 @@ public class VendorController {
 	
 	@GetMapping("/update")
 	public String updatePage(Model model) {
-		System.out.println("in update : " + sessionListener.getUser().getEmail());
 		Vendor vendorProfile = (Vendor) profileService.findByEmail(sessionListener.getUser().getEmail());
-		System.out.println(">>" + vendorProfile);
 		model.addAttribute("vendor" , vendorProfile);
 		return "/profile/vendor_profile";
 	}
