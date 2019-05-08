@@ -1,3 +1,11 @@
+/*
+ * Author: Niveen Abdelaatty
+ * Date: 24-Apr-2019
+ * Class Name: CategoryRepository
+ * Package: repository
+ * Description: provides the mechanism for storage, retrieval, search, update and delete operation on objects
+ * 
+ */
 package mum.pmp.mstore.repository;
 
 import org.springframework.data.repository.CrudRepository;

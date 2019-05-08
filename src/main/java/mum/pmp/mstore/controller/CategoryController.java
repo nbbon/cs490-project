@@ -1,3 +1,11 @@
+/*
+ * Author: Niveen Abdelaatty
+ * Date: 24-Apr-2019
+ * Class Name: CategoryController
+ * Package: controller
+ * Description: contains the handler methods that are used to handles GET and POST requests for category creation, updating, retrieving, deleting 
+ */
+
 package mum.pmp.mstore.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,44 +26,42 @@ import mum.pmp.mstore.service.CategoryService;
 @Controller
 @RequestMapping("/category")
 public class CategoryController {
-	
+
 	@Autowired
 	CategoryService categoryService;
-	
-	//display categoriesList
-	  @GetMapping(value="/")
-	    public String categoriesList(Model model) {
-	        model.addAttribute("categoriesList", categoryService.getCategories());
-	        return "category/categoriesList";
-	    }
-	
-	//add new category or get cartegoryById to be edited
-	  @GetMapping(value={"/categoriesEdit","/categoriesEdit/{id}"})
-	    public String editCategory(Model model, @PathVariable(required = false, name = "id") Integer id) {
-	        if (null != id) {
-	            model.addAttribute("categories", categoryService.getCategory(id));
-	        } else {
-	            model.addAttribute("categories", new Category());
-	        }
-	        return "category/categoriesEdit";
-	    }
-	
-	  //post edited category to server and display the updated categoryList
-	  @PostMapping(value="/categoriesEdit")
-	    public String updateCategory(Model model, Category category) {
-		  categoryService.addCategory(category);	       
-		  model.addAttribute("categoriesList", categoryService.getCategories());
-	        return "category/categoriesList";
-	    }
-	  
-	  //delete categoryById
-	  @RequestMapping(value="/categoriesDelete/{id}")
-	    public String deleteCategory(Model model, @PathVariable(name = "id") Integer id) {
-		  	categoryService.deleteCategory(id);	        
-			model.addAttribute("categoriesList", categoryService.getCategories());
-	        return "category/categoriesList";
-	    }
 
-	  
+	// display categoriesList
+	@GetMapping(value = "/")
+	public String categoriesList(Model model) {
+		model.addAttribute("categoriesList", categoryService.getCategories());
+		return "category/categoriesList";
+	}
+
+	// add new category or get cartegoryById to be edited
+	@GetMapping(value = { "/categoriesEdit", "/categoriesEdit/{id}" })
+	public String editCategory(Model model, @PathVariable(required = false, name = "id") Integer id) {
+		if (null != id) {
+			model.addAttribute("categories", categoryService.getCategory(id));
+		} else {
+			model.addAttribute("categories", new Category());
+		}
+		return "category/categoriesEdit";
+	}
+
+	// post edited category to server and display the updated categoryList
+	@PostMapping(value = "/categoriesEdit")
+	public String updateCategory(Model model, Category category) {
+		categoryService.addCategory(category);
+		model.addAttribute("categoriesList", categoryService.getCategories());
+		return "category/categoriesList";
+	}
+
+	// delete categoryById
+	@RequestMapping(value = "/categoriesDelete/{id}")
+	public String deleteCategory(Model model, @PathVariable(name = "id") Integer id) {
+		categoryService.deleteCategory(id);
+		model.addAttribute("categoriesList", categoryService.getCategories());
+		return "category/categoriesList";
+	}
+
 }
-
