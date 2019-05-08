@@ -149,7 +149,8 @@ public class VendorController {
 		validator.validate(vendor, bindingResult);
 		boolean status = profileService.updateVendor(vendor);
 		if(status)
-			return "/secure/login";
+			//return "/secure/login";
+			return "redirect:/logout-success";
 		else
 			return "redirect:/vendor/update";
 	}
@@ -165,6 +166,6 @@ public class VendorController {
 		byte status = 0;
 		profile.setStatus(status);
 		profileService.saveProfile(profile);
-		return "redirect:/login";
+		return "redirect:/logout-success";
 	}
 }

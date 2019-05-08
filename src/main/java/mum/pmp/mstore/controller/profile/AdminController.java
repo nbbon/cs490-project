@@ -68,7 +68,8 @@ public class AdminController {
 		validator.validate(admin, bindingResult);
 		boolean status = profileService.updateAdmin(admin);
 		if(status)
-			return "/secure/login";
+			//return "/secure/login";
+			return "redirect:/logout-success";
 		else
 			return "redirect:/admin/update";
 	}

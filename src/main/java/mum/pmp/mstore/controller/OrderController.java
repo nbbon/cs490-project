@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import mum.pmp.mstore.config.security.MyAuthSuccessHandler;
 import mum.pmp.mstore.domain.Order;
 import mum.pmp.mstore.domain.OrderFactory;
 import mum.pmp.mstore.domain.ShoppingCart;
@@ -42,7 +43,9 @@ public class OrderController {
 	@Autowired
     ProfileService	profileService;
 	
-
+	@Autowired
+	private MyAuthSuccessHandler handler;
+	
 	@PostMapping("/create")
     public String createOrder(HttpServletRequest request,HttpServletResponse response, ModelMap model) throws ServletException, IOException {
 		
@@ -55,7 +58,8 @@ public class OrderController {
 		String getUserURL="/order/signup";
 		String getShippingURL= "/shopping_address";
 		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Authentication auth = handler.getAuth();
 		Boolean isCus = false;
 		if (auth != null && !auth.getPrincipal().equals("anonymousUser")) {
 			for (GrantedAuthority roles : auth.getAuthorities()) {
@@ -124,6 +128,7 @@ public class OrderController {
 	@GetMapping("/customer")
 	public String getCustomer(@ModelAttribute("order") Order order, Model model) {
 		model.addAttribute("order", order);
+		System.out.println("^^^^^^^");
 		return "profile/customer_signup"; // customer.html
 	}
 	
