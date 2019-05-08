@@ -42,7 +42,10 @@ import mum.pmp.mstore.validator.CustomerValidator;
 @Controller
 @RequestMapping("/order")
 public class OrderController {
-
+	
+	@Autowired
+	private MyAuthSuccessHandler handler;
+	
 	@Autowired
 	OrderService orderService;
 
@@ -56,21 +59,6 @@ public class OrderController {
 	private CreditCardValidator ccValidator;
 
 	private Customer getLoggedCustomer() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-    ProfileService	profileService;
-	
-	@Autowired
-	private MyAuthSuccessHandler handler;
-	
-	@PostMapping("/create")
-    public String createOrder(HttpServletRequest request,HttpServletResponse response, ModelMap model) throws ServletException, IOException {
-		
-		ShoppingCart cart =(ShoppingCart) request.getAttribute("Shopping_Cart");
-		System.out.println("cart details : " + cart);
-		
-		Order order = OrderFactory.createOrder(cart);		
-		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Authentication auth = handler.getAuth();
 		Boolean isCus = false;
 		if (auth != null && !auth.getPrincipal().equals("anonymousUser")) {
