@@ -64,6 +64,7 @@ public class CustomerController {
 			HttpServletResponse response) {
 		
 		String url = "";
+		System.out.println("bindingResult: "+ bindingResult.getClass());
 		//Validate the customer details.
 		validator.validate(customer, bindingResult);
 		

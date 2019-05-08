@@ -19,6 +19,7 @@ import mum.pmp.mstore.model.Password;
 import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.model.User;
 import mum.pmp.mstore.repository.profile.UserRepository;
+import mum.pmp.mstore.service.ResetPasswordService;
 import mum.pmp.mstore.service.email.EmailService;
 import mum.pmp.mstore.service.email.EmailServiceInterface;
 import mum.pmp.mstore.service.security.ProfileService;
@@ -39,6 +40,9 @@ public class PasswordResetController {
 	
 	@Autowired
 	ResetPasswordValidator resetPasswordValidator;
+	
+	@Autowired
+	ResetPasswordService resetPasswordService;
 	
 	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
@@ -107,7 +111,20 @@ public class PasswordResetController {
 	}
 	
 	@PostMapping(value = "/resetpassword")
-	public String resetPassword(Model model, @ModelAttribute("passwordObj") Password passwordObj, BindingResult bindingResult)
+	public String resetPassword(@ModelAttribute("passwordObj") Password passwordObj, BindingResult bindingResult)
+	{
+		resetPasswordValidator.validate(passwordObj, bindingResult);
+		if(bindingResult.hasErrors())
+		{
+			return "password/forgot_password";
+		}
+		
+		return resetPasswordService.resetPassword(passwordObj);
+		
+	}
+	
+	/*@PostMapping(value = "/resetpassword")
+	public String resetPassword(@ModelAttribute("passwordObj") Password passwordObj, BindingResult bindingResult)
 	{
 		//resetPasswordValidator = new ResetPasswordValidator();
 		resetPasswordValidator.validate(passwordObj, bindingResult);
@@ -137,4 +154,5 @@ public class PasswordResetController {
 		
 		return "redirect:/login";
 	}
+	*/
 }
