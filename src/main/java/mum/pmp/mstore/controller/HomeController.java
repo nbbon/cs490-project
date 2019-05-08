@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import mum.pmp.mstore.config.security.MyAuthSuccessHandler;
 import mum.pmp.mstore.domain.Product;
 import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.service.ProductService;
@@ -23,6 +24,9 @@ import mum.pmp.mstore.service.security.ProfileService;
 public class HomeController {
 
 	private Authentication auth;
+	
+	@Autowired
+	private MyAuthSuccessHandler handler;
 	
 	@Autowired
 	private ProfileService profileService;
@@ -55,6 +59,7 @@ public class HomeController {
 	private UserDetails secureOperations() {
 		UserDetails user = null;
 		System.out.println("auth:" + auth);
+		auth = handler.getAuth();
 		if (auth.getPrincipal() != null)
 			user = (UserDetails) auth.getPrincipal();
 		
@@ -71,14 +76,17 @@ public class HomeController {
 	}
 
 	@GetMapping("/home")
-	public String homepage()
+	public String homepage(Model model)
 	{
+		model.addAttribute("products", productService.getAllProducts());
+		model.addAttribute("product", new Product());
 		return "/home/home";
 	}
 	
 	@RequestMapping("/")
 	public String home(Model model) {
 		auth = SecurityContextHolder.getContext().getAuthentication();
+		String redirectURL = "";
 		if (auth != null && !auth.getPrincipal().equals("anonymousUser")) {
 			UserDetails user = secureOperations();
 			System.out.println("UserDetails: "+user);
@@ -99,7 +107,6 @@ public class HomeController {
 			}
 		}
 		model.addAttribute("products", productService.getAllProducts());
-		//return "/index";
 		model.addAttribute("product", new Product());
 		return "/home/home";
 	}

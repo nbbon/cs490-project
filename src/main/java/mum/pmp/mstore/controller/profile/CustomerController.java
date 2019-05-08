@@ -156,7 +156,8 @@ public class CustomerController {
 		validator.validate(customer, bindingResult);
 		boolean status = profileService.updateCustomer(customer);
 		if(status)
-			return "/secure/login";
+			//return "/secure/login";
+			return "redirect:/logout-success";
 		else
 			return "redirect:/customer/update";
 	}
@@ -172,7 +173,7 @@ public class CustomerController {
 		byte status = 0;
 		profile.setStatus(status);
 		profileService.saveProfile(profile);
-		return "redirect:/login";
+		return "redirect:/logout-success";
 	}
 	
 }

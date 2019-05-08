@@ -39,7 +39,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public void addProduct(Product product) {
+    public synchronized void addProduct(Product product) {
         if (products.containsKey(product)) {
             products.replace(product, products.get(product) + 1);
         } else {
@@ -48,7 +48,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public void removeProduct(Product product) {
+    public synchronized void removeProduct(Product product) {
         if (products.containsKey(product)) {
             if (products.get(product) > 1)
                 products.replace(product, products.get(product) - 1);
