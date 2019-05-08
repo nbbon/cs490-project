@@ -47,10 +47,10 @@ public class OrderController {
 
 	@Autowired
 	ProfileService profileService;
-	
+
 	@Autowired
 	private CustomerValidator validator;
-	
+
 	@Autowired
 	private CreditCardValidator ccValidator;
 
@@ -69,123 +69,101 @@ public class OrderController {
 	}
 
 	@PostMapping("/create")
-	public String createOrder(RedirectAttributes redirectAttributes, HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public String createOrder(RedirectAttributes redirectAttributes, HttpServletRequest request,
+			HttpServletResponse response) throws ServletException {
+		System.out.println("ORDER: Request to create order");
 
-		ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("Shopping_Cart");
+		ShoppingCart cart = (ShoppingCart) request.getAttribute("Shopping_Cart");
 
 		Order order = OrderFactory.createOrder(cart);
-		String getCustomerURL = "/get_customer";
-
-		String getUserURL = "/signup";
-		String getShippingURL = "/shopping_address";
 
 		Customer loggedCustomer = getLoggedCustomer();
-		String targetURL = "";
-		
-		if(loggedCustomer != null) {
+		if (loggedCustomer != null) {
 			order.setCustomer(loggedCustomer);
-			targetURL = "forward:/order/shipping"; 
-			request.getSession().setAttribute("order", order);
-		} else {
+			order.setCreditCard(loggedCustomer.getCreditCard());
+
 			redirectAttributes.addFlashAttribute("order", order);
-			targetURL = "redirect:/customer";
-
-			// Show UI to ask customer
-			// If they want to chackout with logged user
-			// OR checkout as guest
-			// If user chooses to checkout as logged user
-			// --> show login page
-			// --> if user successful logged in
-			// --> get user from
-			// else
-			// --> show UI to get customer info
-			// --> create new Customer obj
+			System.out.println("ORDER: User logged in redirect to /order/customer");
+			return "redirect:/order/customer"; // get shipping & billing addresses
 		}
-		
-		return targetURL;
 
+		request.setAttribute("order", order);
+		return "forward:/order/checkLoggedin"; // security check and login
 	}
 
-	@GetMapping("/signup")
-	public String adminSignupPage(Model model) {
-		model.addAttribute("admin", new Admin());
-		return "/profile/admin_signup";
+	@PostMapping("/checkLoggedin")
+	public String checkLoggedin(@RequestParam(required = false) Boolean guest,
+			RedirectAttributes redirectAttributes, Model model, HttpServletRequest request) {
+		System.out.println("ORDER: Security check for Guest is " + guest);
+		
+		Order order = (Order) request.getAttribute("order");
+		if(guest != null && guest == true) {
+			System.out.println("ORDER: redirect to /order/guest/detail");
+			redirectAttributes.addFlashAttribute("order", order);
+			return "redirect:/order/guest/detail"; // to get guest detail info
+		}
+		
+		System.out.println("ORDER: forward to /order/customer");
+		return "forward:/order/customer"; // security check and getting addresses
+		
+	}
+
+	@GetMapping("/guest/detail")
+	public String checkGuestForm(@ModelAttribute("order") Order order, Model model, HttpServletRequest request,
+			HttpServletResponse response) throws ServletException {
+		System.out.println("ORDER: Guest checkout get detail");
+		
+		model.addAttribute("order", order);
+		return "order/guest_detail";  // create html form to get GUEST info: guest user name, credit card, shipping and billing addr
+	}
+
+	@PostMapping("/guest/detail")
+	public String getGuestInfo(@ModelAttribute Order order, BindingResult bindingResult, Model model,
+			HttpServletRequest request) {
+		Customer customer = order.getCustomer();
+		validator.validate(customer, bindingResult);
+
+		ccValidator.validate(customer.getCreditCard(), bindingResult);
+
+		if (bindingResult.hasErrors()) {
+			return "/guest/detail";
+		}
+
+		request.setAttribute("order", order);
+		return "forward:/payment";
 	}
 
 	@PostMapping("/customer")
-	public String showCustomerForm(@ModelAttribute Order order, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model, HttpServletRequest request) {
-		Customer customer = order.getCustomer();
-		validator.validate(customer, bindingResult);
+	public String customerCheckout(RedirectAttributes redirectAttributes, Model model, HttpServletRequest request,
+			HttpServletResponse response) throws ServletException {
 		
-		ccValidator.validate(customer.getCreditCard(), bindingResult);
-		
-		if(bindingResult.hasErrors()) {
-			return "/customer";
-		}			
-		
-		return null;
-	}	
-	
-	@PostMapping("/signup")
-	public String adminSignupPage(Model model, HttpServletRequest request, HttpServletResponse response) {
-		model.addAttribute("customer", new Customer());
-		return "/profile/customer_signup";
-	}
-	
-	@PostMapping("/get_customer")
-    public String trggerGetCustomer(RedirectAttributes redirectAttributes, Model model, HttpServletRequest request) {
-		Order order =(Order) request.getAttribute("order");
+		System.out.println("ORDER: do security check before go further");
+		Order order = (Order) request.getAttribute("order");
 		redirectAttributes.addFlashAttribute("order", order);
-		return "forward:/shipping";
+		return "redirect:/order/customer"; // get shipping & billing addresses
+		
 	}
-
+	
 	@GetMapping("/customer")
-	public String getCustomer(@ModelAttribute("order") Order order, Model model) {
-		model.addAttribute("order", order);
-		model.addAttribute("customer", order.getCustomer());
-		return "/customer_form"; // customer.html
-	}
-
-	@PostMapping("/shipping")
-	public String getShipping(RedirectAttributes redirectAttributes, Model model,
-			HttpServletRequest request) {
-		Order order = (Order) request.getSession().getAttribute("order");
-		redirectAttributes.addFlashAttribute("order", order);
-		return "redirect:/shopping_address";
-	}
-
-	@GetMapping("/shopping_address")
-	public String getShippinAddress(@ModelAttribute("order") Order order, Model model) {
-		model.addAttribute("order", order);
-		return "order/shopping_address"; // shopping_address.html
-	}
-
-	@PostMapping("/billing")
-	public String getBilling(@RequestParam Order order, RedirectAttributes redirectAttributes, Model model,
-			HttpServletRequest request) {
-		redirectAttributes.addFlashAttribute("order", order);
-		return "redirect:/billing";
-	}
-
-	@GetMapping("/billing")
-	public String getBillingAddress(@ModelAttribute("order") Order order, Model model) {
-		model.addAttribute("order", order);
-		return "order/billing"; // billing.html
-	}
-
-	@PostMapping("/sendToPayment")
-	public void sendToPayment(@RequestParam Order order, HttpServletRequest request, HttpServletResponse response) {
-
-		String paymetURL = "/payment";
-
-		RequestDispatcher rd = request.getRequestDispatcher(paymetURL);
-		request.setAttribute("order", order);
-		try {
-			rd.forward(request, response);
-		} catch (ServletException | IOException e) {
-			System.out.println(e.getMessage());
-			// e.printStackTrace();
+	public String getAddressesForm(@ModelAttribute("order") Order order, Model model, HttpServletRequest request,
+			HttpServletResponse response) throws ServletException {
+		
+//		Order order = (Order) request.getAttribute("order");
+		System.out.println("ORDER: security checked and user successful logged in");
+		Customer loggedCustomer = getLoggedCustomer();
+		if (loggedCustomer != null) {
+			order.setCustomer(loggedCustomer);
+			order.setCreditCard(loggedCustomer.getCreditCard());
+			
+			System.out.println("ORDER: Get customer addresses");
+			model.addAttribute("order", order);
+			return "order/shipping_billing_addresses"; // create html form for shipping & billing addr
+		} else {
+			System.out.println("ORDER: Something is going wrong here");
 		}
+		
+		System.out.println("ORDER: Not supose to go here. If it's then go back for security check");
+		return "forward:/order/customer";
 	}
+
 }

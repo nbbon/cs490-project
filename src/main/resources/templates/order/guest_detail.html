@@ -11,74 +11,74 @@
 <body>
 <div class="container">
     <div th:replace="fragments/menu :: menu"></div>
-    <form class="form-horizontal" th:object="${customer}" role="form" method="POST" th:action="@{/order/customer}">
+    <form class="form-horizontal" th:object="${order}" role="form" method="POST" th:action="@{/order/guest}">
         <div class="form-group row">
             <label for="firstName" class="col-sm-3 col-md-3 col-form-label">First Name</label>
             <div class="col-sm-9 col-md-9">
-                <input th:field="*{firstName}" type="text" class="form-control" id="firstName"/>
+                <input th:field="*{customer.firstName}" type="text" class="form-control" id="firstName"/>
             </div>
         </div>
         <div class="form-group row">
             <label for="lastName" class="col-sm-3 col-md-3 col-form-label">Last Name</label>
             <div class="col-sm-9 col-md-9">
-                <input th:field="*{lastName}" type="text" class="form-control" id="lastName"/>
+                <input th:field="*{customer.lastName}" type="text" class="form-control" id="lastName"/>
             </div>
         </div>
         <div class="form-group row">
             <label for="email" class="col-sm-3 col-md-3 col-form-label">Email</label>
             <div class="col-sm-9 col-md-9">
-                <input th:field="*{email}" type="email" class="form-control" id="email"/>
+                <input th:field="*{customer.email}" type="email" class="form-control" id="email"/>
             </div>
         </div>
         <!-- <div class="form-group row">
             <label for="password" class="col-sm-3 col-md-3 col-form-label">Password</label>
             <div class="col-sm-9 col-md-9">
-                <input th:field="*{password}" type="password" class="form-control" id="password"/>
+                <input th:field="*{order.password}" type="password" class="form-control" id="password"/>
             </div>
         </div> 
          <div class="form-group row">
             <label for="confirmPassword" class="col-sm-3 col-md-3 col-form-label">Confirm Password</label>
             <div class="col-sm-9 col-md-9">
-                <input th:field="*{confirmPassword}" type="password" class="form-control" id="confirmPassword"/>
+                <input th:field="*{order.confirmPassword}" type="password" class="form-control" id="confirmPassword"/>
             </div>
         </div> -->
         <div class="form-group row">
             <label for="phone" class="col-sm-3 col-md-3 col-form-label">Phone Number</label>
             <div class="col-sm-9 col-md-9">
-                <input th:field="*{phone}" type="number" class="form-control" id="phone"/>
+                <input th:field="*{customer.phone}" type="number" class="form-control" id="phone"/>
             </div>
         </div>
         <div class="form-group row">
             <label for="city" class="col-sm-3 col-md-3 col-form-label">City</label>
             <div class="col-sm-9 col-md-9">
-                <input th:field="*{address.city}" type="text" class="form-control" id="city"/>
+                <input th:field="*{customer.address.city}" type="text" class="form-control" id="city"/>
             </div>
         </div>
         <div class="form-group row">
             <label for="state" class="col-sm-3 col-md-3 col-form-label">State</label>
             <div class="col-sm-9 col-md-9">
-                <input th:field="*{address.state}" type="text" class="form-control" id="state"/>
+                <input th:field="*{customer.address.state}" type="text" class="form-control" id="state"/>
             </div>
         </div>
         <div class="form-group row">
             <label for="country" class="col-sm-3 col-md-3 col-form-label">Country</label>
             <div class="col-sm-9">
-                <input th:field="*{address.country}" type="text" class="form-control" id="country"/>
+                <input th:field="*{customer.address.country}" type="text" class="form-control" id="country"/>
             </div>
         </div>
         <div class="form-group row">
             <label for="zipcode" class="col-sm-3 col-md-3 col-form-label">Zip Code</label>
             <div class="col-sm-9 col-md-9">
-                <input th:field="*{address.zipcode}" type="text" class="form-control" id="zipcode"/>
+                <input th:field="*{customer.address.zipcode}" type="text" class="form-control" id="zipcode"/>
             </div>
         </div>
         
         <!-- <div class="form-group row">
          <label for="cardType" class="col-sm-3 col-md-3 col-form-label">Payment Type</label>
             <div class="col-sm-9 form-check form-check-inline">
-               <input class="form-check-input" type="radio" th:field="*{creditCard.cardType}" value="1"/><label class="form-check-label"> 
+               <input class="form-check-input" type="radio" th:field="*{order.creditCard.cardType}" value="1"/><label class="form-check-label"> 
                 &nbsp; Master Card</label> &nbsp; &nbsp;
-	    	   <input class="form-check-input" type="radio" th:field="*{creditCard.cardType}" value="2"/><label class="form-check-label">  
+	    	   <input class="form-check-input" type="radio" th:field="*{order.creditCard.cardType}" value="2"/><label class="form-check-label">  
 	    	   &nbsp; Visa Card</label>  &nbsp; &nbsp;
             </div>
 		</div>
@@ -86,32 +86,32 @@
 		 <div class="form-group row">
             <label for="cardNumber" class="col-sm-3 col-md-3 col-form-label">Card Number</label>
             <div class="col-sm-9 col-md-9">
-                <input th:field="*{creditCard.cardNumber}" type="text" class="form-control" id="cardNumber" required="true"/>
-                <label th:if="${#fields.hasErrors('creditCard.cardNumber')}" class="text-danger align-middle" th:errors="*{creditCard.cardNumber}">
+                <input th:field="*{order.creditCard.cardNumber}" type="text" class="form-control" id="cardNumber" required="true"/>
+                <label th:if="${#fields.hasErrors('creditCard.cardNumber')}" class="text-danger align-middle" th:errors="*{order.creditCard.cardNumber}">
                 </label>
       		 </div>
         </div>
          <div class="form-group row">
             <label for="cardName" class="col-sm-3 col-md-3 col-form-label">Card Name</label>
             <div class="col-sm-9 col-md-9">
-                <input th:field="*{creditCard.cardName}" type="text" class="form-control" id="cardName" required="true"/>
-                <label th:if="${#fields.hasErrors('creditCard.cardName')}" class="text-danger align-middle" th:errors="*{creditCard.cardName}">
+                <input th:field="*{order.creditCard.cardName}" type="text" class="form-control" id="cardName" required="true"/>
+                <label th:if="${#fields.hasErrors('creditCard.cardName')}" class="text-danger align-middle" th:errors="*{order.creditCard.cardName}">
                 </label>
       	</div>
         </div>
          <div class="form-group row">
             <label for="expDate" class="col-sm-3 col-md-3 col-form-label">Expiry Date</label>
             <div class="col-sm-9 col-md-9">
-                <input th:field="*{creditCard.expireDate}" type="month" class="form-control" id="expireDate" required="true"/>
-                <label th:if="${#fields.hasErrors('creditCard.expireDate')}" class="text-danger align-middle" th:errors="*{creditCard.expireDate}">
+                <input th:field="*{order.creditCard.expireDate}" type="month" class="form-control" id="expireDate" required="true"/>
+                <label th:if="${#fields.hasErrors('creditCard.expireDate')}" class="text-danger align-middle" th:errors="*{order.creditCard.expireDate}">
                 </label>
       		</div>
         </div>
          <div class="form-group row">
             <label for="cvv" class="col-sm-3 col-md-3 col-form-label">CVV</label>
             <div class="col-sm-9 col-md-9">
-                <input th:field="*{creditCard.csv}" type="text" class="form-control" id="csv" required="true"/>
-                <label th:if="${#fields.hasErrors('creditCard.csv')}" class="text-danger align-middle" th:errors="*{creditCard.csv}">
+                <input th:field="*{order.creditCard.csv}" type="text" class="form-control" id="csv" required="true"/>
+                <label th:if="${#fields.hasErrors('creditCard.csv')}" class="text-danger align-middle" th:errors="*{order.creditCard.csv}">
                 </label>
       		</div>
         </div> -->
