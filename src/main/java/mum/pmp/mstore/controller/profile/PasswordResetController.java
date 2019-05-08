@@ -19,11 +19,21 @@ import mum.pmp.mstore.model.Password;
 import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.model.User;
 import mum.pmp.mstore.repository.profile.UserRepository;
+import mum.pmp.mstore.service.ResetPasswordService;
 import mum.pmp.mstore.service.email.EmailService;
 import mum.pmp.mstore.service.email.EmailServiceInterface;
 import mum.pmp.mstore.service.security.ProfileService;
 import mum.pmp.mstore.service.security.UserService;
 import mum.pmp.mstore.validator.ResetPasswordValidator;
+
+/*
+ * Author: Stanley Julien
+ * Date: 25-Apr-2019
+ * Class Name: PasswordResetController
+ * Module: Reset Password
+ * Description: The implementation of reset password  
+ * 
+ */
 
 @Controller
 public class PasswordResetController {
@@ -39,6 +49,9 @@ public class PasswordResetController {
 	
 	@Autowired
 	ResetPasswordValidator resetPasswordValidator;
+	
+	@Autowired
+	ResetPasswordService resetPasswordService;
 	
 	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
@@ -107,34 +120,16 @@ public class PasswordResetController {
 	}
 	
 	@PostMapping(value = "/resetpassword")
-	public String resetPassword(Model model, @ModelAttribute("passwordObj") Password passwordObj, BindingResult bindingResult)
+	public String resetPassword(@ModelAttribute("passwordObj") Password passwordObj, BindingResult bindingResult)
 	{
-		//resetPasswordValidator = new ResetPasswordValidator();
 		resetPasswordValidator.validate(passwordObj, bindingResult);
 		if(bindingResult.hasErrors())
 		{
 			return "password/forgot_password";
 		}
-		Profile profile = profileService.findProfileByToken(passwordObj.getToken());
 		
+		return resetPasswordService.resetPassword(passwordObj);
 		
-		//System.out.println(person.getToken());
-		System.out.println("Profile: "+profile);
-		if(profile == null)
-		{
-			return "password/forgot_password";
-		}
-		
-		profile.setPassword(passwordEncoder.encode(passwordObj.getPassword()));
-		profile.setToken(null);
-		profileService.saveProfile(profile);
-		
-		//set for user details.
-		User user = userRepository.findByUsername(profile.getEmail());
-		System.out.println("user >>" + user);
-		user.setPassword(passwordEncoder.encode(passwordObj.getPassword()));
-		userRepository.save(user);
-		
-		return "redirect:/login";
 	}
+	
 }
