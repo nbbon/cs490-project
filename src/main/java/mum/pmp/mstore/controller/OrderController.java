@@ -1,21 +1,15 @@
 package mum.pmp.mstore.controller;
 
-import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,14 +22,10 @@ import mum.pmp.mstore.config.security.MyAuthSuccessHandler;
 import mum.pmp.mstore.domain.Order;
 import mum.pmp.mstore.domain.OrderFactory;
 import mum.pmp.mstore.domain.ShoppingCart;
-import mum.pmp.mstore.model.Admin;
-import mum.pmp.mstore.model.CreditCard;
 import mum.pmp.mstore.model.Customer;
-import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.service.OrderService;
 import mum.pmp.mstore.service.security.ProfileService;
 
-import mum.pmp.mstore.validator.AdminValidator;
 import mum.pmp.mstore.validator.CreditCardValidator;
 import mum.pmp.mstore.validator.CustomerValidator;
 
@@ -60,7 +50,7 @@ public class OrderController {
 
 	private Customer getLoggedCustomer() {
 		Authentication auth = handler.getAuth();
-		Boolean isCus = false;
+		
 		if (auth != null && !auth.getPrincipal().equals("anonymousUser")) {
 			for (GrantedAuthority roles : auth.getAuthorities()) {
 				String authorizedRole = roles.getAuthority();

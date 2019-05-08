@@ -1,3 +1,14 @@
+/*
+ * Author: Bon Nguyen
+ * Date: 25-Apr-2019
+ * Class Name: HalfYearlyReportData
+ * Module: Report
+ * Description: The report data holder class, store data for half-yearly product and product category report 
+ * Used by ReportRepository to fill data query from DB
+ * 
+ */
+
+
 package mum.pmp.mstore.service.report;
 
 public class HalfYearlyReportData {

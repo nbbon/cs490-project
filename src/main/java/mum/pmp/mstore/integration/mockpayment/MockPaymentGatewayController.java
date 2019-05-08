@@ -1,3 +1,14 @@
+/*
+ * Author: Bon Nguyen
+ * Date: 25-Apr-2019
+ * Class Name: MockPaymentController
+ * Module: Mock Payment
+ * Description: The main controller of Mock Payment module, responsible for controlling the payment request
+ * from Payment Module, Vendor Module. When a payment request come, it will do some validations on requested
+ * credit cards before pass it to MockPaymentService to perform making payment transactions 
+ * 
+ */
+
 package mum.pmp.mstore.integration.mockpayment;
 
 import java.io.IOException;

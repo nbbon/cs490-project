@@ -1,3 +1,13 @@
+/*
+ * Author: Bon Nguyen
+ * Date: 25-Apr-2019
+ * Class Name: VisaCard
+ * Module: Mock Payment
+ * Description: The entity class that holding information for a visa card. Used by
+ * MockPaymentService
+ * 
+ */
+
 package mum.pmp.mstore.integration.mockpayment.model;
 
 import javax.persistence.Entity;

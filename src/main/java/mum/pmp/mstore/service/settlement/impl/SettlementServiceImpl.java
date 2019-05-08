@@ -1,3 +1,13 @@
+/*
+ * Author: Bon Nguyen
+ * Date: 22-Apr-2019
+ * Class Name: SettlementService
+ * Module: Payment
+ * Description: The implementation of SettlementService interface
+ * 
+ */
+
+
 package mum.pmp.mstore.service.settlement.impl;
 
 import java.time.LocalDate;
