@@ -67,12 +67,14 @@ public class ShoppingCartController {
         		cart = shoppingCartService.checkout();
         		System.out.println("In place order" + cart);
         		request.getSession().setAttribute("Shopping_Cart", cart);
-        		RequestDispatcher rd = request.getRequestDispatcher("/order/create");
-        		rd.forward(request, response);
+//        		RequestDispatcher rd = request.getRequestDispatcher("/order/create");
+//        		rd.forward(request, response);
+        		return "forward:/order/create";
         	}
         	
-         } catch (NotEnoughProductsInStockException | ServletException | IOException e) {
+         } catch (NotEnoughProductsInStockException e) {
             //return shoppingCart().addObject("outOfStockMessage", e.getMessage());
+        	 System.out.println(e.getMessage());
         }
         return "redirect: /order/create";
     }

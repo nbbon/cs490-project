@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,87 +28,82 @@ import mum.pmp.mstore.domain.Order;
 import mum.pmp.mstore.domain.OrderFactory;
 import mum.pmp.mstore.domain.ShoppingCart;
 import mum.pmp.mstore.model.Admin;
+import mum.pmp.mstore.model.CreditCard;
 import mum.pmp.mstore.model.Customer;
 import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.service.OrderService;
 import mum.pmp.mstore.service.security.ProfileService;
 import mum.pmp.mstore.validator.AdminValidator;
+import mum.pmp.mstore.validator.CreditCardValidator;
+import mum.pmp.mstore.validator.CustomerValidator;
 
 @Controller
 @RequestMapping("/order")
 public class OrderController {
-	
+
 	@Autowired
 	OrderService orderService;
+
+	@Autowired
+	ProfileService profileService;
 	
 	@Autowired
-    ProfileService	profileService;
+	private CustomerValidator validator;
 	
+	@Autowired
+	private CreditCardValidator ccValidator;
 
-	@GetMapping("/create")
-    public String createOrder(HttpServletRequest request,HttpServletResponse response, ModelMap model) throws ServletException, IOException {
-		
-		ShoppingCart cart =(ShoppingCart) request.getAttribute("Shopping_Cart");
-		
-		Order order = OrderFactory.createOrder(cart);
-		String getCustomerURL = "/get_customer";
-		
-		String getUserURL="/signup";
-		String getShippingURL= "/shopping_address";
-		
+	private Customer getLoggedCustomer() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Boolean isCus = false;
 		if (auth != null && !auth.getPrincipal().equals("anonymousUser")) {
 			for (GrantedAuthority roles : auth.getAuthorities()) {
 				String authorizedRole = roles.getAuthority();
-				if(authorizedRole.equals("ROLE_CUSTOMER")) {
+				if (authorizedRole.equals("ROLE_CUSTOMER")) {
 					UserDetails user = (UserDetails) auth.getPrincipal();
-					Profile customer = profileService.findByEmail(user.getUsername());
-					if(customer != null) {
-						order.setCustomer((Customer) customer);
-						return "forward:/shipping";
-					}
+					return (Customer) profileService.findByEmail(user.getUsername());
 				}
 			}
 		}
+		return null;
+	}
+
+	@PostMapping("/create")
+	public String createOrder(RedirectAttributes redirectAttributes, HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("Shopping_Cart");
+
+		Order order = OrderFactory.createOrder(cart);
+		String getCustomerURL = "/get_customer";
+
+		String getUserURL = "/signup";
+		String getShippingURL = "/shopping_address";
+
+		Customer loggedCustomer = getLoggedCustomer();
+		String targetURL = "";
 		
-		if(!isCus) {
-			if (auth == null ) {
-				
-				RequestDispatcher rd=request.getRequestDispatcher(getCustomerURL);
-				request.setAttribute("order", order);
-  			    rd.forward(request, response);
-  			    return getShippingURL;
-			}
-			
-			if (auth.getPrincipal().equals("anonymousUser")) {
-				
-				RequestDispatcher rd=request.getRequestDispatcher(getUserURL);
-				request.setAttribute("order", order);
-  			    rd.forward(request, response);
-				
-  			    return getShippingURL;
-				
-			}
-			
+		if(loggedCustomer != null) {
+			order.setCustomer(loggedCustomer);
+			targetURL = "forward:/order/shipping"; 
+			request.getSession().setAttribute("order", order);
+		} else {
+			redirectAttributes.addFlashAttribute("order", order);
+			targetURL = "redirect:/customer";
 			// Show UI to ask customer
 			// If they want to chackout with logged user
 			// OR checkout as guest
 			// If user chooses to checkout as logged user
-			//    --> show login page
-			//    --> if user successful logged in
-			//	  --> get user from
-			// else	
-			//    --> show UI to get customer info
-			//	  --> create new Customer obj
+			// --> show login page
+			// --> if user successful logged in
+			// --> get user from
+			// else
+			// --> show UI to get customer info
+			// --> create new Customer obj
 		}
-		return null;
-			
 		
-	}	
-	
+		return targetURL;
 
-
+	}
 
 	@GetMapping("/signup")
 	public String adminSignupPage(Model model) {
@@ -115,60 +111,67 @@ public class OrderController {
 		return "/profile/admin_signup";
 	}
 
-	
-	
-	
-	@PostMapping("/get_customer")
-    public String trggerGetCustomer(RedirectAttributes redirectAttributes, Model model, HttpServletRequest request) {
-		Order order =(Order) request.getAttribute("order");
+	@PostMapping("/customer")
+	public String showCustomerForm(@ModelAttribute Order order, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model, HttpServletRequest request) {
+		Customer customer = order.getCustomer();
+		validator.validate(customer, bindingResult);
+		
+		ccValidator.validate(customer.getCreditCard(), bindingResult);
+		
+		if(bindingResult.hasErrors()) {
+			return "/customer";
+		}
+		
 		redirectAttributes.addFlashAttribute("order", order);
-		return "redirect:/customer";  
+		return "forward:/shipping";
 	}
-	
+
 	@GetMapping("/customer")
 	public String getCustomer(@ModelAttribute("order") Order order, Model model) {
 		model.addAttribute("order", order);
-		return "profile/customer_profile"; // customer.html
+		model.addAttribute("customer", order.getCustomer());
+		return "/customer_form"; // customer.html
 	}
-	
+
 	@PostMapping("/shipping")
-    public String getShipping(@RequestParam Order order, RedirectAttributes redirectAttributes, Model model, HttpServletRequest request) {
+	public String getShipping(RedirectAttributes redirectAttributes, Model model,
+			HttpServletRequest request) {
+		Order order = (Order) request.getSession().getAttribute("order");
 		redirectAttributes.addFlashAttribute("order", order);
-		return "redirect:/shopping_address"; 
+		return "redirect:/shopping_address";
 	}
-	
+
 	@GetMapping("/shopping_address")
 	public String getShippinAddress(@ModelAttribute("order") Order order, Model model) {
 		model.addAttribute("order", order);
 		return "order/shopping_address"; // shopping_address.html
 	}
-	
+
 	@PostMapping("/billing")
-    public String getBilling(@RequestParam Order order, RedirectAttributes redirectAttributes, Model model, HttpServletRequest request) {
+	public String getBilling(@RequestParam Order order, RedirectAttributes redirectAttributes, Model model,
+			HttpServletRequest request) {
 		redirectAttributes.addFlashAttribute("order", order);
-		return "redirect:/billing"; 
+		return "redirect:/billing";
 	}
-	
+
 	@GetMapping("/billing")
 	public String getBillingAddress(@ModelAttribute("order") Order order, Model model) {
 		model.addAttribute("order", order);
 		return "order/billing"; // billing.html
 	}
-	
-	
-	
+
 	@PostMapping("/sendToPayment")
-    public void sendToPayment(@RequestParam Order order, HttpServletRequest request, HttpServletResponse response) {
-		
+	public void sendToPayment(@RequestParam Order order, HttpServletRequest request, HttpServletResponse response) {
+
 		String paymetURL = "/payment";
-			
-		RequestDispatcher rd=	request.getRequestDispatcher(paymetURL);
+
+		RequestDispatcher rd = request.getRequestDispatcher(paymetURL);
 		request.setAttribute("order", order);
 		try {
 			rd.forward(request, response);
 		} catch (ServletException | IOException e) {
 			System.out.println(e.getMessage());
-//			e.printStackTrace();
+			// e.printStackTrace();
 		}
-	}	
+	}
 }

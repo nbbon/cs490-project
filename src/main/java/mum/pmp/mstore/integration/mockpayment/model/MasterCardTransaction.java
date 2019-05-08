@@ -16,20 +16,20 @@ public class MasterCardTransaction {
 	private String cardName;
 	private LocalDate tDate;
 	private Double tAmount;
-	private Double preBalance;
+	private Double prevBalance;
 	private Double remainBalance;
 	private String description;
 	
 	public MasterCardTransaction() {
 		
 	}
-	public MasterCardTransaction(String cardNumber, String cardName, LocalDate tDate, Double tAmount, Double preBalance,
+	public MasterCardTransaction(String cardNumber, String cardName, LocalDate tDate, Double tAmount, Double prevBalance,
 			Double remainBalance, String description) {
 		this.cardNumber = cardNumber;
 		this.cardName = cardName;
 		this.tDate = tDate;
 		this.tAmount = tAmount;
-		this.preBalance = preBalance;
+		this.prevBalance = prevBalance;
 		this.remainBalance = remainBalance;
 		this.description = description;
 	}
@@ -74,12 +74,12 @@ public class MasterCardTransaction {
 		this.tAmount = tAmount;
 	}
 
-	public Double getPreBalance() {
-		return preBalance;
+	public Double getPrevBalance() {
+		return prevBalance;
 	}
 
-	public void setPreBalance(Double preBalance) {
-		this.preBalance = preBalance;
+	public void setPrevBalance(Double prevBalance) {
+		this.prevBalance = prevBalance;
 	}
 
 	public Double getRemainBalance() {
