@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import mum.pmp.mstore.domain.Product;
 import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.service.ProductService;
 import mum.pmp.mstore.service.security.ProfileService;
@@ -99,6 +100,7 @@ public class HomeController {
 		}
 		model.addAttribute("products", productService.getAllProducts());
 		//return "/index";
+		model.addAttribute("product", new Product());
 		return "/home/home";
 	}
 	

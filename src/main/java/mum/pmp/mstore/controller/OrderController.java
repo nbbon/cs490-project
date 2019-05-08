@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import mum.pmp.mstore.config.security.Listener;
 import mum.pmp.mstore.domain.Order;
 import mum.pmp.mstore.domain.OrderFactory;
 import mum.pmp.mstore.domain.ShoppingCart;
@@ -33,6 +33,7 @@ import mum.pmp.mstore.model.Customer;
 import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.service.OrderService;
 import mum.pmp.mstore.service.security.ProfileService;
+
 import mum.pmp.mstore.validator.AdminValidator;
 import mum.pmp.mstore.validator.CreditCardValidator;
 import mum.pmp.mstore.validator.CustomerValidator;
@@ -89,6 +90,7 @@ public class OrderController {
 		} else {
 			redirectAttributes.addFlashAttribute("order", order);
 			targetURL = "redirect:/customer";
+
 			// Show UI to ask customer
 			// If they want to chackout with logged user
 			// OR checkout as guest
@@ -120,8 +122,20 @@ public class OrderController {
 		
 		if(bindingResult.hasErrors()) {
 			return "/customer";
-		}
+		}			
 		
+		return null;
+	}	
+	
+	@PostMapping("/signup")
+	public String adminSignupPage(Model model, HttpServletRequest request, HttpServletResponse response) {
+		model.addAttribute("customer", new Customer());
+		return "/profile/customer_signup";
+	}
+	
+	@PostMapping("/get_customer")
+    public String trggerGetCustomer(RedirectAttributes redirectAttributes, Model model, HttpServletRequest request) {
+		Order order =(Order) request.getAttribute("order");
 		redirectAttributes.addFlashAttribute("order", order);
 		return "forward:/shipping";
 	}

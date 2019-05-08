@@ -61,22 +61,21 @@ public class ShoppingCartController {
 			HttpServletResponse response) {
         try {
         	System.out.println("In placeorder shopping cart");
-        	ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("Shopping_Cart");
+        	ShoppingCart cart = (ShoppingCart) request.getAttribute("Shopping_Cart");
         	if(cart == null)
         	{
         		cart = shoppingCartService.checkout();
         		System.out.println("In place order" + cart);
-        		request.getSession().setAttribute("Shopping_Cart", cart);
-//        		RequestDispatcher rd = request.getRequestDispatcher("/order/create");
-//        		rd.forward(request, response);
-        		return "forward:/order/create";
+        		request.setAttribute("Shopping_Cart", cart);
+        		//RequestDispatcher rd = request.getRequestDispatcher("/order/create");
+        		return "forward:" + "/order/create";
         	}
         	
          } catch (NotEnoughProductsInStockException e) {
             //return shoppingCart().addObject("outOfStockMessage", e.getMessage());
         	 System.out.println(e.getMessage());
         }
-        return "redirect: /order/create";
+        return "forward:" + "/order/create";
     }
     
 }
