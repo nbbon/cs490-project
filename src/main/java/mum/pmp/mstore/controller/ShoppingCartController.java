@@ -68,11 +68,12 @@ public class ShoppingCartController {
         		System.out.println("In place order" + cart);
         		request.setAttribute("Shopping_Cart", cart);
         		//RequestDispatcher rd = request.getRequestDispatcher("/order/create");
-        		return "forward:" + "/order/create";
+//        		return "forward:" + "/order/create";
         	}
         	
          } catch (NotEnoughProductsInStockException e) {
             //return shoppingCart().addObject("outOfStockMessage", e.getMessage());
+        	 System.out.println(e.getMessage());
         }
         return "forward:" + "/order/create";
     }

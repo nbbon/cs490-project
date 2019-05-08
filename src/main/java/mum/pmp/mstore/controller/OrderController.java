@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,19 +29,35 @@ import mum.pmp.mstore.domain.Order;
 import mum.pmp.mstore.domain.OrderFactory;
 import mum.pmp.mstore.domain.ShoppingCart;
 import mum.pmp.mstore.model.Admin;
+import mum.pmp.mstore.model.CreditCard;
 import mum.pmp.mstore.model.Customer;
 import mum.pmp.mstore.model.Profile;
 import mum.pmp.mstore.service.OrderService;
 import mum.pmp.mstore.service.security.ProfileService;
 
+import mum.pmp.mstore.validator.AdminValidator;
+import mum.pmp.mstore.validator.CreditCardValidator;
+import mum.pmp.mstore.validator.CustomerValidator;
+
 @Controller
 @RequestMapping("/order")
 public class OrderController {
-	
+
 	@Autowired
 	OrderService orderService;
-	
+
 	@Autowired
+	ProfileService profileService;
+
+	@Autowired
+	private CustomerValidator validator;
+
+	@Autowired
+	private CreditCardValidator ccValidator;
+
+	private Customer getLoggedCustomer() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
     ProfileService	profileService;
 	
 	@Autowired
@@ -52,124 +69,118 @@ public class OrderController {
 		ShoppingCart cart =(ShoppingCart) request.getAttribute("Shopping_Cart");
 		System.out.println("cart details : " + cart);
 		
-		Order order = OrderFactory.createOrder(cart);
-		String getCustomerURL = "/get_customer";
-		
-		String getUserURL="/order/signup";
-		String getShippingURL= "/shopping_address";
-		
+		Order order = OrderFactory.createOrder(cart);		
 		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Authentication auth = handler.getAuth();
 		Boolean isCus = false;
 		if (auth != null && !auth.getPrincipal().equals("anonymousUser")) {
 			for (GrantedAuthority roles : auth.getAuthorities()) {
 				String authorizedRole = roles.getAuthority();
-				if(authorizedRole.equals("ROLE_CUSTOMER")) {
+				if (authorizedRole.equals("ROLE_CUSTOMER")) {
 					UserDetails user = (UserDetails) auth.getPrincipal();
-					Profile customer = profileService.findByEmail(user.getUsername());
-					if(customer != null) {
-						order.setCustomer((Customer) customer);
-						return "forward:/shipping";
-					}
+					return (Customer) profileService.findByEmail(user.getUsername());
 				}
 			}
 		}
-		
-		if(!isCus) {
-			if (auth == null ) {
-				
-				//RequestDispatcher rd=request.getRequestDispatcher(getCustomerURL);
-				request.setAttribute("order", order);
-  			   // rd.forward(request, response);
-  			   // return getShippingURL;
-  			    return "forward:" + getCustomerURL;
-			}
-			
-			if (auth.getPrincipal().equals("anonymousUser")) {
-				
-				//RequestDispatcher rd=request.getRequestDispatcher(getUserURL);
-				request.setAttribute("order", order);
-  			    //rd.forward(request, response);
-				
-  			    //return getShippingURL;
-  			    return "forward:" + getUserURL;
-				
-			}
-			
-			// Show UI to ask customer
-			// If they want to chackout with logged user
-			// OR checkout as guest
-			// If user chooses to checkout as logged user
-			//    --> show login page
-			//    --> if user successful logged in
-			//	  --> get user from
-			// else	
-			//    --> show UI to get customer info
-			//	  --> create new Customer obj
-		}
-		return getShippingURL;
-			
-		
-	}	
-	
-	@PostMapping("/signup")
-	public String adminSignupPage(Model model, HttpServletRequest request, HttpServletResponse response) {
-		model.addAttribute("customer", new Customer());
-		return "/profile/customer_signup";
+		return null;
 	}
-	
-	@PostMapping("/get_customer")
-    public String trggerGetCustomer(RedirectAttributes redirectAttributes, Model model, HttpServletRequest request) {
-		Order order =(Order) request.getAttribute("order");
+
+	@PostMapping("/create")
+	public String createOrder(RedirectAttributes redirectAttributes, HttpServletRequest request,
+			HttpServletResponse response) throws ServletException {
+		System.out.println("ORDER: Request to create order");
+
+		ShoppingCart cart = (ShoppingCart) request.getAttribute("Shopping_Cart");
+
+		Order order = OrderFactory.createOrder(cart);
+
+		Customer loggedCustomer = getLoggedCustomer();
+		if (loggedCustomer != null) {
+			order.setCustomer(loggedCustomer);
+			order.setCreditCard(loggedCustomer.getCreditCard());
+
+			redirectAttributes.addFlashAttribute("order", order);
+			System.out.println("ORDER: User logged in redirect to /order/customer");
+			return "redirect:/order/customer"; // get shipping & billing addresses
+		}
+
+		request.setAttribute("order", order);
+		return "forward:/order/checkLoggedin"; // security check and login
+	}
+
+	@PostMapping("/checkLoggedin")
+	public String checkLoggedin(@RequestParam(required = false) Boolean guest,
+			RedirectAttributes redirectAttributes, Model model, HttpServletRequest request) {
+		System.out.println("ORDER: Security check for Guest is " + guest);
+		
+		Order order = (Order) request.getAttribute("order");
+		if(guest != null && guest == true) {
+			System.out.println("ORDER: redirect to /order/guest/detail");
+			redirectAttributes.addFlashAttribute("order", order);
+			return "redirect:/order/guest/detail"; // to get guest detail info
+		}
+		
+		System.out.println("ORDER: forward to /order/customer");
+		return "forward:/order/customer"; // security check and getting addresses
+		
+	}
+
+	@GetMapping("/guest/detail")
+	public String checkGuestForm(@ModelAttribute("order") Order order, Model model, HttpServletRequest request,
+			HttpServletResponse response) throws ServletException {
+		System.out.println("ORDER: Guest checkout get detail");
+		
+		model.addAttribute("order", order);
+		return "order/guest_detail";  // create html form to get GUEST info: guest user name, credit card, shipping and billing addr
+	}
+
+	@PostMapping("/guest/detail")
+	public String getGuestInfo(@ModelAttribute Order order, BindingResult bindingResult, Model model,
+			HttpServletRequest request) {
+		Customer customer = order.getCustomer();
+		validator.validate(customer, bindingResult);
+
+		ccValidator.validate(customer.getCreditCard(), bindingResult);
+
+		if (bindingResult.hasErrors()) {
+			return "/guest/detail";
+		}
+
+		request.setAttribute("order", order);
+		return "forward:/payment";
+	}
+
+	@PostMapping("/customer")
+	public String customerCheckout(RedirectAttributes redirectAttributes, Model model, HttpServletRequest request,
+			HttpServletResponse response) throws ServletException {
+		
+		System.out.println("ORDER: do security check before go further");
+		Order order = (Order) request.getAttribute("order");
 		redirectAttributes.addFlashAttribute("order", order);
-		return "redirect:/customer";  
+		return "redirect:/order/customer"; // get shipping & billing addresses
+		
 	}
 	
 	@GetMapping("/customer")
-	public String getCustomer(@ModelAttribute("order") Order order, Model model) {
-		model.addAttribute("order", order);
-		System.out.println("^^^^^^^");
-		return "profile/customer_signup"; // customer.html
-	}
-	
-	@PostMapping("/shipping")
-    public String getShipping(@RequestParam Order order, RedirectAttributes redirectAttributes, Model model, HttpServletRequest request) {
-		redirectAttributes.addFlashAttribute("order", order);
-		return "redirect:/shopping_address"; 
-	}
-	
-	@GetMapping("/shopping_address")
-	public String getShippinAddress(@ModelAttribute("order") Order order, Model model) {
-		model.addAttribute("order", order);
-		return "order/shopping_address"; // shopping_address.html
-	}
-	
-	@PostMapping("/billing")
-    public String getBilling(@RequestParam Order order, RedirectAttributes redirectAttributes, Model model, HttpServletRequest request) {
-		redirectAttributes.addFlashAttribute("order", order);
-		return "redirect:/billing"; 
-	}
-	
-	@GetMapping("/billing")
-	public String getBillingAddress(@ModelAttribute("order") Order order, Model model) {
-		model.addAttribute("order", order);
-		return "order/billing"; // billing.html
-	}
-	
-	
-	
-	@PostMapping("/sendToPayment")
-    public void sendToPayment(@RequestParam Order order, HttpServletRequest request, HttpServletResponse response) {
+	public String getAddressesForm(@ModelAttribute("order") Order order, Model model, HttpServletRequest request,
+			HttpServletResponse response) throws ServletException {
 		
-		String paymetURL = "/payment";
+//		Order order = (Order) request.getAttribute("order");
+		System.out.println("ORDER: security checked and user successful logged in");
+		Customer loggedCustomer = getLoggedCustomer();
+		if (loggedCustomer != null) {
+			order.setCustomer(loggedCustomer);
+			order.setCreditCard(loggedCustomer.getCreditCard());
 			
-		RequestDispatcher rd=	request.getRequestDispatcher(paymetURL);
-		request.setAttribute("order", order);
-		try {
-			rd.forward(request, response);
-		} catch (ServletException | IOException e) {
-			System.out.println(e.getMessage());
-//			e.printStackTrace();
+			System.out.println("ORDER: Get customer addresses");
+			model.addAttribute("order", order);
+			return "order/shipping_billing_addresses"; // create html form for shipping & billing addr
+		} else {
+			System.out.println("ORDER: Something is going wrong here");
 		}
-	}	
+		
+		System.out.println("ORDER: Not supose to go here. If it's then go back for security check");
+		return "forward:/order/customer";
+	}
+
 }
