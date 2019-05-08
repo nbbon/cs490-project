@@ -28,7 +28,7 @@ import mum.pmp.mstore.utilities.User_Type;
 
 @Service
 @Transactional
-public class ProfileService {
+public class ProfileService implements IProfileService{
 
 	@Autowired
 	private ProfileRepository profileRepository;

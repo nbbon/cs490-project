@@ -56,7 +56,6 @@ public class AdminController {
 	@GetMapping("/update")
 	public String updatePage(Model model) {
 		System.out.println("To update");
-		//Admin adminProfile = (Admin) profileService.findByEmail(sessionListener.getUser().getEmail());
 		Profile adminProfile = profileService.findByEmail(sessionListener.getUser().getEmail());
 		model.addAttribute("admin", adminProfile);
 		return "/profile/admin_profile";
@@ -69,7 +68,8 @@ public class AdminController {
 		validator.validate(admin, bindingResult);
 		boolean status = profileService.updateAdmin(admin);
 		if(status)
-			return "/secure/login";
+			//return "/secure/login";
+			return "redirect:/logout-success";
 		else
 			return "redirect:/admin/update";
 	}

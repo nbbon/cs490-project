@@ -1,11 +1,8 @@
 package mum.pmp.mstore.controller.profile;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -48,9 +45,6 @@ public class CustomerController {
 	private ProfileService profileService;
 	
 	@Autowired
-	private ProductService productService;
-	
-	@Autowired
 	private CompanyCardConfig cards;
 	
 	@GetMapping("/signup")
@@ -64,6 +58,7 @@ public class CustomerController {
 			HttpServletResponse response) {
 		
 		String url = "";
+		System.out.println("bindingResult: "+ bindingResult.getClass());
 		//Validate the customer details.
 		validator.validate(customer, bindingResult);
 		
@@ -161,7 +156,8 @@ public class CustomerController {
 		validator.validate(customer, bindingResult);
 		boolean status = profileService.updateCustomer(customer);
 		if(status)
-			return "/secure/login";
+			//return "/secure/login";
+			return "redirect:/logout-success";
 		else
 			return "redirect:/customer/update";
 	}
@@ -177,7 +173,7 @@ public class CustomerController {
 		byte status = 0;
 		profile.setStatus(status);
 		profileService.saveProfile(profile);
-		return "redirect:/login";
+		return "redirect:/logout-success";
 	}
 	
 }

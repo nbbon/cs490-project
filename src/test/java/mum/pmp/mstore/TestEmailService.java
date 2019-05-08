@@ -12,7 +12,7 @@ import org.junit.Test;
 import mum.pmp.mstore.service.email.EmailService;
 import mum.pmp.mstore.service.email.EmailServiceInterface;
 
-public class TestEmailService extends MStoreApplication{
+public class TestEmailService extends MStoreApplicationTests{
 
 	@Test
 	public void testSendEmail() throws AddressException, MessagingException, IOException

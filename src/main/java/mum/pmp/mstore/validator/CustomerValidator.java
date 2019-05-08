@@ -25,7 +25,20 @@ public class CustomerValidator implements Validator {
 		Customer customer = (Customer) target;
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "field.required");
+		if (customer.getFirstName().length() < 2 || customer.getFirstName().length() > 20) {
+			errors.rejectValue("firstName", "First name must be 2 to 20 alpha numeric characters.");
+		}
+		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "field.required");
+		if (customer.getLastName().length() < 2 || customer.getLastName().length() > 20) {
+			errors.rejectValue("lastName", "Last name must be 2 to 20 alpha numeric characters.");
+		}
+		
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Password is required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirmPassword", "Confirm password is required");
+		if (!customer.getPassword().equals(customer.getConfirmPassword())) {
+			errors.rejectValue("password", "nomatch.password");
+		}
 		
 		try {
 			errors.pushNestedPath("address");

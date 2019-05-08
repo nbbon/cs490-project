@@ -28,8 +28,8 @@
 			</tr>
 			<tbody>
 				<tr th:each="vendor : ${vendors}">
-					<td><a th:href="@{'/vendor/' + ${vendor.id}}"
-						th:text="${vendor.vendorName}"> </a></td>
+					<td
+						th:text="${vendor.vendorName}"></td>
 					<td th:text="${vendor.vendorNumber}"></td>
 					<td th:text="${vendor.regId}"></td>
 					<td th:text="${vendor.email}"></td>
