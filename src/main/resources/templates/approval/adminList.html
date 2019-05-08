@@ -3,10 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <title>Person List</title>
-<link rel="stylesheet" type="text/css" th:href="@{/static/css/styles.css}"/>
-      <link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}" />
-	  <link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.0.13/css/all.css}"/>
-	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/static/css/styles.css}" />
+<link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.0.13/css/all.css}" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <title>MStore - Admin Approval</title>
 </head>
 <body>
@@ -40,9 +41,9 @@
 							 <input type="hidden" th:value="${admin.email}" name="admin-email"/>
 						</form>
 					</td>
-					<td><a th:href="@{'/admins/' + ${admin.id}}"><i class="fa fa-edit"></i></a> &nbsp;&nbsp;
-						<a
-						th:href="@{'/admins/delete/'+ ${admin.id}}"><i class="fa fa-trash"></i></a></td>
+<!-- 					<td><a th:href="@{'/admins/' + ${admin.id}}"><i class="fa fa-edit"></i></a> &nbsp;&nbsp; -->
+<!-- 						<a -->
+<!-- 						th:href="@{'/admins/delete/'+ ${admin.id}}"><i class="fa fa-trash"></i></a></td> -->
 				</tr>
 			</tbody>
 		</table>
