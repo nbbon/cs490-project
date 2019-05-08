@@ -1,11 +1,8 @@
 package mum.pmp.mstore.controller.profile;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -46,9 +43,6 @@ public class CustomerController {
 	
 	@Autowired
 	private ProfileService profileService;
-	
-	@Autowired
-	private ProductService productService;
 	
 	@Autowired
 	private CompanyCardConfig cards;
