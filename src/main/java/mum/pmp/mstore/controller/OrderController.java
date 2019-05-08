@@ -59,7 +59,9 @@ public class OrderController {
 	private CreditCardValidator ccValidator;
 
 	private Customer getLoggedCustomer() {
+		System.out.println("handler" + handler);
 		Authentication auth = handler.getAuth();
+		System.out.println("auth:" + auth);
 		Boolean isCus = false;
 		if (auth != null && !auth.getPrincipal().equals("anonymousUser")) {
 			for (GrantedAuthority roles : auth.getAuthorities()) {
@@ -149,6 +151,21 @@ public class OrderController {
 		
 	}
 	
+	@PostMapping("/saveCustomerAddress")
+	public String saveCustomerAddress(@ModelAttribute Order order, BindingResult bindingResult,
+			HttpServletRequest request,
+			HttpServletResponse response) throws ServletException {
+		
+		Customer customer = order.getCustomer();
+		if (bindingResult.hasErrors()) {
+			return "redirect:/customer";
+		}
+
+		request.setAttribute("order", order);
+		return "forward:/payment";
+		
+	}
+	
 	@GetMapping("/customer")
 	public String getAddressesForm(@ModelAttribute("order") Order order, Model model, HttpServletRequest request,
 			HttpServletResponse response) throws ServletException {
@@ -162,13 +179,14 @@ public class OrderController {
 			
 			System.out.println("ORDER: Get customer addresses");
 			model.addAttribute("order", order);
+		    System.out.println("order:" + order);
 			return "order/shipping_billing_addresses"; // create html form for shipping & billing addr
 		} else {
 			System.out.println("ORDER: Something is going wrong here");
 		}
 		
 		System.out.println("ORDER: Not supose to go here. If it's then go back for security check");
-		return "forward:/order/customer";
+		return "Error";
 	}
 
 }
