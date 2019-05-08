@@ -23,6 +23,9 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private DataSource dataSource;
 	
+	@Autowired
+	private MyAuthSuccessHandler successHandler;
+	
 	@Value("${auth.query}")
 	private String authQuery;
 	@Value("${author.query}")
@@ -72,6 +75,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 			.formLogin()
 			.loginPage("/login")
 			.permitAll()
+			.successHandler(successHandler)
 			.and()
 			.logout().invalidateHttpSession(true)
 			.clearAuthentication(true)
