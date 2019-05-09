@@ -28,6 +28,15 @@ import mum.pmp.mstore.utilities.User_Type;
 import mum.pmp.mstore.validator.CreditCardValidator;
 import mum.pmp.mstore.validator.CustomerValidator;
 
+/*
+ * Author: Stanley Julien
+ * Date: 25-Apr-2019
+ * Class Name: CustomerController
+ * Module: Customer Registration
+ * Description: Customer sign up and/or registration.  
+ * 
+ */
+
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {
@@ -156,7 +165,8 @@ public class CustomerController {
 		validator.validate(customer, bindingResult);
 		boolean status = profileService.updateCustomer(customer);
 		if(status)
-			return "/secure/login";
+			//return "/secure/login";
+			return "redirect:/logout-success";
 		else
 			return "redirect:/customer/update";
 	}
@@ -172,7 +182,7 @@ public class CustomerController {
 		byte status = 0;
 		profile.setStatus(status);
 		profileService.saveProfile(profile);
-		return "redirect:/login";
+		return "redirect:/logout-success";
 	}
 	
 }

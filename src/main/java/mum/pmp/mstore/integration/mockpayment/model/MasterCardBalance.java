@@ -1,3 +1,13 @@
+/*
+ * Author: Bon Nguyen
+ * Date: 25-Apr-2019
+ * Class Name: MasterCardBalance
+ * Module: Mock Payment
+ * Description: The entity class that holding current balance information of a master card. Used by
+ * MockPaymentService
+ * 
+ */
+
 package mum.pmp.mstore.integration.mockpayment.model;
 
 import java.time.LocalDate;

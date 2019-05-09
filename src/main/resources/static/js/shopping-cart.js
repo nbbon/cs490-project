@@ -1,16 +1,16 @@
 $(function() {
-	console.log("in shopping cart");
-    $("#placeOrder-btn").click(function(e) {
-    	console.log("in shopping cart..");
-        $.ajax({
-            type: "POST",
-            url: "/shoppingCart/placeOrder",
-            contentType: "application/json; charset=utf-8",
-            success: function() {
-            }
-        });
-    });
-    
+//	console.log("in shopping cart");
+//    $("#placeOrder-btn").click(function(e) {
+//    	console.log("in shopping cart..");
+//        $.ajax({
+//            type: "POST",
+//            url: "/shoppingCart/placeOrder",
+//            contentType: "application/json; charset=utf-8",
+//            success: function() {
+//            }
+//        });
+//    });
+//    
     
 	console.log("Add Product catalog");
     $(".add-to-cart-btn").click(function(e) {
@@ -23,6 +23,22 @@ $(function() {
             type: "POST",
             data: self.attr("productId"),
             contentType: "application/json; charset=utf-8",
+            success: function() {
+                //do nothing
+            	console.log("Loading...");
+            }
+        });
+    }); 
+    
+    $("#guestCheckout").click(function(e) {
+    	var self = $(this);
+    	var url = "/order/checkLoggedin";
+    	var param = "guest=true";
+    	console.log(url + "?" + param);
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: param,
             success: function() {
                 //do nothing
             	console.log("Loading...");

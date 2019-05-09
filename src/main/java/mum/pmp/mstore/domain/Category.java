@@ -1,19 +1,19 @@
+/*
+ * Author: Niveen Abdelaatty
+ * Date: 24-Apr-2019
+ * Class Name: Category
+ * Package: domain
+ * Description: it is a POJO class that is mapped to the database and configured for usage through JPA. 
+ * 
+ */
 package mum.pmp.mstore.domain;
 
 
-import java.util.List;
-
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
-
-import mum.pmp.mstore.model.Vendor;
 
 
 @Entity
@@ -25,30 +25,9 @@ public class Category {
 	@NotEmpty(message = "{categoryName.empty}")
 	private String categoryName;
 	private String description;
-	@ManyToOne(fetch =  FetchType.EAGER)
-	@JoinColumn(name = "VENDOR_NUMBER")
-	private Vendor vendor;
-	
-	@OneToMany
-	private List<Product> products;
 
-	public Vendor getVendor() {
-		return vendor;
+	public Category() {
 	}
-
-	public void setVendor(Vendor vendor) {
-		this.vendor = vendor;
-	}
-
-	public List<Product> getProducts() {
-		return products;
-	}
-
-	public void setProducts(List<Product> products) {
-		this.products = products;
-	}
-
-	public Category() {	}
 
 	public Integer getCategoryID() {
 		return categoryID;
@@ -73,27 +52,6 @@ public class Category {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	/*
-	 * public List<Product> getProducts() { return products; }
-	 * 
-	 * 
-	 * 
-	 * public void setProducts(List<Product> products) { this.products = products; }
-	 * 
-	 * 
-	 * 
-	 * public boolean addProduct(Product product){
-	 * 
-	 * boolean success=false; if( products.add(product)){ product.setCategory(this);
-	 * success=true; } return success; }
-	 * 
-	 * public boolean removeProduct(Product product){ boolean success=false;
-	 * 
-	 * if(products.remove(product)){ product.setCategory(null); success=true; }
-	 * 
-	 * return success; }
-	 */
 
 	@Override
 	public int hashCode() {

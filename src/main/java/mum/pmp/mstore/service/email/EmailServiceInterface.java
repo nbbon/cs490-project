@@ -7,6 +7,15 @@ import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.AddressException;
 
+/*
+ * Author: Stanley Julien
+ * Date: 25-Apr-2019
+ * Class Name: EmailServiceInterface
+ * Module: SMTP Module
+ * Description: Email API. 
+ * 
+ */
+
 public interface EmailServiceInterface {
 
 	void sendEmail()throws AddressException, MessagingException, IOException;

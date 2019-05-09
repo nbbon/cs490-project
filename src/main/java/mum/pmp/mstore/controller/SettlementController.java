@@ -1,11 +1,19 @@
+/*
+ * Author: Bon Nguyen
+ * Date: 25-Apr-2019
+ * Class Name: SettlementController
+ * Module: Payment
+ * Description: The controller of Report module, responsible for settling order after payment confirmed.
+ * It will send email to 
+ * 		- Customer to confirm the successful of their order
+ * 		- Vendors to inform Vendor order request for their shipping schedule 
+ */
+
 package mum.pmp.mstore.controller;
 
-import java.io.IOException;
 import java.util.Map.Entry;
 
 import javax.mail.MessagingException;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

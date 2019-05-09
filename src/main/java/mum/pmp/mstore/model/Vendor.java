@@ -25,18 +25,6 @@ public class Vendor extends Profile{
 	
 	@Column(name="CONTACT_PERSON")
 	private String contactPerson;
-	
-	@OneToMany(mappedBy="vendor")
-	private List<Category> categories;
-	
-	
-	public List<Category> getCategories() {
-		return categories;
-	}
-
-	public void setCategories(List<Category> categories) {
-		this.categories = categories;
-	}
 
 	public String getVendorNumber() {
 		return vendorNumber;
@@ -73,7 +61,7 @@ public class Vendor extends Profile{
 	@Override
 	public String toString() {
 		return "Vendor [vendorNumber=" + vendorNumber + ", vendorName=" + vendorName + ", regId=" + regId
-				+ ", contactPerson=" + contactPerson + ", categories=" + categories // + ", creditCard=" + creditCard
+				+ ", contactPerson=" + contactPerson + ", categories=" 
 				+ "]";
 	}
 

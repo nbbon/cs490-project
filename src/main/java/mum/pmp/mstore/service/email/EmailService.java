@@ -20,6 +20,15 @@ import javax.mail.internet.MimeMultipart;
 import org.springframework.expression.AccessException;
 import org.springframework.stereotype.Service;
 
+/*
+ * Author: Stanley Julien
+ * Date: 25-Apr-2019
+ * Class Name: EmailService
+ * Module: SMTP Module
+ * Description: Email API implementation.  
+ * 
+ */
+
 @Service
 public class EmailService implements EmailServiceInterface {
 

@@ -1,3 +1,11 @@
+/*
+ * Author: Niveen Abdelaatty
+ * Date: 24-Apr-2019
+ * Class Name: CategoryService
+ * Package: service
+ * Description: contains the business logic of category module to operate on the data sent to and from the DAO and the client.
+ * 
+ */
 package mum.pmp.mstore.service.impl;
 
 import java.util.List;
@@ -12,7 +20,7 @@ import mum.pmp.mstore.repository.CategoryRepository;
 import mum.pmp.mstore.service.CategoryService;
 
 @Service
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements CategoryService {
 	@Autowired
 	CategoryRepository categoryRepository;
 
@@ -23,9 +31,9 @@ public class CategoryServiceImpl implements CategoryService{
 
 	@Override
 	public Category getCategory(Integer id) {
-	     Optional<Category> optional = categoryRepository.findById(id);
-	     if (optional.isPresent()) {
-	    	 return optional.get();
+		Optional<Category> optional = categoryRepository.findById(id);
+		if (optional.isPresent()) {
+			return optional.get();
 		}
 		return null;
 	}
@@ -37,8 +45,8 @@ public class CategoryServiceImpl implements CategoryService{
 
 	@Override
 	public void deleteCategory(Integer id) {
-	    	 categoryRepository.deleteById(id);	
-				
+		categoryRepository.deleteById(id);
+
 	}
 	/*
 	 * @Override public List<Category> getCategoriesByVendorId(String vendornum) {
