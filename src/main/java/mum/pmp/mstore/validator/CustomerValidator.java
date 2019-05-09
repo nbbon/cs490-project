@@ -8,6 +8,14 @@ import org.springframework.validation.Validator;
 import mum.pmp.mstore.model.Address;
 import mum.pmp.mstore.model.Customer;
 
+/*
+ * Author: Stanley Julien
+ * Date: 25-Apr-2019
+ * Class Name: CustomerValidator
+ * Module: Reset Password
+ * Description: The implementation of reset password  
+ * 
+ */
 
 @Component
 public class CustomerValidator implements Validator {
