@@ -1,3 +1,13 @@
+/*
+ * Author: Bon Nguyen
+ * Date: 25-Apr-2019
+ * Class Name: WeeklyReportData
+ * Module: Report
+ * Description: The report data holder class, store data for weekly product and product category report 
+ * Used by ReportRepository to fill data query from DB
+ * 
+ */
+
 package mum.pmp.mstore.service.report;
 
 public class WeeklyReportData {

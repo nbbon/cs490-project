@@ -3,7 +3,7 @@
  * Date: 25-Apr-2019
  * Class Name: ReportServiceImpl
  * Module: Report
- * Description: The implementation of report service  
+ * Description: The implementation of ReportService interface  
  * 
  */
 

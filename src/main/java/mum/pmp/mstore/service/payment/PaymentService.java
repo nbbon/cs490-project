@@ -2,8 +2,8 @@
  * Author: Bon Nguyen
  * Date: 25-Apr-2019
  * Class Name: PaymentService
- * Package: service
- * Description: The payment service interface  
+ * Module: Payment
+ * Description: The interface, define necessary methods for payment service  
  * 
  */
 

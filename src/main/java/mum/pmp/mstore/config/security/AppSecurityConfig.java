@@ -71,10 +71,9 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 					"/signup", "/vendor/signup", "/admin/signup", "/customer/signup", 
 					"/search", "/adsearch", 
 					"/password/forgotpassword", "/forgotpassword", "/sendemailforgotpassword", "/resetpassword"
-					,"/products/**", "/category/**" , "/category" , 
-					"/shoppingCart/**", "/reports/**" , 
-					"/placeOrder",
-					"/payment/**", "/paymentgw/**", "/settlement/**")
+					,"/products/**", "/category/**" , "/category" , "/shoppingCart/**", "/reports/**" , 
+					"/order/create", "/order/guest/detail/**","/order/checkLoggedin",
+					"/placeOrder", "/payment/**", "/paymentgw/**", "/settlement/**")
 			.permitAll();
 		
 		
