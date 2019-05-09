@@ -16,6 +16,6 @@ public interface ProductService {
     
     List<Product> findProductsByProductName(String name);
     
-   
+    List<Product> findProductsByVendor(int vendorNumber);
 
 }

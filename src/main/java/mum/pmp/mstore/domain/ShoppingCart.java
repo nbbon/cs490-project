@@ -1,3 +1,10 @@
+/*
+ * Author: Yee Mon Zaw
+ * Date: 02-May-2019
+ * Class Name: ShoppingCart
+ * Package: mum.pmp.mstore.domain
+ * Description: ShoppingCart Entity
+ */
 
 package mum.pmp.mstore.domain;
 

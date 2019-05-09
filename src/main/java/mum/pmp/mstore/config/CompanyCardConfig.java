@@ -1,3 +1,11 @@
+/*
+ * Author: Yee Mon Zaw
+ * Date: 05-May-2019
+ * Class Name: CompanyCardConfig
+ * Package: mum.pmp.mstore.config
+ * Description: Read company visa and master card information from application.properties file
+ */
+
 package mum.pmp.mstore.config;
 
 import org.springframework.beans.factory.annotation.Value;
