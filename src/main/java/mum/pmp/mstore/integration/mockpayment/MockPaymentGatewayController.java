@@ -66,6 +66,8 @@ public class MockPaymentGatewayController {
 				System.out.println("PAYMENT GATEWAY: payment resquest approved for " + fromCardNumber);
 				System.out.println("PAYMENT GATEWAY: transaction is approved: " + description);
 				result = true;
+			} else {
+				System.out.println("Process payment failed!!");
 			}
 		} else {
 			System.out.println("Cannot verified credit card!!");
@@ -101,6 +103,19 @@ public class MockPaymentGatewayController {
 		String toCardExpireDate = (String) request.getAttribute("toCardExpireDate");
 		Double amount = (Double) request.getAttribute("amount");
 		String fallbackUrl = (String) request.getAttribute("fallbackUrl");
+		
+		System.out.println("PAYMENT GATEWAY: payment resquest ");
+		System.out.println("From card");
+		System.out.println("\tNumber: " + fromCardNumber);
+		System.out.println("\tName: " + fromCardName); 
+		System.out.println("\tCSV "+ fromCardCSV);
+		System.out.println("\tExpire Date: " + fromCardExpireDate);
+		System.out.println("To card");
+		System.out.println("\tNumber: " + toCardNumber);
+		System.out.println("\tName: " + toCardName); 
+		System.out.println("\tCSV "+ toCardCSV);
+		System.out.println("\tExpire Date: " + toCardExpireDate);
+		
 		Boolean result = false;
 		if (verifyCardInfo(fromCardNumber, fromCardName, fromCardCSV, fromCardExpireDate) 
 			&& verifyCardInfo(toCardNumber, toCardName, toCardCSV, toCardExpireDate)) {
@@ -113,7 +128,11 @@ public class MockPaymentGatewayController {
 				System.out.println("PAYMENT GATEWAY: payment resquest approved for " + fromCardNumber);
 				System.out.println("PAYMENT GATEWAY: transaction is approved: " + description);
 				result = true;
+			} else {
+				System.out.println("Process payment failed!!");
 			}
+		} else {
+			System.out.println("Cannot verified credit card!!");
 		}
 
 		try {

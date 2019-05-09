@@ -14,12 +14,15 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-	<div class="container">
+	<div th:replace="fragments/menu :: menu"></div>
+	<div class="container">	
 		<div style="margin: auto; width: 860px; text-align: center">
 			<h1><span th:field="*{status }" th:text="${status }"></span> </h1>
 			<h3><span th:field="*{message }" th:text="${message }"></span> </h3>
 			<span th:field="*{detail }" th:text="${detail }"></span>
 		</div>
 	</div>
+	
+	<div th:replace="/fragments/footer :: footer"></div>
 </body>
 </html>

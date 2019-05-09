@@ -33,9 +33,8 @@ public class Product implements Serializable {
 	
 	private String productNumber;
 	
-	@Column(name = "name", nullable = false, unique = true)
+	@Column(nullable = false, unique = true)
     @Length(min = 3, message = "*Name must have at least 5 characters")
-	
 	private String productName;
 	
 	@Column(name = "price", nullable = false)
@@ -51,6 +50,7 @@ public class Product implements Serializable {
 	
 	@ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
+	@JoinColumn(name="category_id")
 	private Category category;
 	
 	@ManyToOne

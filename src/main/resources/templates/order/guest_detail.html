@@ -13,9 +13,9 @@
 
 <div class="container">
     <div th:replace="fragments/menu :: menu"></div>
-    <form class="form-horizontal" th:object="${order}" role="form" method="POST" th:action="@{/order/guest}">
+    <form class="form-horizontal" th:object="${order}" role="form" method="POST" th:action="@{/order/guest/detail}">
      <h3 align="center">Customer Info</h3>   
-     
+     <input th:field="*{orderNumber}" type="text" class="form-control" id="orderNumber" style="display: none" />
         <div class="form-group row">
             <label for="firstName" class="col-sm-3 col-md-3 col-form-label">First Name</label>
             <div class="col-sm-9 col-md-9">
@@ -81,9 +81,9 @@
          <label for="cardType" class="col-sm-3 col-md-3 col-form-label">Payment Type</label>
             <div class="col-sm-9 form-check form-check-inline">
                <input class="form-check-input" type="radio" th:field="*{creditCard.cardType}" value="1"/><label class="form-check-label"> 
-                &nbsp; Master Card</label> &nbsp; &nbsp;
+                &nbsp; Visa Card</label> &nbsp; &nbsp;
 	    	   <input class="form-check-input" type="radio" th:field="*{creditCard.cardType}" value="2"/><label class="form-check-label">  
-	    	   &nbsp; Visa Card</label>  &nbsp; &nbsp;
+	    	   &nbsp; Master Card</label>  &nbsp; &nbsp;
             </div>
 		</div>
 		

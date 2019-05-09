@@ -27,9 +27,9 @@ public class ProductServiceImpl implements ProductService{
 	StockRepository stockRepository;
 
 	@Override
-	public Optional<Product> getProduct(Integer id) {
-		Optional<Product> optional = productRepository.findById(id);
-		return optional;
+	public Product getProductByProductNumber(String productNumber) {
+		Optional<Product> optional = productRepository.findByProductNumber(productNumber);
+		return optional.orElse(null);
 	}
 
 	@Override
@@ -63,7 +63,8 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	
 	  public void setStock(String productnumber, int quantity, String locationcode) {
-	        Product product = productRepository.findByProductNumber(productnumber);
+	        Optional<Product> optional = productRepository.findByProductNumber(productnumber);
+	        Product product = optional.orElse(null);
 	        if (product!=null) {
 	            Stock stock = new Stock(quantity, locationcode);
 	            stockRepository.save(stock);
@@ -75,7 +76,8 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 
 	    public Stock getStock(String productnumber) {
-        		Product product = productRepository.findByProductNumber(productnumber);
+		Optional<Product> optional = productRepository.findByProductNumber(productnumber);
+        Product product = optional.orElse(null);
 	        if (product!=null) {
 	            Stock stock = product.getStock();
 	            return stock;
@@ -87,6 +89,12 @@ public class ProductServiceImpl implements ProductService{
 	public List<Product> findProductsByProductName(String name) {
 		// TODO Auto-generated method stub
 		return productRepository.findProductsByProductName(name);
+	}
+
+	@Override
+	public Optional<Product> getProduct(Integer id) {
+		// TODO Auto-generated method stub
+		return productRepository.findById(id);
 	}
 	
 	

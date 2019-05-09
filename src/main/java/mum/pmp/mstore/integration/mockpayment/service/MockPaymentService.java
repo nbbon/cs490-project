@@ -47,7 +47,11 @@ public interface MockPaymentService {
 						amount, toCardBalance.getBalance(), toCardNewBalance, description);
 				createVisaCardTransaction(toTrans);
 				return true;			
+			} else {
+				System.out.println("Visa Credit card amount is not enough for making payment");
 			}
+		} else {
+			System.out.println("Visa Credit card is not found");
 		}
 		return false;
 	};
@@ -86,7 +90,11 @@ public interface MockPaymentService {
 						amount, toCardBalance.getBalance(), toCardNewBalance, description);
 				createMasterCardTransaction(toTrans);
 				return true;			
+			}else {
+				System.out.println("Master Credit card amount is not enough for making payment");
 			}
+		}else {
+			System.out.println("Master Credit card is not found");
 		}
 		return false;
 	};
