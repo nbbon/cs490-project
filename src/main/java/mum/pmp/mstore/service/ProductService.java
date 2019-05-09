@@ -15,7 +15,7 @@ public interface ProductService {
     Stock getStock(String productNumber);
     
     List<Product> findProductsByProductName(String name);
-    
+    Product getProductByProductNumber(String productNumber);
+   
     List<Product> findProductsByVendor(int vendorNumber);
-
 }

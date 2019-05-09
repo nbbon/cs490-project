@@ -13,9 +13,9 @@
 
 <div class="container">
     <div th:replace="fragments/menu :: menu"></div>
-    <form class="form-horizontal" th:object="${order}" role="form" method="POST" th:action="@{/order/saveCustomerAddress}">
+    <form class="form-horizontal" th:object="${order}" role="form" method="POST" th:action="@{/order/customer/addresses}">
      <h3 align="center">Customer Info</h3>   
-     
+     <input th:field="*{orderNumber}" type="text" class="form-control" id="orderNumber" style="display: none"/>
         <h3 align="center"> Shipping Address</h3>
         
         <div class="form-group row">

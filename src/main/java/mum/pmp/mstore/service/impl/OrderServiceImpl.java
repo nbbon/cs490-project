@@ -27,11 +27,13 @@ public class OrderServiceImpl implements OrderService{
 	@Autowired
 	AddressRepository addressRepository;
 	
+	@Autowired
+	OrderFactory orderFactory;
 
 	@Override
 	public Order createOrder(ShoppingCart shoppingCart) {
 
-		Order order = OrderFactory.createOrder(shoppingCart);
+		Order order = orderFactory.createOrder(shoppingCart);
 		Order order1 = orderRepository.save(order);	
 		return order1;
 	}
@@ -83,4 +85,17 @@ public class OrderServiceImpl implements OrderService{
             orderRepository.save(order);
         }			
 	}
+
+
+	@Override
+	public Order save(Order order) {
+		return orderRepository.save(order);
+	}
+
+
+	@Override
+	public void remove(String orderNumber) {
+		orderRepository.deleteById(orderNumber);;
+	}
+
 }
