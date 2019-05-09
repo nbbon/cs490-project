@@ -1,3 +1,12 @@
+/*
+ * Author: Yee Mon Zaw
+ * Date: 26-May-2019
+ * Class Name: ShoppingCartService
+ * Package: mum.pmp.mstore.service
+ * Description:  Service class for Shopping Cart add/remove Products, and checkout processes
+ * 
+ */
+
 package mum.pmp.mstore.service;
 
 import java.util.Map;

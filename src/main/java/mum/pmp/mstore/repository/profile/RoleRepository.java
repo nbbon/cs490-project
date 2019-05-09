@@ -1,3 +1,12 @@
+/*
+ * Author: Yee Mon Zaw
+ * Date: 26-May-2019
+ * Class Name: RoleRepository
+ * Package: mum.pmp.mstore.repository.profile
+ * Description:  User Role Repository 
+ * 
+ */
+
 package mum.pmp.mstore.repository.profile;
 
 import org.springframework.data.jpa.repository.JpaRepository;

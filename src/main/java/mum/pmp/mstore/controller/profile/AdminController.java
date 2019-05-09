@@ -1,3 +1,13 @@
+/*
+ * Author: Ulugbek 
+ * Date: 28-Apr-2019
+ * Class Name: AdminController
+ * Package: mum.pmp.mstore.controller.profile
+ * Description: Admin Controller for Admin Sign up and update.
+ * 
+ */
+
+
 package mum.pmp.mstore.controller.profile;
 
 import org.springframework.beans.factory.annotation.Autowired;

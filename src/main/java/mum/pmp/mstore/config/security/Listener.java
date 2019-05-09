@@ -1,5 +1,12 @@
-package mum.pmp.mstore.config.security;
+/*
+ * Author: Yee Mon Zaw
+ * Date: 25-Apr-2019
+ * Class Name: Listener
+ * Package: mum.pmp.mstore.config.security
+ * Description: Listener class to retrieved login user.
+ */
 
+package mum.pmp.mstore.config.security;
 
 import javax.servlet.http.HttpSession;
 

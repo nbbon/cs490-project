@@ -34,8 +34,9 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	public void deleteProduct(Integer id) {
-		productRepository.deleteById(id);
-		
+		System.out.println("delete this product >> " + id);
+		//productRepository.deleteById(id);
+		productRepository.deleteProduct(id);
 	}
 
 	@Override
@@ -95,6 +96,12 @@ public class ProductServiceImpl implements ProductService{
 	public Optional<Product> getProduct(Integer id) {
 		// TODO Auto-generated method stub
 		return productRepository.findById(id);
+	}
+	
+	
+	@Override
+	public List<Product> findProductsByVendor(int vendorNumber) {
+		return productRepository.findByVendorNumber(vendorNumber);
 	}
 	
 	
