@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -68,7 +69,7 @@ public class ShoppingCartController {
     // once user click the place order button, will keep shopping cart in session and call to order controller for further processing.
     @PostMapping("/placeOrder")
     public String checkout(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response, Model model) {
         try {
         	System.out.println("In placeorder shopping cart");
         	ShoppingCart cart = (ShoppingCart) request.getAttribute("Shopping_Cart");
@@ -81,8 +82,13 @@ public class ShoppingCartController {
         	}
         	
          } catch (NotEnoughProductsInStockException e) {
-            //return shoppingCart().addObject("outOfStockMessage", e.getMessage());
+            //
         	 System.out.println(e.getMessage());
+        	 model.addAttribute("outOfStockMessage", e.getMessage());
+        	 model.addAttribute("products", shoppingCartService.getProductsInCart());
+        	 model.addAttribute("total", shoppingCartService.getTotal().toString());
+        	 return "/shoppingcart/shoppingCart";
+        	 
         }
         return "forward:" + "/order/create";
     }

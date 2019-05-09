@@ -47,10 +47,8 @@ public class ProductController {
 	public String listProducts(Model model) {
 		Vendor vendorProfile = (Vendor) profileService.findByEmail(sessionListener.getUser().getEmail());
 		Long vendorNumber = vendorProfile.getId();
-		System.out.println(">>>" + vendorNumber);
+		
 		List<Product> products = productService.findProductsByVendor(vendorNumber.intValue());
-		System.out.println("In list product" + products.size());
-		products.stream().forEach(System.out::print);
 		model.addAttribute("productsList", products);
 		return "product/productsList";
 	}
@@ -93,7 +91,6 @@ public class ProductController {
 	@RequestMapping(value = "/productsDelete/{id}", method = RequestMethod.GET)
 	public String productsDelete(Model model, @PathVariable(name = "id") Integer id) {
 		System.out.println("Delete product");
-		//productService.deleteProduct(id);
 		dao.deleteProduct(id);
 		
 		Vendor vendorProfile = (Vendor) profileService.findByEmail(sessionListener.getUser().getEmail());
