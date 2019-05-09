@@ -1,3 +1,11 @@
+/*
+ * Author: Yee Mon Zaw
+ * Date: 25-Apr-2019
+ * Class Name: MyAccessDeniedHandler
+ * Package: mum.pmp.mstore.config.security
+ * Description: Access Denied handler for Errors - Eg: page not found, links broken.
+ */
+
 package mum.pmp.mstore.config.security;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

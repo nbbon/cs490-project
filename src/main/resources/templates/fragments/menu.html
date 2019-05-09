@@ -27,7 +27,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 	      <li id="reports" sec:authorize="hasAuthority('ROLE_ADMIN')"><a href="/reports">Reports</a></li>
 	      
 	      <li id="products" sec:authorize="hasAuthority('ROLE_VENDOR')"><a href="/products/">Product List</a></li>
-	       
+	      
 	      <li id="admins" sec:authorize="hasAuthority('ROLE_SUPER_ADMIN')"><a href="/approval/admins/">Manage Administrators</a></li>
 	     
 	    </ul>

@@ -1,3 +1,11 @@
+/*
+ * Author: Yee Mon Zaw
+ * Date: 02-May-2019
+ * Class Name: NotEnoughProductsInStockException
+ * Package: mum.pmp.mstore.exception
+ * Description: NotEnoughProductsInStockException - Invalid no. of stocks
+ */
+
 package mum.pmp.mstore.exception;
 
 import mum.pmp.mstore.domain.Product;
