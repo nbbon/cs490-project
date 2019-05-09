@@ -10,10 +10,12 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>mum.pmp</groupId>
+	<packaging>war</packaging>
 	<artifactId>mstore</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>MStore</name>
 	<description>Branded Online Store Version 1.1</description>
+	
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -22,6 +24,7 @@
 	</properties>
 
 	<dependencies>
+	
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -106,6 +109,12 @@
 			<artifactId>jasperreports</artifactId>
 			<version>6.4.0</version>
 		</dependency>
+		
+		<dependency>
+		   <groupId>org.springframework.boot</groupId>
+		   <artifactId>spring-boot-starter-tomcat</artifactId>
+  		   <scope>provided</scope>
+        </dependency>
 
 	</dependencies>
 
