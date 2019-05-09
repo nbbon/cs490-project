@@ -35,10 +35,10 @@ public class SettlementServiceImpl implements SettlementService {
 			Product product = orderLine.getProduct();
 			Vendor vendor = product.getVendor();
 			if(vendor != null) {
-				String vName = vendor.getFirstName() + " " + vendor.getLastName(); 
+				String vNumber = vendor.getVendorNumber(); 
 				String vEmail = vendor.getEmail(); 
-				emailList.put(vName, product.getVendor().getEmail());
-				System.out.println("Vendor: " + vName + " - " + vEmail);
+				emailList.put(vNumber, product.getVendor().getEmail());
+				System.out.println("Vendor: " + vNumber + " - " + vEmail);
 			}
 		}
 

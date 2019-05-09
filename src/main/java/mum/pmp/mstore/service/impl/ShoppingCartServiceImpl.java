@@ -93,6 +93,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             if (product.getStock().getQuantity() < entry.getValue())
                 throw new NotEnoughProductsInStockException(product);
             int quantity = product.getStock().getQuantity() - entry.getValue();
+            
             entry.getKey().getStock().setQuantity(quantity);
             
             productRepository.save(product);
@@ -100,7 +101,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             //Create cart line
             ShoppingCartLine cartLine = new ShoppingCartLine();
             cartLine.setProduct(product);
-            cartLine.setQuantity(quantity);
+            cartLine.setQuantity(entry.getValue());
             cartLineList.add(cartLine);
         }
         

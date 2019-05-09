@@ -29,6 +29,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mum.pmp.mstore.domain.Order;
+import mum.pmp.mstore.domain.OrderLine;
+import mum.pmp.mstore.domain.Product;
+import mum.pmp.mstore.model.Vendor;
 import mum.pmp.mstore.service.OrderService;
 import mum.pmp.mstore.service.email.EmailService;
 import mum.pmp.mstore.service.settlement.SettlementService;
