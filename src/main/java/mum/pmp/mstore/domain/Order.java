@@ -3,27 +3,29 @@ package mum.pmp.mstore.domain;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.swing.JList.DropLocation;
+import javax.persistence.Table;
 
 import mum.pmp.mstore.model.Address;
 import mum.pmp.mstore.model.CreditCard;
 import mum.pmp.mstore.model.Customer;
 
-@Entity
+@Entity(name="orders")
+@Table(name="orders")
 public class Order {
 	    @Id
-	    private String ordernumber;
-	    private LocalDate date;
+	    private String orderNumber;
+	    private LocalDate orderDate;
 	    private String status;
 	    @OneToOne(cascade = CascadeType.ALL)
-		@JoinColumn(name = "ID")
+		@JoinColumn(name = "customer_id")
 	    private Customer customer;
 	    
 	    @OneToOne(cascade = CascadeType.ALL)
@@ -34,19 +36,20 @@ public class Order {
 		@JoinColumn(name = "ADDRESS_ID2")
 	    private Address shippingAddress;
 	    
-	    @OneToOne
+	    @OneToOne(cascade = CascadeType.ALL)
 	    private CreditCard creditCard;
 	  
-
-	    private ArrayList<OrderLine> orderlineList = new ArrayList<OrderLine>();
+	    @OneToMany(cascade = CascadeType.ALL)
+	    @JoinColumn(name="order_number")
+	    private List<OrderLine> orderlineList = new ArrayList<OrderLine>();
 	    
 	    public Order() {
 	    }
 
-	    public Order(String ordernumber, LocalDate date, String status) {
+	    public Order(String orderNumber, LocalDate orderDate, String status) {
 	        super();
-	        this.ordernumber = ordernumber;
-	        this.date = date;
+	        this.orderNumber = orderNumber;
+	        this.orderDate = orderDate;
 	        this.status = status;
 	    }
 
@@ -63,20 +66,20 @@ public class Order {
 	        orderlineList.add(oline);
 	    }
 
-	    public String getOrdernumber() {
-	        return ordernumber;
+	    public String getOrderNumber() {
+	        return orderNumber;
 	    }
 
-	    public void setOrdernumber(String ordernumber) {
-	        this.ordernumber = ordernumber;
+	    public void setOrderNumber(String orderNumber) {
+	        this.orderNumber = orderNumber;
 	    }
 
-	    public LocalDate getDate() {
-	        return date;
+	    public LocalDate getOrderDate() {
+	        return orderDate;
 	    }
 
-	    public void setDate(LocalDate date) {
-	        this.date = date;
+	    public void setOrderDate(LocalDate orderDate) {
+	        this.orderDate = orderDate;
 	    }
 
 	    public String getStatus() {
@@ -87,11 +90,11 @@ public class Order {
 	        this.status = status;
 	    }
 
-	    public ArrayList<OrderLine> getOrderlineList() {
+	    public List<OrderLine> getOrderlineList() {
 	        return orderlineList;
 	    }
 
-	    public void setOrderlineList(ArrayList<OrderLine> orderlineList) {
+	    public void setOrderlineList(List<OrderLine> orderlineList) {
 	        this.orderlineList = orderlineList;
 	    }
 

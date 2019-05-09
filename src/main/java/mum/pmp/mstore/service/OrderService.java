@@ -15,5 +15,7 @@ public interface OrderService {
 	    
 	 void addBillingAddress(String orderNumber,  Address address);
 	 void addShippingAddress(String orderNumber, Address address);
+	public Order save(Order order);
+	public void remove(String orderNumber);
 
 }

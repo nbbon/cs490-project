@@ -2,6 +2,7 @@ package mum.pmp.mstore.repository;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,7 +15,7 @@ import mum.pmp.mstore.domain.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product,Integer>{
 	
-	Product findByProductNumber(String productNumber);
+	Optional<Product> findByProductNumber(String productNumber);
 	
 	List<Product> findProductsByProductName(String name);
 	

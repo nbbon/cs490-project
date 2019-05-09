@@ -1,3 +1,12 @@
+/*
+ * Author: Yee Mon Zaw 
+ * Date: 02-May-2019
+ * Class Name: CreditCardValidator
+ * Package: mum.pmp.mstore.validator
+ * Description: Validator class for Credit Card 
+ * 
+ */
+
 package mum.pmp.mstore.validator;
 
 import org.springframework.stereotype.Component;
@@ -27,8 +36,8 @@ public class CreditCardValidator implements Validator {
         	errors.rejectValue("creditCard.cardName", "length.creditcard.name");
         
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "creditCard.cardNumber", "notEmpty.creditcard.number");
-//        if (cc.getCardNumber().length() != 16) 
-//            errors.rejectValue("creditCard.cardNumber", "length.creditcard.cardNumber");
+        if (cc.getCardNumber().length() != 16) 
+            errors.rejectValue("creditCard.cardNumber", "length.creditcard.cardNumber");
         
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "creditCard.csv", "notEmpty.creditcard.csv");
         if(cc.getCsv().length() <1 || cc.getCsv().length() > 4) 

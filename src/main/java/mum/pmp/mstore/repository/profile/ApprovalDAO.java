@@ -2,8 +2,8 @@
  * Author: Yee Mon Zaw
  * Date: 02-May-2019
  * Class Name: ShoppingCartRepository
- * Package: mum.pmp.mstore.repository
- * Description:  ShoppingCart Repository for CRUD  operations ( add product,  and remove product)
+ * Package: mum.pmp.mstore.repository.profile
+ * Description:  Approve admins and vendors user 
  * 
  */
 
@@ -31,6 +31,7 @@ public class ApprovalDAO {
 
 	public List<Admin> findNewAdmins(){
 		
+		// Retrieve Registered list of Admins whom needs approval
 		String sql = "select p.first_name,p.last_name,p.email,p.phone,p.enable from profile p where p.email in(select usr.username from user usr where usr.enabled = false and usr.id in (select u.user_id from user_roles  u inner join role r where r.role=\'ADMIN\' and r.id=u.role_id))";
 		Query query =  em.createNativeQuery (sql);
 		
@@ -48,7 +49,7 @@ public class ApprovalDAO {
 		    if(a[4].equals(0))
 		    	admin.setEnable(false);
 		    else 
-		    	admin.setEnable(true);
+		    	admin.setEnable(true);	
 		    adminList.add(admin);
 		}
 
@@ -56,6 +57,7 @@ public class ApprovalDAO {
 		return adminList;
 	}
 	
+	// Retrieve Registered list of Vendors who needs approval
 	public List<Vendor> findNewVendors(){
 		
 		String sql = "select p.vendor_name,p.vendor_number,p.email,p.phone,p.enable,p.reg_id,p.contact_person from profile p "
