@@ -45,7 +45,7 @@ public class HomeController {
 	@RequestMapping("/login")
 	public String loginPage() {
 		System.out.println("Login???");
-		return "/secure/login";
+		return "secure/login";
 	}
 
 	@RequestMapping("/logout-success")
@@ -54,7 +54,7 @@ public class HomeController {
 		if (auth != null) {
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
-		return "redirect:/login";
+		return "redirect:login";
 	}
 
 	@GetMapping("/forgotpwd")
@@ -88,7 +88,7 @@ public class HomeController {
 	{
 		model.addAttribute("products", productService.getAllProducts());
 		model.addAttribute("product", new Product());
-		return "/home/home";
+		return "home/home";
 	}
 	
 	@RequestMapping("/")
@@ -116,7 +116,7 @@ public class HomeController {
 		}
 		model.addAttribute("products", productService.getAllProducts());
 		model.addAttribute("product", new Product());
-		return "/home/home";
+		return "home/home";
 	}
 	
 	@RequestMapping("/profile")
@@ -150,6 +150,6 @@ public class HomeController {
 	@GetMapping("/catalogs")
 	public String getAllCatalogs(Model model) {
 		model.addAttribute("products", productService.getAllProducts());
-		return "/catalog/catalog";
+		return "catalog/catalog";
 	}
 }

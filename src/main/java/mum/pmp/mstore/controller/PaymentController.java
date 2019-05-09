@@ -64,16 +64,16 @@ public class PaymentController {
 			CreditCard fromCard = order.getCreditCard();
 			CreditCard toCard = new CreditCard();
 			if (fromCard.getCardType() == 1) { // Visa
-				paymentGatewayUrl = "/paymentgw/visa";
-				fallbackUrl = fallbackUrl + "/payment/visa/confirm/" + order.getOrderNumber();
+				paymentGatewayUrl = "paymentgw/visa";
+				fallbackUrl = fallbackUrl + "payment/visa/confirm/" + order.getOrderNumber();
 				
 				toCard.setCardName(cards.getVisaCardName());
 				toCard.setCardNumber(cards.getVisaCardNumber());
 				toCard.setCsv(cards.getVisaCardCSV());
 				toCard.setExpireDate(cards.getVisaCardexpireDate());
 			} else {
-				paymentGatewayUrl = "/paymentgw/master";
-				fallbackUrl = fallbackUrl + "/payment/master/confirm/" + order.getOrderNumber();
+				paymentGatewayUrl = "paymentgw/master";
+				fallbackUrl = fallbackUrl + "payment/master/confirm/" + order.getOrderNumber();
 				
 				toCard.setCardName(cards.getMasterCardName());
 				toCard.setCardNumber(cards.getMasterCardNumber());
@@ -116,12 +116,12 @@ public class PaymentController {
 			order.setOrderDate(LocalDate.now());
 			order = orderService.save(order);
 			request.getSession().setAttribute("order", order);
-			targetURL = "forward:/settlement";
+			targetURL = "forward:settlement";
 		} else {
 			System.out.println("PAYMENT: payment declined for order number " + orderNumber);
 			orderService.remove(orderNumber);
 			redirectAttributes.addFlashAttribute("status", status);
-			targetURL = "redirect:/payment";
+			targetURL = "redirect:payment";
 		}
 		return targetURL;
 	}

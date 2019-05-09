@@ -86,13 +86,13 @@ public class OrderController {
 
 			redirectAttributes.addFlashAttribute("order", order);
 			System.out.println("ORDER: User logged in redirect to /order/customer - " + order.getOrderNumber());
-			return "redirect:/order/customer"; // get shipping & billing addresses
+			return "redirect:order/customer"; // get shipping & billing addresses
 		}
 
 		
 //		request.setAttribute("order", order);
 		System.out.println("ORDER: forwarding for security check - " + order.getOrderNumber());
-		return "forward:/order/checkLoggedin"; // security check and login
+		return "forward:order/checkLoggedin"; // security check and login
 	}
 
 	@PostMapping("/checkLoggedin")
@@ -105,11 +105,11 @@ public class OrderController {
 			
 			System.out.println("ORDER: redirect to /order/guest/detail - " + order.getOrderNumber());
 			redirectAttributes.addFlashAttribute("order", order);
-			return "redirect:/order/guest/detail"; // to get guest detail info
+			return "redirect:order/guest/detail"; // to get guest detail info
 		}
 		
 		System.out.println("ORDER: forward to /order/customer - " + order);
-		return "forward:/order/customer"; // security check and getting addresses
+		return "forward:order/customer"; // security check and getting addresses
 		
 	}
 
@@ -135,7 +135,7 @@ public class OrderController {
 		
 		if (bindingResult.hasErrors()) {
 			System.out.println("ORDER: Guest checkout - binding error");
-			return "/guest/detail";
+			return "guest/detail";
 		}
 		String orderNumber = order.getOrderNumber();
 		System.out.println("ORDER: Guest checkout - forwarding for processing payment: " + orderNumber);
@@ -148,7 +148,7 @@ public class OrderController {
 		order = orderService.save(updatedOrder);
 		
 		request.getSession().setAttribute("order", order);
-		return "forward:/payment";
+		return "forward:payment";
 	}
 
 	@PostMapping("/customer")
@@ -158,7 +158,7 @@ public class OrderController {
 		Order order = (Order) request.getSession().getAttribute("order");
 		redirectAttributes.addFlashAttribute("order", order);
 		System.out.println("ORDER: do security check before go further - " + order.getOrderNumber());
-		return "redirect:/order/customer"; // get shipping & billing addresses
+		return "redirect:order/customer"; // get shipping & billing addresses
 		
 	}
 	
@@ -168,7 +168,7 @@ public class OrderController {
 			HttpServletResponse response) throws ServletException {
 		
 		if (bindingResult.hasErrors()) {
-			return "redirect:/customer";
+			return "redirect:customer";
 		}
 		
 		Customer loggedCustomer = getLoggedCustomer();
@@ -186,7 +186,7 @@ public class OrderController {
 			
 			System.out.println("ORDER: Customer checkout - forwarding for processing payment: " + order.getOrderNumber());
 			request.getSession().setAttribute("order", order);
-			return "forward:/payment";
+			return "forward:payment";
 		}
 		
 		System.out.println("ORDER: Not supose to go here. If it's then go back for security check");

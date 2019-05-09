@@ -150,21 +150,21 @@ public class ReportController {
 	public String quarterlyReport(Model model, RedirectAttributes redirectAttributes, @RequestParam Integer year, @RequestParam String type) {
 		redirectAttributes.addFlashAttribute("year", year);
 		redirectAttributes.addFlashAttribute("type", type);
-		return "redirect:/reports/quarterly";
+		return "redirect:reports/quarterly";
 	}
 	
 	@PostMapping("halfyearly")
 	public String halfyearlyReport(Model model, RedirectAttributes redirectAttributes, @RequestParam Integer year, @RequestParam String type) {
 		redirectAttributes.addFlashAttribute("year", year);
 		redirectAttributes.addFlashAttribute("type", type);
-		return "redirect:/reports/halfyearly";
+		return "redirect:reports/halfyearly";
 	}
 	
 	@PostMapping("annually")
 	public String annuallyReport(Model model, RedirectAttributes redirectAttributes, @RequestParam Integer year, @RequestParam String type) {
 		redirectAttributes.addFlashAttribute("year", year);
 		redirectAttributes.addFlashAttribute("type", type);
-		return "redirect:/reports/annually";
+		return "redirect:reports/annually";
 	}
 	
 	@PostMapping("adhoc")
@@ -172,7 +172,7 @@ public class ReportController {
 		redirectAttributes.addFlashAttribute("adhocFromDate", adhocFromDate);
 		redirectAttributes.addFlashAttribute("adhocToDate", adhocToDate);
 		redirectAttributes.addFlashAttribute("type", type);
-		return "redirect:/reports/adhoc";
+		return "redirect:reports/adhoc";
 	}
 
 	@GetMapping(value = "weekly")
