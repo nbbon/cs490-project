@@ -86,7 +86,7 @@ public class ShoppingCartController {
 //        		}
         		System.out.println("In place order" + cart);
         		request.setAttribute("Shopping_Cart", cart);
-        		return "forward:" + "/order/create";
+        		return "forward:order/create";
         	}
         	
          } catch (NotEnoughProductsInStockException e) {
@@ -95,10 +95,10 @@ public class ShoppingCartController {
         	 model.addAttribute("outOfStockMessage", e.getMessage());
         	 model.addAttribute("products", shoppingCartService.getProductsInCart());
         	 model.addAttribute("total", shoppingCartService.getTotal().toString());
-        	 return "/shoppingcart/shoppingCart";
+        	 return "shoppingcart/shoppingCart";
         	 
         }
-        return "forward:" + "/order/create";
+        return "forward:order/create";
     }
     
 }

@@ -76,7 +76,7 @@ public class SettlementController {
 
 		redirectAttributes.addFlashAttribute("status", status);
 		redirectAttributes.addFlashAttribute("order", order);
-		return "redirect:/settlement";
+		return "redirect:settlement";
 	}
 
 	@GetMapping({"", "/"})

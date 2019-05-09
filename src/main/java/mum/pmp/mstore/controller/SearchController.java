@@ -29,7 +29,7 @@ public class SearchController {
 	@GetMapping(value = "/search")
 	public String showSearchForm(ModelMap modelMap) {
 		modelMap.addAttribute("product", new Product());
-		return "/search/findProducts";
+		return "search/findProducts";
 	}
 
 	@GetMapping(value = "/adsearch")
@@ -74,6 +74,6 @@ public class SearchController {
 			productList = searchRepository.findProductBy(productNumber, productName, price);
 			modelMap.addAttribute("productList", productList);
 		}
-		return "/search/displayProducts";
+		return "search/displayProducts";
 	}
 }
