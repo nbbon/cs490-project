@@ -2,8 +2,8 @@
  * Author: Yee Mon Zaw
  * Date: 02-May-2019
  * Class Name: ShoppingCartRepository
- * Package: mum.pmp.mstore.repository
- * Description:  ShoppingCart Repository for CRUD  operations ( add product,  and remove product)
+ * Package: mum.pmp.mstore.repository.profile
+ * Description:  Approve admins and vendors user 
  * 
  */
 

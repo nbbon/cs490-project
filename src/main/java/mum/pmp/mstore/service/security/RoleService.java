@@ -1,3 +1,11 @@
+/*
+ * Author: Yee Mon Zaw
+ * Date: 26-May-2019
+ * Class Name: RoleService
+ * Package: mum.pmp.mstore.service.security
+ * Description:  Role Service 
+ */
+
 package mum.pmp.mstore.service.security;
 
 import java.util.List;
