@@ -72,6 +72,7 @@ public class VendorController {
 			validator.validate(vendor, bindingResult);
 			
 			ccValidator.validate(vendor.getCreditCard(), bindingResult);
+			
 			String paymentUrl = "";
 			String fallbackUrl = ""; 
 			
