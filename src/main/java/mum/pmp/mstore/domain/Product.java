@@ -55,6 +55,7 @@ public class Product implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "VENDOR_NUMBER")
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Vendor vendor;
 		
 	public Vendor getVendor() {

@@ -1,14 +1,21 @@
+/*
+ * Author: Yee Mon Zaw
+ * Date: 01-May-2019
+ * Class Name: ShoppingCartController
+ * Package: mum.pmp.mstore.controller
+ * Description: ShoppingCartController - responsible to get the products from catalogs and add to shopping cart. 
+ * User can add and remove products from the Shopping Cart.
+ * 
+ */
+
 package mum.pmp.mstore.controller;
 
-import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +42,7 @@ public class ShoppingCartController {
         this.productService = productService;
     }
 
+    // Display shopping cart page.
     @GetMapping
     public ModelAndView shoppingCart() {
         ModelAndView modelAndView = new ModelAndView("/shoppingcart/shoppingCart");
@@ -43,6 +51,7 @@ public class ShoppingCartController {
         return modelAndView;
     }
 
+    // Add product to the shopping cart
     @PostMapping("/addProduct")
     public ModelAndView addProductToCart(@RequestBody int productId) {
     	System.out.println("Here in add to cart product controller");
@@ -50,15 +59,17 @@ public class ShoppingCartController {
         return shoppingCart();
     }
 
+    // Remove product from the shopping cart.
     @GetMapping("/removeProduct/{productId}")
     public ModelAndView removeProductFromCart(@PathVariable("productId") int productId) {
         productService.getProduct(productId).ifPresent(shoppingCartService::removeProduct);
         return shoppingCart();
     }
 
+    // once user click the place order button, will keep shopping cart in session and call to order controller for further processing.
     @PostMapping("/placeOrder")
     public String checkout(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response, Model model) {
         try {
         	System.out.println("In placeorder shopping cart");
         	ShoppingCart cart = (ShoppingCart) request.getAttribute("Shopping_Cart");
@@ -67,13 +78,17 @@ public class ShoppingCartController {
         		cart = shoppingCartService.checkout();
         		System.out.println("In place order" + cart);
         		request.setAttribute("Shopping_Cart", cart);
-        		//RequestDispatcher rd = request.getRequestDispatcher("/order/create");
-//        		return "forward:" + "/order/create";
+        		return "forward:" + "/order/create";
         	}
         	
          } catch (NotEnoughProductsInStockException e) {
-            //return shoppingCart().addObject("outOfStockMessage", e.getMessage());
+            //
         	 System.out.println(e.getMessage());
+        	 model.addAttribute("outOfStockMessage", e.getMessage());
+        	 model.addAttribute("products", shoppingCartService.getProductsInCart());
+        	 model.addAttribute("total", shoppingCartService.getTotal().toString());
+        	 return "/shoppingcart/shoppingCart";
+        	 
         }
         return "forward:" + "/order/create";
     }

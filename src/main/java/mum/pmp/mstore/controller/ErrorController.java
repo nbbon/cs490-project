@@ -1,3 +1,11 @@
+/*
+ * Author: Yee Mon Zaw
+ * Date: 26-Apr-2019
+ * Class Name: ErrorController
+ * Package: mum.pmp.mstore.controller
+ * Description: Error Controller class to handle errors.
+ */
+
 package mum.pmp.mstore.controller;
 
 import javax.servlet.http.HttpServletRequest;

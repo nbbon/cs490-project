@@ -1,3 +1,11 @@
+/*
+ * Author: Yee Mon Zaw
+ * Date: 01-May-2019
+ * Class Name: HomeController
+ * Package: mum.pmp.mstore.controller
+ * Description: This is Home Controller for all login and home mapping.
+ */
+
 package mum.pmp.mstore.controller;
 
 import javax.servlet.http.HttpServletRequest;
@@ -114,6 +122,7 @@ public class HomeController {
 	@RequestMapping("/profile")
 	public String profilePage() {
 		System.out.println("Here in profile.");
+		// validate user role and route to different profile.
 		String url = "";
 		UserDetails user = secureOperations();
 		if (user != null) {
@@ -137,6 +146,7 @@ public class HomeController {
 		return url;
 	}
 	
+	//display all products in catalog format
 	@GetMapping("/catalogs")
 	public String getAllCatalogs(Model model) {
 		model.addAttribute("products", productService.getAllProducts());

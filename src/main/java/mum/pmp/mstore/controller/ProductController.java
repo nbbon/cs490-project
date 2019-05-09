@@ -15,10 +15,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import mum.pmp.mstore.config.security.Listener;
 import mum.pmp.mstore.domain.Category;
 import mum.pmp.mstore.domain.Product;
+import mum.pmp.mstore.model.Vendor;
+import mum.pmp.mstore.repository.profile.ApprovalDAO;
 import mum.pmp.mstore.service.CategoryService;
 import mum.pmp.mstore.service.ProductService;
+import mum.pmp.mstore.service.security.ProfileService;
 
 @Controller
 @RequestMapping("/products")
@@ -26,14 +30,26 @@ public class ProductController {
 
 	@Autowired
 	ProductService productService;
+	
+	@Autowired
+	private ApprovalDAO dao;
+	
+	@Autowired
+	private Listener sessionListener;
+	
+	@Autowired
+	private ProfileService profileService;
 
 	@Autowired
 	CategoryService categoryService;
 
 	@GetMapping("/")
 	public String listProducts(Model model) {
-
-		model.addAttribute("productsList", productService.getAllProducts());
+		Vendor vendorProfile = (Vendor) profileService.findByEmail(sessionListener.getUser().getEmail());
+		Long vendorNumber = vendorProfile.getId();
+		
+		List<Product> products = productService.findProductsByVendor(vendorNumber.intValue());
+		model.addAttribute("productsList", products);
 		return "product/productsList";
 	}
 
@@ -62,14 +78,26 @@ public class ProductController {
 
 		List<Category> categories = categoryService.getCategories();
 		model.addAttribute("categories", categories);
+		Vendor vendorProfile = (Vendor) profileService.findByEmail(sessionListener.getUser().getEmail());
+		product.setVendor(vendorProfile);
 		productService.addProduct(product);
+		
+		Long vendorNumber = vendorProfile.getId();
+		List<Product> products = productService.findProductsByVendor(vendorNumber.intValue());
+		model.addAttribute("productsList", products);
 		return "product/productsList";
 	}
 
 	@RequestMapping(value = "/productsDelete/{id}", method = RequestMethod.GET)
-	public String productsDelete(Model model, @PathVariable(required = true, name = "id") Integer id) {
-		productService.deleteProduct(id);
-		model.addAttribute("productsList", productService.getAllProducts());
+	public String productsDelete(Model model, @PathVariable(name = "id") Integer id) {
+		System.out.println("Delete product");
+		dao.deleteProduct(id);
+		
+		Vendor vendorProfile = (Vendor) profileService.findByEmail(sessionListener.getUser().getEmail());
+		Long vendorNumber = vendorProfile.getId();
+		List<Product> products = productService.findProductsByVendor(vendorNumber.intValue());
+		
+		model.addAttribute("productsList",  products);
 		return "product/productsList";
 
 	}

@@ -1,3 +1,12 @@
+/*
+ * Author: Yee Mon Zaw
+ * Date: 02-May-2019
+ * Class Name: ShoppingCartRepository
+ * Package: mum.pmp.mstore.repository
+ * Description:  ShoppingCart Repository for CRUD  operations ( add product,  and remove product)
+ * 
+ */
+
 package mum.pmp.mstore.repository.profile;
 
 import java.util.ArrayList;
@@ -73,5 +82,12 @@ public class ApprovalDAO {
 
 		
 		return vendorList;
+	}
+	
+	public void deleteProduct(int id) {
+		String sql = "delete from product where id=" + id;
+		Query query =  em.createNativeQuery (sql);
+		query.executeUpdate();
+		System.out.println("Deleted...");
 	}
 }

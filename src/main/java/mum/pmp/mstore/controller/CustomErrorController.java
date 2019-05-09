@@ -1,3 +1,11 @@
+/*
+ * Author: Yee Mon Zaw
+ * Date: 26-Apr-2019
+ * Class Name: CustomErrorController
+ * Package: mum.pmp.mstore.controller
+ * Description: Custom Error Controller class to handle errors.
+ */
+
 package mum.pmp.mstore.controller;
 
 import org.springframework.boot.web.servlet.error.ErrorController;

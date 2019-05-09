@@ -1,3 +1,12 @@
+/*
+ * Author: Yee Mon Zaw
+ * Date: 28-Apr-2019
+ * Class Name: VendorController
+ * Package: mum.pmp.mstore.controller.profile
+ * Description:  Vendor Sign up , update  
+ * 
+ */
+
 package mum.pmp.mstore.controller.profile;
 
 import java.time.LocalDate;
@@ -46,6 +55,7 @@ public class VendorController {
 	@Autowired
 	private CompanyCardConfig cards;
 	
+	// Vendor Sign up
 	@GetMapping("/signup")
 	public String signupPage(Model model) {
 		model.addAttribute("vendor", new Vendor());
