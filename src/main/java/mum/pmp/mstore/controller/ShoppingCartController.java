@@ -82,6 +82,7 @@ public class ShoppingCartController {
         	
          } catch (NotEnoughProductsInStockException e) {
             //return shoppingCart().addObject("outOfStockMessage", e.getMessage());
+        	 System.out.println(e.getMessage());
         }
         return "forward:" + "/order/create";
     }

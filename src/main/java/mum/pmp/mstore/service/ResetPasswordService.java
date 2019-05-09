@@ -14,6 +14,15 @@ import mum.pmp.mstore.repository.profile.UserRepository;
 import mum.pmp.mstore.service.security.IProfileService;
 import mum.pmp.mstore.service.security.ProfileService;
 
+/*
+ * Author: Stanley Julien
+ * Date: 25-Apr-2019
+ * Class Name: ResetPasswordService
+ * Module: Reset Password
+ * Description: The implementation of reset password  
+ * 
+ */
+
 @Service
 public class ResetPasswordService {
 

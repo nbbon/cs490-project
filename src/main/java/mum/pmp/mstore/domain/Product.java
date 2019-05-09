@@ -45,9 +45,6 @@ public class Product implements Serializable {
 	 @Column(name = "description")
 	private String description;
 	 
-//	@Lob
-//	private Byte[] image;
-	 
 	@OneToOne
 	@JoinColumn(name = "STOCK_ID")
 	private Stock stock;
@@ -218,14 +215,5 @@ public class Product implements Serializable {
 		this.price = price;
 	}
 
-
-//	public Byte[] getImage() {
-//		return image;
-//	}
-//
-//
-//	public void setImage(Byte[] image) {
-//		this.image = image;
-//	}
 
 }

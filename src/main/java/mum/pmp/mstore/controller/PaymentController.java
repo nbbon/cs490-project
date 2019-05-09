@@ -2,21 +2,16 @@
  * Author: Bon Nguyen
  * Date: 25-Apr-2019
  * Class Name: PaymentController
- * Package: controller
- * Description: The main entry point of Payment module for processing order payment request
+ * Module: Payment
+ * Description: The main controller of Payment module, reponsible for controlling the order payment request
  * 		When receive order payment request from Order Module. It will send payment request with 
- * credit card info to Mock Payment gateway for making payment transaction. After that transaction 
- * successful return from the gateway. It will send request to 
- * Settlement module for fulfillment the order
+ * credit card info to Mock Payment gateway for making payment transaction. After payment transactions 
+ * made return from the gateway. It will send request to Settlement for handling fulfill the order
  * 
  */
 
 package mum.pmp.mstore.controller;
 
-import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
