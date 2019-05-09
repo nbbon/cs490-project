@@ -23,7 +23,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import mum.pmp.mstore.domain.OrderLine;
+import mum.pmp.mstore.domain.Product;
 import mum.pmp.mstore.domain.ShoppingCart;
+import mum.pmp.mstore.domain.ShoppingCartLine;
 import mum.pmp.mstore.exception.NotEnoughProductsInStockException;
 import mum.pmp.mstore.service.ProductService;
 import mum.pmp.mstore.service.ShoppingCartService;
@@ -75,7 +78,12 @@ public class ShoppingCartController {
         	ShoppingCart cart = (ShoppingCart) request.getAttribute("Shopping_Cart");
         	if(cart == null)
         	{
+        		
         		cart = shoppingCartService.checkout();
+        		
+//        		for (ShoppingCartLine cline : cart.getCartlineList()) {
+//        			System.out.println("cartline quantity " + cline.getQuantity());
+//        		}
         		System.out.println("In place order" + cart);
         		request.setAttribute("Shopping_Cart", cart);
         		return "forward:" + "/order/create";

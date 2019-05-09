@@ -10,9 +10,8 @@
 </head>
 <body>
 
-
+<div th:replace="fragments/menu :: menu"></div>
 <div class="container">
-    <div th:replace="fragments/menu :: menu"></div>
     <form class="form-horizontal" th:object="${order}" role="form" method="POST" th:action="@{/order/guest/detail}">
      <h3 align="center">Customer Info</h3>   
      <input th:field="*{orderNumber}" type="text" class="form-control" id="orderNumber" style="display: none" />
@@ -120,23 +119,10 @@
       		</div>
         </div>
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    
-        
         <h3 align="center"> Shipping Address</h3>
         
         <div class="form-group row">
-            <label for="city" class="col-sm-3 col-md-3 col-form-label">Zip Code</label>
+            <label for="city" class="col-sm-3 col-md-3 col-form-label">City</label>
             <div class="col-sm-9 col-md-9">
                 <input th:field="*{shippingAddress.city}" type="text" class="form-control" id="city"/>
             </div>
@@ -166,7 +152,7 @@
          <h3 align="center"> Billing Address</h3>
         
         <div class="form-group row">
-            <label for="city" class="col-sm-3 col-md-3 col-form-label">Zip Code</label>
+            <label for="city" class="col-sm-3 col-md-3 col-form-label">City</label>
             <div class="col-sm-9 col-md-9">
                 <input th:field="*{billingAddress.city}" type="text" class="form-control" id="city"/>
             </div>

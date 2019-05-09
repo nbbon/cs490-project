@@ -1,8 +1,12 @@
 package mum.pmp.mstore.service.security;
 
 /*
- * Romie
- * */
+ * Author: Yee Mon Zaw
+ * Date: 24-Apr-2019
+ * Class Name: ProfileService
+ * Package: mum.pmp.mstore.service.security
+ * Description: Profile Service for Sign up, Update for All users and Approval modules.
+ */
 import java.util.List;
 
 import javax.mail.MessagingException;
