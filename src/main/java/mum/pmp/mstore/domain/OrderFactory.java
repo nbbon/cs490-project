@@ -1,4 +1,11 @@
-
+/*
+ * Author: Jean Chrisner Jean Charles
+ * Date: 29-Apr-2019
+ * Class Name: OrderFactory
+ * Package: domain
+ * Description: it is a factory class  help you to create an instance of order
+ * 
+ */
 package mum.pmp.mstore.domain;
 
 import java.time.LocalDate;
