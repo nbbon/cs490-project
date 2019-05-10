@@ -1,3 +1,12 @@
+/*
+ * Author: Jean Chrisner Jean Charles
+ * Date: 24-Apr-2019
+ * Class Name: ProductServiceImpl
+ * Package: service
+ * Description: contains the business logic of product module to operate on the data sent to and from the DAO and the client.
+ * 
+ */
+
 package mum.pmp.mstore.service.impl;
 
 import java.util.List;
