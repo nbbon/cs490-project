@@ -1,4 +1,11 @@
-
+/*
+ * Author: Jean Chrisner Jean Charles
+ * Date: 29-Apr-2019
+ * Class Name: OrderServiceImpl
+ * Package: service
+ * Description: contains the business logic of order module to operate on the data sent to and from the DAO and the client.
+ * 
+ */
 package mum.pmp.mstore.service.impl;
 
 import java.util.Optional;

@@ -1,4 +1,11 @@
-
+/*
+ * Author: Jean Chrisner Jean Charles
+ * Date: 29-Apr-2019
+ * Class Name: Order
+ * Package: domain
+ * Description: it is a POJO class that is mapped to the database and configured for usage through JPA. 
+ * 
+ */
 package mum.pmp.mstore.domain;
 
 import java.time.LocalDate;

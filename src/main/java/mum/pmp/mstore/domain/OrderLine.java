@@ -1,3 +1,4 @@
+
 package mum.pmp.mstore.domain;
 
 import javax.persistence.Entity;

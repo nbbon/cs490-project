@@ -1,3 +1,12 @@
+/*
+ * Author: Jean Chrisner Jean Charles
+ * Date: 24-Apr-2019
+ * Class Name: Product
+ * Package: domain
+ * Description: it is a POJO class that is mapped to the database and configured for usage through JPA. 
+ * 
+ */
+
 package mum.pmp.mstore.domain;
 
 import java.io.Serializable;
